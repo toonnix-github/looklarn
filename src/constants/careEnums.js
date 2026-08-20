@@ -49,6 +49,39 @@ export const APPOINTMENT_EVENTS = Object.freeze({
   CUSTOM: 'custom',
 });
 
+export const CARETAKER_REQUIREMENTS = Object.freeze({
+  WHEELCHAIR_EXPERIENCE: 'wheelchair_experience',
+  HOSPITAL_ESCORT: 'hospital_escort',
+  MEDICATION_REMINDER: 'medication_reminder',
+  VITAL_SIGNS: 'vital_signs',
+  FIRST_AID: 'first_aid',
+  GENTLE_TRANSFER: 'gentle_transfer',
+  PATIENT_TEMPERAMENT: 'patient_temperament',
+  CLEAR_SPEECH: 'clear_speech',
+  THAI_LANGUAGE: 'thai_language',
+  ISAN_LANGUAGE: 'isan_language',
+  ENGLISH_LANGUAGE: 'english_language',
+  FEMALE_ONLY: 'female_only',
+  MALE_ONLY: 'male_only',
+  NON_SMOKER: 'non_smoker',
+  NO_STRONG_PERFUME: 'no_strong_perfume',
+  NO_STRONG_ODOR: 'no_strong_odor',
+  CAN_LIFT_SUPPORT: 'can_lift_support',
+  STAIR_ASSISTANCE: 'stair_assistance',
+  CAR_AVAILABLE: 'car_available',
+  LARGE_CAR: 'large_car',
+  CAN_WAIT_LONG_QUEUE: 'can_wait_long_queue',
+  DOCUMENT_HELP: 'document_help',
+  PAYMENT_HELP: 'payment_help',
+  FOOD_RESTRICTION_AWARE: 'food_restriction_aware',
+  DIABETES_AWARE: 'diabetes_aware',
+  BLOOD_PRESSURE_AWARE: 'blood_pressure_aware',
+  DEMENTIA_AWARE: 'dementia_aware',
+  FALL_RISK_AWARE: 'fall_risk_aware',
+  QUIET_COMPANION: 'quiet_companion',
+  PHOTO_UPDATE: 'photo_update',
+});
+
 export const elderMobilityOptions = Object.freeze([
   {
     id: ELDER_MOBILITY.INDEPENDENT,
@@ -262,6 +295,39 @@ export const appointmentEventOptions = Object.freeze([
   },
 ]);
 
+export const caretakerRequirementOptions = Object.freeze([
+  { id: CARETAKER_REQUIREMENTS.WHEELCHAIR_EXPERIENCE, label: { th: 'ชำนาญวีลแชร์', en: 'Wheelchair experience' }, shortLabel: { th: 'วีลแชร์', en: 'Wheelchair' } },
+  { id: CARETAKER_REQUIREMENTS.HOSPITAL_ESCORT, label: { th: 'คุ้นเคยโรงพยาบาล', en: 'Hospital escort' }, shortLabel: { th: 'โรงพยาบาล', en: 'Hospital' } },
+  { id: CARETAKER_REQUIREMENTS.MEDICATION_REMINDER, label: { th: 'ช่วยเตือนยา', en: 'Medication reminder' }, shortLabel: { th: 'เตือนยา', en: 'Meds' } },
+  { id: CARETAKER_REQUIREMENTS.VITAL_SIGNS, label: { th: 'วัดความดัน/ชีพจรได้', en: 'Can check vitals' }, shortLabel: { th: 'วัดชีพจร', en: 'Vitals' } },
+  { id: CARETAKER_REQUIREMENTS.FIRST_AID, label: { th: 'ผ่านปฐมพยาบาล', en: 'First-aid trained' }, shortLabel: { th: 'ปฐมพยาบาล', en: 'First aid' } },
+  { id: CARETAKER_REQUIREMENTS.GENTLE_TRANSFER, label: { th: 'ช่วยลุกนั่งนุ่มนวล', en: 'Gentle transfer support' }, shortLabel: { th: 'ช่วยลุกนั่ง', en: 'Transfer' } },
+  { id: CARETAKER_REQUIREMENTS.PATIENT_TEMPERAMENT, label: { th: 'ใจเย็นมาก', en: 'Very patient' }, shortLabel: { th: 'ใจเย็น', en: 'Patient' } },
+  { id: CARETAKER_REQUIREMENTS.CLEAR_SPEECH, label: { th: 'พูดชัด อธิบายเก่ง', en: 'Clear communicator' }, shortLabel: { th: 'พูดชัด', en: 'Clear' } },
+  { id: CARETAKER_REQUIREMENTS.THAI_LANGUAGE, label: { th: 'พูดไทยชัด', en: 'Thai speaker' }, shortLabel: { th: 'ไทยชัด', en: 'Thai' } },
+  { id: CARETAKER_REQUIREMENTS.ISAN_LANGUAGE, label: { th: 'พูดอีสานได้', en: 'Isan speaker' }, shortLabel: { th: 'อีสาน', en: 'Isan' } },
+  { id: CARETAKER_REQUIREMENTS.ENGLISH_LANGUAGE, label: { th: 'สื่อสารอังกฤษได้', en: 'English speaker' }, shortLabel: { th: 'อังกฤษ', en: 'English' } },
+  { id: CARETAKER_REQUIREMENTS.FEMALE_ONLY, label: { th: 'ต้องเป็นผู้หญิง', en: 'Female caretaker only' }, shortLabel: { th: 'ผู้หญิง', en: 'Female' } },
+  { id: CARETAKER_REQUIREMENTS.MALE_ONLY, label: { th: 'ต้องเป็นผู้ชาย', en: 'Male caretaker only' }, shortLabel: { th: 'ผู้ชาย', en: 'Male' } },
+  { id: CARETAKER_REQUIREMENTS.NON_SMOKER, label: { th: 'ไม่สูบบุหรี่', en: 'Non-smoker' }, shortLabel: { th: 'ไม่สูบบุหรี่', en: 'Non-smoker' } },
+  { id: CARETAKER_REQUIREMENTS.NO_STRONG_PERFUME, label: { th: 'ไม่ใช้น้ำหอมแรง', en: 'No strong perfume' }, shortLabel: { th: 'ไม่ฉุนน้ำหอม', en: 'No perfume' } },
+  { id: CARETAKER_REQUIREMENTS.NO_STRONG_ODOR, label: { th: 'ไม่มีกลิ่นติดเสื้อแรง', en: 'No strong clothing odor' }, shortLabel: { th: 'ไม่มีกลิ่นแรง', en: 'No odor' } },
+  { id: CARETAKER_REQUIREMENTS.CAN_LIFT_SUPPORT, label: { th: 'ช่วยพยุงน้ำหนักได้', en: 'Can support body weight' }, shortLabel: { th: 'พยุงได้', en: 'Lift support' } },
+  { id: CARETAKER_REQUIREMENTS.STAIR_ASSISTANCE, label: { th: 'ช่วยขึ้นลงบันได', en: 'Stair assistance' }, shortLabel: { th: 'บันได', en: 'Stairs' } },
+  { id: CARETAKER_REQUIREMENTS.CAR_AVAILABLE, label: { th: 'มีรถรับส่ง', en: 'Has car' }, shortLabel: { th: 'มีรถ', en: 'Car' } },
+  { id: CARETAKER_REQUIREMENTS.LARGE_CAR, label: { th: 'รถใส่วีลแชร์ได้', en: 'Wheelchair-friendly car' }, shortLabel: { th: 'รถใส่วีลแชร์', en: 'Large car' } },
+  { id: CARETAKER_REQUIREMENTS.CAN_WAIT_LONG_QUEUE, label: { th: 'รอคิวนานได้', en: 'Can wait long queues' }, shortLabel: { th: 'รอคิว', en: 'Queue' } },
+  { id: CARETAKER_REQUIREMENTS.DOCUMENT_HELP, label: { th: 'ช่วยเอกสารได้', en: 'Document assistance' }, shortLabel: { th: 'เอกสาร', en: 'Docs' } },
+  { id: CARETAKER_REQUIREMENTS.PAYMENT_HELP, label: { th: 'ช่วยจ่ายเงิน/รับใบเสร็จ', en: 'Payment help' }, shortLabel: { th: 'จ่ายเงิน', en: 'Payment' } },
+  { id: CARETAKER_REQUIREMENTS.FOOD_RESTRICTION_AWARE, label: { th: 'เข้าใจข้อจำกัดอาหาร', en: 'Diet restriction aware' }, shortLabel: { th: 'คุมอาหาร', en: 'Diet' } },
+  { id: CARETAKER_REQUIREMENTS.DIABETES_AWARE, label: { th: 'เข้าใจเบาหวาน', en: 'Diabetes aware' }, shortLabel: { th: 'เบาหวาน', en: 'Diabetes' } },
+  { id: CARETAKER_REQUIREMENTS.BLOOD_PRESSURE_AWARE, label: { th: 'เข้าใจความดัน', en: 'Blood pressure aware' }, shortLabel: { th: 'ความดัน', en: 'BP' } },
+  { id: CARETAKER_REQUIREMENTS.DEMENTIA_AWARE, label: { th: 'เข้าใจภาวะหลงลืม', en: 'Dementia aware' }, shortLabel: { th: 'หลงลืม', en: 'Dementia' } },
+  { id: CARETAKER_REQUIREMENTS.FALL_RISK_AWARE, label: { th: 'ระวังเสี่ยงล้ม', en: 'Fall-risk aware' }, shortLabel: { th: 'กันล้ม', en: 'Fall risk' } },
+  { id: CARETAKER_REQUIREMENTS.QUIET_COMPANION, label: { th: 'ไม่ชวนคุยมาก', en: 'Quiet companion' }, shortLabel: { th: 'เงียบสุภาพ', en: 'Quiet' } },
+  { id: CARETAKER_REQUIREMENTS.PHOTO_UPDATE, label: { th: 'ส่งรูปอัปเดตให้ลูกหลาน', en: 'Photo updates' }, shortLabel: { th: 'ส่งรูป', en: 'Photos' } },
+]);
+
 const toLookup = (options) =>
   Object.freeze(
     options.reduce((lookup, option) => {
@@ -274,6 +340,7 @@ export const elderMobilityById = toLookup(elderMobilityOptions);
 export const mobilityAidById = toLookup(mobilityAidOptions);
 export const medicalConditionById = toLookup(medicalConditionOptions);
 export const appointmentEventById = toLookup(appointmentEventOptions);
+export const caretakerRequirementById = toLookup(caretakerRequirementOptions);
 
 export const getLocalizedEnumValue = (value, language = 'th') => {
   if (!value) return '';
@@ -290,6 +357,8 @@ export const getElderMobilityMeta = (id) =>
 export const getMobilityAidMeta = (id) => mobilityAidById[id] || null;
 
 export const getMedicalConditionMeta = (id) => medicalConditionById[id] || null;
+
+export const getCaretakerRequirementMeta = (id) => caretakerRequirementById[id] || null;
 
 export const getAppointmentEventMeta = (id) =>
   appointmentEventById[id] || appointmentEventById[APPOINTMENT_EVENTS.CUSTOM] || {

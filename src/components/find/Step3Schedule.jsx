@@ -1,125 +1,185 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { CardTitle } from '../ui/Card';
-import { DollarSign, FileText, Users, Sparkles } from 'lucide-react';
+import { CheckCircle2, FileText, ShieldCheck, UserCheck, Users, X } from 'lucide-react';
+import {
+  caretakerRequirementOptions,
+  getCaretakerRequirementMeta,
+  getEnumLabel,
+} from '../../constants/careEnums';
 
 const GENDERS = [
-  { id: 'any',    th: 'เพศใดก็ได้',      en: 'Any Gender' },
-  { id: 'female', th: 'ผู้หญิงเท่านั้น', en: 'Female Only' },
-  { id: 'male',   th: 'ผู้ชายเท่านั้น',  en: 'Male Only' },
+  { id: 'any', th: 'เพศใดก็ได้', en: 'Any' },
+  { id: 'female', th: 'ผู้หญิง', en: 'Female' },
+  { id: 'male', th: 'ผู้ชาย', en: 'Male' },
 ];
 
-export default function Step3Budget({ formData, setFormData }) {
+const MAX_REQUIREMENTS = 5;
+
+export default function Step3CaretakerDetails({ formData, setFormData }) {
   const { language } = useLanguage();
-  const totalEst = (formData.budgetMax || 500) * (formData.durationHours || 4);
+  const selectedRequirements = Array.isArray(formData.caretakerRequirements)
+    ? formData.caretakerRequirements
+    : [];
+  const selectedRequirementMetas = selectedRequirements
+    .map(getCaretakerRequirementMeta)
+    .filter(Boolean);
+  const isMaxSelected = selectedRequirements.length >= MAX_REQUIREMENTS;
+
+  const toggleRequirement = (requirementId) => {
+    const alreadySelected = selectedRequirements.includes(requirementId);
+    if (!alreadySelected && isMaxSelected) return;
+
+    const nextRequirements = alreadySelected
+      ? selectedRequirements.filter((id) => id !== requirementId)
+      : [...selectedRequirements, requirementId];
+
+    setFormData({
+      ...formData,
+      caretakerRequirements: nextRequirements,
+    });
+  };
+
+  const removeRequirement = (requirementId) => {
+    setFormData({
+      ...formData,
+      caretakerRequirements: selectedRequirements.filter((id) => id !== requirementId),
+    });
+  };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
-        <CardTitle as="h2" className="text-xl sm:text-2xl font-black text-slate-900">
-          {language === 'th' ? 'งบประมาณและรายละเอียดเพิ่มเติม' : 'Budget & Final Details'}
+    <div className="h-full min-h-0 space-y-[1.15dvh] sm:h-auto sm:space-y-6">
+      <div className="space-y-[0.25dvh] sm:space-y-1">
+        <CardTitle as="h2" className="text-[clamp(1rem,4.8vw,1.22rem)] font-black leading-tight text-slate-900 sm:text-2xl">
+          {language === 'th' ? 'ต้องการผู้ดูแลแบบไหน' : 'Caretaker Preferences'}
         </CardTitle>
-        <p className="text-sm text-slate-500">
+        <p className="text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-tight text-slate-500 sm:text-sm">
           {language === 'th'
-            ? 'กำหนดอัตราที่ต้องการ และเพิ่มข้อความถึงผู้ดูแลโดยตรง'
-            : 'Set your rate and add a personal message to the caretaker.'}
+            ? 'เลือกข้อจำกัดที่สำคัญ เพื่อให้เราแนะนำผู้ดูแลได้ตรงขึ้น'
+            : 'Choose important constraints so we can recommend a better match.'}
         </p>
       </div>
 
-      {/* Budget Slider */}
-      <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-sky-50/40 border border-slate-200/80 p-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-            <DollarSign className="w-4 h-4 text-emerald-600" />
-            {language === 'th' ? 'ค่าตอบแทนสูงสุด (บาท/ชั่วโมง)' : 'Max Rate (THB/hr)'}
-          </label>
-          <span className="text-xl font-black text-emerald-600">
-            ฿{formData.budgetMax || 500}
-            <span className="text-xs font-bold text-slate-400 ml-1">
-              / {language === 'th' ? 'ชม.' : 'hr'}
-            </span>
-          </span>
-        </div>
-
-        <input
-          type="range"
-          min={300}
-          max={1000}
-          step={25}
-          value={formData.budgetMax || 500}
-          onChange={(e) => setFormData({ ...formData, budgetMax: Number(e.target.value) })}
-          className="w-full h-2.5 rounded-full accent-emerald-500 cursor-pointer"
-        />
-
-        <div className="flex justify-between text-[11px] text-slate-400 font-medium">
-          <span>฿300</span>
-          <span className="text-slate-500">{language === 'th' ? 'เฉลี่ย ฿350–500/ชม.' : 'Avg ฿350–500/hr'}</span>
-          <span>฿1,000</span>
-        </div>
-
-        {/* Estimated total */}
-        <div className="flex items-center justify-between rounded-xl bg-white border border-emerald-100 px-4 py-3 shadow-xs">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-500" />
-            <span className="text-sm font-bold text-slate-700">
-              {language === 'th' ? `ค่าใช้จ่ายรวมประมาณ (${formData.durationHours || 4} ชม.)` : `Estimated Total (${formData.durationHours || 4} hrs)`}
-            </span>
-          </div>
-          <span className="text-base font-black text-emerald-600">
-            ฿{totalEst.toLocaleString()}
-          </span>
-        </div>
-      </div>
-
-      {/* Gender Preference */}
-      <div className="space-y-2.5">
-        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-          <Users className="w-4 h-4 text-purple-500" />
-          {language === 'th' ? 'เพศของผู้ดูแลที่ต้องการ' : 'Caretaker Gender Preference'}
+      <div className="space-y-[0.75dvh] sm:space-y-2.5">
+        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+          <Users className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
+          {language === 'th' ? 'เพศของผู้ดูแล' : 'Caretaker gender'}
         </label>
-        <div className="grid grid-cols-3 gap-2.5">
-          {GENDERS.map((g) => {
-            const isSelected = formData.genderPref === g.id;
+        <div className="grid grid-cols-3 gap-[1.8vw] sm:gap-2.5">
+          {GENDERS.map((gender) => {
+            const isSelected = formData.genderPref === gender.id;
             return (
               <button
-                key={g.id}
+                key={gender.id}
                 type="button"
-                onClick={() => setFormData({ ...formData, genderPref: g.id })}
-                className={`rounded-2xl border py-3 text-sm font-bold transition-all cursor-pointer text-center ${
+                onClick={() => setFormData({ ...formData, genderPref: gender.id })}
+                className={`h-[4.8dvh] rounded-[min(3.4vw,0.85rem)] border text-[clamp(0.62rem,2.75vw,0.74rem)] font-black transition-all active:scale-[0.985] sm:h-auto sm:rounded-2xl sm:py-3 sm:text-sm ${
                   isSelected
-                    ? 'bg-sky-500 text-white border-sky-500 shadow-sm ring-2 ring-sky-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                    ? 'border-sky-500 bg-sky-500 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500/20'
+                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                {language === 'th' ? g.th : g.en}
+                {language === 'th' ? gender.th : gender.en}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Notes for caretaker */}
-      <div className="space-y-2.5">
-        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-          <FileText className="w-4 h-4 text-slate-500" />
-          {language === 'th' ? 'ข้อความถึงผู้ดูแล (ถ้ามี)' : 'Message to Caretaker (optional)'}
+      <div className="min-h-0 space-y-[0.7dvh] sm:space-y-2.5">
+        <div className="flex items-center justify-between gap-2">
+          <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+            <ShieldCheck className="h-[1.8dvh] w-[1.8dvh] text-emerald-500 sm:h-4 sm:w-4" />
+            {language === 'th' ? 'ข้อจำกัดเกี่ยวกับผู้ดูแล' : 'Caretaker constraints'}
+          </label>
+          <span className="rounded-full bg-slate-100 px-[2vw] py-[0.35dvh] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black text-slate-500">
+            {selectedRequirements.length}/{MAX_REQUIREMENTS}
+          </span>
+        </div>
+
+        <div className="min-h-[3.1dvh] rounded-[min(3.2vw,0.8rem)] bg-slate-50 px-[2vw] py-[0.55dvh] ring-1 ring-slate-100 sm:rounded-2xl sm:p-2">
+          {selectedRequirementMetas.length > 0 ? (
+            <div className="flex flex-wrap gap-[1vw] sm:gap-1.5">
+              {selectedRequirementMetas.map((requirement) => (
+                <span
+                  key={requirement.id}
+                  className="inline-flex h-[2.55dvh] items-center gap-[0.8vw] rounded-full bg-white px-[1.8vw] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black text-emerald-800 shadow-sm ring-1 ring-emerald-100 sm:h-7 sm:gap-1 sm:px-2.5 sm:text-xs"
+                >
+                  {getEnumLabel(requirement, language, 'shortLabel')}
+                  <button
+                    type="button"
+                    aria-label={`${language === 'th' ? 'ลบ' : 'Remove'} ${getEnumLabel(requirement, language, 'shortLabel')}`}
+                    onClick={() => removeRequirement(requirement.id)}
+                    className="grid h-[1.75dvh] w-[1.75dvh] place-items-center rounded-full bg-emerald-50 text-emerald-700 active:scale-95 sm:h-5 sm:w-5"
+                  >
+                    <X className="h-[1.05dvh] w-[1.05dvh] sm:h-3 sm:w-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="block text-[clamp(0.5rem,2.15vw,0.6rem)] font-bold text-slate-400 sm:text-xs">
+              {language === 'th' ? 'ยังไม่ได้เลือกข้อจำกัด' : 'No constraints selected'}
+            </span>
+          )}
+        </div>
+
+        <div
+          className="grid max-h-[13.2dvh] grid-cols-2 gap-[1.6vw] overflow-y-auto rounded-[min(3.6vw,0.9rem)] bg-white pr-[1vw] ring-1 ring-slate-100 sm:max-h-56 sm:gap-2.5 sm:rounded-2xl sm:p-1"
+          aria-label={language === 'th' ? 'รายการข้อจำกัดเกี่ยวกับผู้ดูแล' : 'Caretaker constraint options'}
+        >
+          {caretakerRequirementOptions.map((requirement) => {
+            const isSelected = selectedRequirements.includes(requirement.id);
+            const isDisabled = !isSelected && isMaxSelected;
+            return (
+              <button
+                key={requirement.id}
+                type="button"
+                disabled={isDisabled}
+                onClick={() => toggleRequirement(requirement.id)}
+                className={`relative flex min-h-[3.85dvh] items-center justify-center rounded-[min(3vw,0.75rem)] border px-[1.6vw] text-center text-[clamp(0.49rem,2.12vw,0.6rem)] font-black leading-tight transition-all active:scale-[0.985] sm:min-h-12 sm:rounded-2xl sm:px-3 sm:py-3 sm:text-sm ${
+                  isSelected
+                    ? 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm ring-2 ring-emerald-500/15'
+                    : isDisabled
+                    ? 'border-slate-100 bg-slate-50 text-slate-300'
+                    : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-white'
+                }`}
+              >
+                {isSelected && (
+                  <CheckCircle2 className="absolute right-[1.4vw] top-[0.55dvh] h-[1.45dvh] w-[1.45dvh] text-emerald-600 sm:h-4 sm:w-4" />
+                )}
+                {getEnumLabel(requirement, language, 'label')}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="space-y-[0.75dvh] sm:space-y-2.5">
+        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+          <FileText className="h-[1.8dvh] w-[1.8dvh] text-slate-500 sm:h-4 sm:w-4" />
+          {language === 'th' ? 'บอกผู้ดูแลเพิ่มเติม' : 'Caretaker note'}
         </label>
         <textarea
-          rows={4}
+          rows={3}
           value={formData.notes || ''}
-          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+          onChange={(event) => setFormData({ ...formData, notes: event.target.value })}
           placeholder={
             language === 'th'
-              ? 'เช่น "คุณแม่เดินช้า กรุณาอดทนรอ ชอบคุยเรื่องบุญและวัด ไม่ชอบอากาศร้อน..." '
-              : 'e.g. "Mom walks slowly, please be patient. She enjoys talking about Buddhism and dislikes heat..."'
+              ? 'เช่น คุณแม่เดินช้า ชอบคุยเบา ๆ และไม่ชอบที่ร้อนมาก'
+              : 'e.g. Mom walks slowly and prefers calm conversation.'
           }
-          className="w-full rounded-2xl border border-slate-200 bg-white p-3.5 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 resize-none leading-relaxed"
+          className="h-[9.4dvh] w-full resize-none rounded-[min(3.8vw,0.95rem)] border border-slate-200 bg-white px-[3vw] py-[1.05dvh] text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-snug text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3.5 sm:text-sm"
         />
-        <p className="text-[11px] text-slate-400">
+      </div>
+
+      <div className="flex items-center gap-[2vw] rounded-[min(3.8vw,0.95rem)] bg-sky-50 px-[3vw] py-[0.9dvh] text-[clamp(0.56rem,2.45vw,0.68rem)] font-bold leading-tight text-sky-800 ring-1 ring-sky-100 sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">
+        <UserCheck className="h-[1.9dvh] w-[1.9dvh] shrink-0 text-sky-600 sm:h-4 sm:w-4" />
+        <span>
           {language === 'th'
-            ? 'ข้อความนี้จะส่งให้ผู้ดูแลอ่านก่อนรับงาน'
-            : 'This message will be shared with the caretaker before they accept.'}
-        </p>
+            ? 'ข้อมูลนี้ใช้กรองผู้ดูแลก่อนส่งผลลัพธ์'
+            : 'These preferences filter caretaker results before matching.'}
+        </span>
       </div>
     </div>
   );

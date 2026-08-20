@@ -64,6 +64,8 @@ export default function FindCaretakerPage() {
     activityType: searchCriteria?.activityType || APPOINTMENT_EVENTS.HOSPITAL,
     date: searchCriteria?.date || new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0],
     timeSlot: searchCriteria?.timeSlot || 'morning',
+    startTime: searchCriteria?.startTime || '08:00',
+    endTime: searchCriteria?.endTime || '12:00',
     durationHours: searchCriteria?.durationHours || 4,
     pickupAddress: searchCriteria?.pickupAddress || elderAddress || '',
     destination: searchCriteria?.destination || elderHospital || '',
@@ -77,6 +79,7 @@ export default function FindCaretakerPage() {
     religion: 'Buddhism',
     dietary: 'low_sodium',
     genderPref: searchCriteria?.genderPref || 'any',
+    caretakerRequirements: searchCriteria?.caretakerRequirements || [],
   });
 
   useEffect(() => {
@@ -118,27 +121,24 @@ export default function FindCaretakerPage() {
   }
 
   return (
-    <div data-testid="page-find" className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6 lg:py-10">
+    <div
+      data-testid="page-find"
+      className="h-full max-h-full w-full overflow-hidden bg-slate-100 px-[4.1vw] py-[1.35dvh] sm:mx-auto sm:h-auto sm:max-h-none sm:max-w-3xl sm:overflow-visible sm:bg-transparent sm:px-6 sm:py-6 lg:py-10"
+    >
+      <div className="grid h-full min-h-0 grid-rows-[auto_auto_auto_1fr] gap-[1dvh] sm:block">
 
       {/* ── Page Header ── */}
-      <div className="mb-6 space-y-1">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-600">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>AI Matching</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-          {language === 'th' ? 'ค้นหาผู้ดูแลให้ใคร?' : 'Who are we finding a caretaker for?'}
-        </h1>
-        <p className="text-sm text-slate-500">
+      <div className="sm:mb-6">
+        <h1 className="text-[clamp(1.18rem,5.4vw,1.42rem)] font-black leading-tight text-slate-900 sm:text-3xl">
           {language === 'th'
-            ? 'ข้อมูลสุขภาพของผู้สูงอายุถูกโหลดจากโปรไฟล์แล้ว บอกแค่รายละเอียดการออกไปข้างนอก'
-            : "Elder's health info is loaded from their profile. Just tell us about the outing."}
-        </p>
+            ? `วันนี้${elderNickname || elderName}มีนัดอะไร`
+            : `What is ${elderNickname || elderName}'s appointment today?`}
+        </h1>
       </div>
 
       {/* ── Elder Profile Card ── */}
-      <div className="mb-6 rounded-2xl bg-white ring-1 ring-slate-200/80 shadow-sm overflow-hidden">
-        <div className="flex items-center gap-4 p-4 sm:p-5">
+      <div className="overflow-hidden rounded-[min(4.6vw,1.15rem)] bg-white shadow-sm ring-1 ring-slate-200/80 sm:mb-6 sm:rounded-2xl">
+        <div className="flex items-center gap-[2.8vw] p-[2.8vw] sm:gap-4 sm:p-5">
           {/* Avatar */}
           <div className="shrink-0">
             {elderPhoto ? (
@@ -146,13 +146,13 @@ export default function FindCaretakerPage() {
                 src={elderPhoto}
                 alt={elderName}
                 onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = ''; e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover ring-2 ring-sky-100 shadow-sm"
+                className="aspect-square h-[7.3dvh] max-h-16 min-h-12 rounded-[min(3.2vw,0.8rem)] object-cover ring-2 ring-sky-100 shadow-sm sm:h-20 sm:w-20 sm:rounded-2xl"
               />
             ) : null}
             <div
-              className={`h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-br from-sky-100 to-teal-100 items-center justify-center ring-2 ring-sky-100 shadow-sm ${elderPhoto ? 'hidden' : 'flex'}`}
+              className={`aspect-square h-[7.3dvh] max-h-16 min-h-12 items-center justify-center rounded-[min(3.2vw,0.8rem)] bg-gradient-to-br from-sky-100 to-teal-100 shadow-sm ring-2 ring-sky-100 sm:h-20 sm:w-20 sm:rounded-2xl ${elderPhoto ? 'hidden' : 'flex'}`}
             >
-              <User className="w-8 h-8 text-sky-400" />
+              <User className="h-[3.2dvh] w-[3.2dvh] text-sky-400 sm:h-8 sm:w-8" />
             </div>
           </div>
 
@@ -160,32 +160,32 @@ export default function FindCaretakerPage() {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="text-base sm:text-lg font-black text-slate-900 truncate">{elderName}</p>
-                <p className="text-sm text-slate-500">
+                <p className="truncate text-[clamp(0.82rem,3.7vw,0.96rem)] font-black leading-tight text-slate-900 sm:text-lg">{elderName}</p>
+                <p className="text-[clamp(0.58rem,2.55vw,0.7rem)] font-semibold leading-tight text-slate-500 sm:text-sm">
                   {elderNickname && `"${elderNickname}" · `}
                   {elderAge} {language === 'th' ? 'ปี' : 'years old'}
                 </p>
               </div>
               <Link
                 to="/elder-profile"
-                className="shrink-0 flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+                className="flex shrink-0 items-center gap-[1vw] rounded-full border border-slate-200 px-[2vw] py-[0.45dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-slate-600 transition-colors hover:bg-slate-50 sm:gap-1.5 sm:rounded-xl sm:px-3 sm:py-1.5 sm:text-xs"
               >
-                <Edit3 className="w-3.5 h-3.5" />
+                <Edit3 className="h-[1.45dvh] w-[1.45dvh] sm:h-3.5 sm:w-3.5" />
                 {language === 'th' ? 'แก้ไข' : 'Edit'}
               </Link>
             </div>
 
             {/* Mobility + Conditions */}
-            <div className="mt-2.5 flex flex-wrap gap-1.5">
-              <span className="inline-flex items-center gap-1 rounded-lg bg-sky-50 border border-sky-200 px-2 py-0.5 text-xs font-bold text-sky-700">
-                <MobilityIcon className="w-3.5 h-3.5" />
+            <div className="mt-[0.7dvh] flex flex-wrap gap-[1vw] sm:mt-2.5 sm:gap-1.5">
+              <span className="inline-flex items-center gap-[0.8vw] rounded-full border border-sky-200 bg-sky-50 px-[1.7vw] py-[0.32dvh] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black leading-none text-sky-700 sm:gap-1 sm:rounded-lg sm:px-2 sm:py-0.5 sm:text-xs">
+                <MobilityIcon className="h-[1.3dvh] w-[1.3dvh] sm:h-3.5 sm:w-3.5" />
                 {mobilityLabel}
               </span>
               {elderConditions.filter(c => c !== 'none').map((cond) => {
                 const conditionMeta = getMedicalConditionMeta(cond);
                 return (
-                  <span key={cond} className="inline-flex items-center gap-1 rounded-lg bg-rose-50 border border-rose-200 px-2 py-0.5 text-xs font-bold text-rose-700">
-                    <HeartPulse className="w-3 h-3" />
+                  <span key={cond} className="inline-flex items-center gap-[0.8vw] rounded-full border border-rose-200 bg-rose-50 px-[1.7vw] py-[0.32dvh] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black leading-none text-rose-700 sm:gap-1 sm:rounded-lg sm:px-2 sm:py-0.5 sm:text-xs">
+                    <HeartPulse className="h-[1.2dvh] w-[1.2dvh] sm:h-3 sm:w-3" />
                     {getEnumLabel(conditionMeta, language, 'shortLabel') || cond}
                   </span>
                 );
@@ -195,7 +195,7 @@ export default function FindCaretakerPage() {
         </div>
 
         {/* Subtle divider + note */}
-        <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 sm:px-5">
+        <div className="hidden border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 sm:block sm:px-5">
           <p className="text-[11px] text-slate-400 font-medium">
             <span className="text-emerald-600 font-bold">✓ </span>
             {language === 'th'
@@ -206,14 +206,14 @@ export default function FindCaretakerPage() {
       </div>
 
       {/* ── Step Indicator ── */}
-      <div className="mb-5">
+      <div className="sm:mb-5">
         <StepIndicator currentStep={currentStep} onStepClick={handleStepClick} />
       </div>
 
       {/* ── Step Content ── */}
-      <Card className="rounded-2xl border-0 bg-white shadow-sm ring-1 ring-slate-200/80">
-        <CardContent className="p-5 sm:p-7 lg:p-8">
-          <div className="space-y-6">
+      <Card className="min-h-0 overflow-hidden rounded-[min(5vw,1.25rem)] border-0 bg-white shadow-sm ring-1 ring-slate-200/80 sm:overflow-visible sm:rounded-2xl">
+        <CardContent className="flex h-full min-h-0 flex-col p-[3.2vw] sm:block sm:p-7 lg:p-8">
+          <div className="min-h-0 flex-1 overflow-hidden sm:overflow-visible">
             {currentStep === 1 && (
               <Step1Activity formData={formData} setFormData={setFormData} elder={elder} />
             )}
@@ -226,7 +226,7 @@ export default function FindCaretakerPage() {
           </div>
 
           {/* ── Wizard Nav ── */}
-          <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
+          <div className="mt-[1.2dvh] flex shrink-0 items-center justify-between border-t border-slate-100 pt-[1.2dvh] sm:mt-8 sm:pt-5">
             {currentStep > 1 ? (
               <Button
                 type="button"
@@ -247,7 +247,7 @@ export default function FindCaretakerPage() {
                 variant="primary"
                 onClick={handleNext}
                 rightIcon={<ArrowRight className="w-4 h-4" />}
-                className="cursor-pointer font-bold px-6"
+                className="h-[4.7dvh] cursor-pointer px-6 text-[clamp(0.66rem,2.9vw,0.78rem)] font-black sm:h-auto sm:text-sm"
               >
                 {t('common.next', 'ถัดไป')}
               </Button>
@@ -266,6 +266,7 @@ export default function FindCaretakerPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

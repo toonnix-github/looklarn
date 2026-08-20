@@ -3,36 +3,90 @@ import { useLanguage } from '../../context/LanguageContext';
 import { CardTitle } from '../ui/Card';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
-const TIME_SLOTS = [
-  { id: 'morning',   th: 'ช่วงเช้า', en: 'Morning',   range: '08:00 – 12:00' },
-  { id: 'afternoon', th: 'ช่วงบ่าย', en: 'Afternoon', range: '13:00 – 17:00' },
-  { id: 'evening',   th: 'ช่วงเย็น', en: 'Evening',   range: '17:00 – 21:00' },
-  { id: 'full_day',  th: 'เต็มวัน',  en: 'Full Day',  range: '08:00 – 17:00' },
-];
+const DEFAULT_START_BY_SLOT = {
+  morning: '08:00',
+  afternoon: '13:00',
+  evening: '17:00',
+  full_day: '08:00',
+};
 
-const DURATIONS = [2, 3, 4, 6, 8];
+const TIME_OPTIONS = Array.from({ length: 29 }, (_, index) => {
+  const minutes = 7 * 60 + index * 30;
+  return {
+    value: `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`,
+    label: `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`,
+  };
+});
+
+const timeToMinutes = (time) => {
+  const [hours = 0, minutes = 0] = String(time || '00:00').split(':').map(Number);
+  return hours * 60 + minutes;
+};
+
+const minutesToTime = (totalMinutes) => {
+  const normalized = Math.max(0, Math.min(23 * 60 + 59, totalMinutes));
+  const hours = String(Math.floor(normalized / 60)).padStart(2, '0');
+  const minutes = String(normalized % 60).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
+const addHours = (time, hours) => minutesToTime(timeToMinutes(time) + hours * 60);
+
+const calculateDurationHours = (startTime, endTime) => {
+  const diff = timeToMinutes(endTime) - timeToMinutes(startTime);
+  return diff > 0 ? Math.round((diff / 60) * 10) / 10 : 0;
+};
 
 export default function Step2Schedule({ formData, setFormData }) {
   const { language } = useLanguage();
+  const startTime = formData.startTime || DEFAULT_START_BY_SLOT[formData.timeSlot] || '08:00';
+  const endTime = formData.endTime || addHours(startTime, formData.durationHours || 4);
+  const durationHours = calculateDurationHours(startTime, endTime);
+  const durationLabel = durationHours > 0
+    ? `${durationHours} ${language === 'th' ? 'ชม.' : durationHours === 1 ? 'hr' : 'hrs'}`
+    : language === 'th' ? 'กรุณาเลือกเวลาจบหลังเวลาเริ่ม' : 'End time must be after start time';
+
+  const updateTimeRange = (nextStart, nextEnd) => {
+    const nextDurationHours = calculateDurationHours(nextStart, nextEnd);
+    setFormData({
+      ...formData,
+      startTime: nextStart,
+      endTime: nextEnd,
+      timeSlot: `${nextStart} - ${nextEnd}`,
+      durationHours: nextDurationHours || formData.durationHours || 1,
+    });
+  };
+
+  const handleStartChange = (value) => {
+    const currentEnd = formData.endTime || endTime;
+    const nextEnd = timeToMinutes(currentEnd) > timeToMinutes(value)
+      ? currentEnd
+      : addHours(value, Math.max(formData.durationHours || 4, 1));
+    updateTimeRange(value, nextEnd);
+  };
+
+  const handleEndChange = (value) => {
+    updateTimeRange(startTime, value);
+  };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
-        <CardTitle as="h2" className="text-xl sm:text-2xl font-black text-slate-900">
+    <div className="h-full min-h-0 space-y-[1.2dvh] sm:h-auto sm:space-y-6">
+      <div className="space-y-[0.25dvh] sm:space-y-1">
+        <CardTitle as="h2" className="text-[clamp(1rem,4.8vw,1.22rem)] font-black leading-tight text-slate-900 sm:text-2xl">
           {language === 'th' ? 'นัดหมายวันและสถานที่' : 'Schedule & Location'}
         </CardTitle>
-        <p className="text-sm text-slate-500">
+        <p className="text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-tight text-slate-500 sm:text-sm">
           {language === 'th'
-            ? 'กำหนดวันที่ เวลา และสถานที่สำหรับการออกไปครั้งนี้'
+            ? 'เลือกวัน เวลาเริ่ม-จบ แล้วใส่จุดรับกับปลายทาง'
             : 'Set the date, time, and locations for this outing.'}
         </p>
       </div>
 
-      {/* Date + Duration */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Date + Time Range */}
+      <div className="grid grid-cols-1 gap-[1dvh] sm:grid-cols-2 sm:gap-4">
         <div className="space-y-2">
-          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-            <Calendar className="w-4 h-4 text-sky-500" />
+          <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+            <Calendar className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
             {language === 'th' ? 'วันที่รับบริการ' : 'Date'}
           </label>
           <input
@@ -40,71 +94,63 @@ export default function Step2Schedule({ formData, setFormData }) {
             value={formData.date || ''}
             min={new Date().toISOString().split('T')[0]}
             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.68rem,3vw,0.8rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-            <Clock className="w-4 h-4 text-emerald-500" />
-            {language === 'th' ? 'ระยะเวลาที่ต้องการ (ชั่วโมง)' : 'Duration (hours)'}
-          </label>
-          <div className="flex gap-2">
-            {DURATIONS.map((hrs) => (
-              <button
-                key={hrs}
-                type="button"
-                onClick={() => setFormData({ ...formData, durationHours: hrs })}
-                className={`flex-1 rounded-xl border py-2.5 text-sm font-bold transition-all cursor-pointer ${
-                  formData.durationHours === hrs
-                    ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm ring-2 ring-emerald-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                {hrs}
-                <span className="text-[10px] font-normal ml-0.5">
-                  {language === 'th' ? 'ชม.' : 'hr'}
-                </span>
-              </button>
-            ))}
+        <div className="grid grid-cols-[1fr_1fr] gap-[2vw] sm:gap-3">
+          <div className="space-y-2">
+            <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+              <Clock className="h-[1.8dvh] w-[1.8dvh] text-emerald-500 sm:h-4 sm:w-4" />
+              {language === 'th' ? 'เริ่ม' : 'Start'}
+            </label>
+            <select
+              value={startTime}
+              onChange={(e) => handleStartChange(e.target.value)}
+              className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.72rem,3.2vw,0.86rem)] font-black text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
+            >
+              {TIME_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+              <Clock className="h-[1.8dvh] w-[1.8dvh] text-rose-500 sm:h-4 sm:w-4" />
+              {language === 'th' ? 'จบ' : 'End'}
+            </label>
+            <select
+              value={endTime}
+              onChange={(e) => handleEndChange(e.target.value)}
+              className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.72rem,3.2vw,0.86rem)] font-black text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
+            >
+              {TIME_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
 
-      {/* Time Slot */}
-      <div className="space-y-2">
-        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-          <Clock className="w-4 h-4 text-sky-500" />
-          {language === 'th' ? 'ช่วงเวลาที่สะดวก' : 'Preferred Time'}
-        </label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          {TIME_SLOTS.map((slot) => {
-            const isSelected = formData.timeSlot === slot.id;
-            return (
-              <button
-                key={slot.id}
-                type="button"
-                onClick={() => setFormData({ ...formData, timeSlot: slot.id })}
-                className={`flex flex-col items-center gap-0.5 rounded-2xl border p-3 text-center transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-sky-500 text-white border-sky-500 shadow-sm ring-2 ring-sky-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-sm font-black">{language === 'th' ? slot.th : slot.en}</span>
-                <span className={`text-[11px] font-medium ${isSelected ? 'text-sky-100' : 'text-slate-400'}`}>
-                  {slot.range}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+      <div className={`flex items-center justify-between rounded-[min(3.8vw,0.95rem)] px-[3vw] py-[1dvh] ring-1 sm:rounded-2xl sm:px-4 sm:py-3 ${
+        durationHours > 0 ? 'bg-emerald-50 text-emerald-800 ring-emerald-100' : 'bg-rose-50 text-rose-700 ring-rose-100'
+      }`}>
+        <span className="text-[clamp(0.62rem,2.75vw,0.74rem)] font-black sm:text-sm">
+          {language === 'th' ? 'สรุประยะเวลา' : 'Total duration'}
+        </span>
+        <span className="text-[clamp(0.72rem,3.2vw,0.86rem)] font-black">
+          {durationLabel}
+        </span>
       </div>
 
       {/* Pickup Address */}
       <div className="space-y-2">
-        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-          <MapPin className="w-4 h-4 text-sky-500" />
+        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+          <MapPin className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'จุดรับ (บ้านหรือสถานที่ปัจจุบัน)' : 'Pickup Location'}
         </label>
         <input
@@ -112,14 +158,14 @@ export default function Step2Schedule({ formData, setFormData }) {
           value={formData.pickupAddress || ''}
           onChange={(e) => setFormData({ ...formData, pickupAddress: e.target.value })}
           placeholder={language === 'th' ? 'เช่น 128/4 ซอยสุขุมวิท 39 เขตวัฒนา กรุงเทพฯ' : 'e.g. 128/4 Sukhumvit 39, Bangkok'}
-          className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.66rem,2.9vw,0.78rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
         />
       </div>
 
       {/* Destination */}
       <div className="space-y-2">
-        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
-          <MapPin className="w-4 h-4 text-rose-500" />
+        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+          <MapPin className="h-[1.8dvh] w-[1.8dvh] text-rose-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'สถานที่ปลายทาง' : 'Destination'}
         </label>
         <input
@@ -127,7 +173,7 @@ export default function Step2Schedule({ formData, setFormData }) {
           value={formData.destination || ''}
           onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
           placeholder={language === 'th' ? 'เช่น โรงพยาบาลศิริราช, วัดพระแก้ว' : 'e.g. Siriraj Hospital, Wat Phra Kaew'}
-          className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.66rem,2.9vw,0.78rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
         />
       </div>
     </div>

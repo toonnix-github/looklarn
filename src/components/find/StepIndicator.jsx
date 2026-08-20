@@ -6,12 +6,12 @@ const STEPS = {
   th: [
     { number: 1, label: 'ไปไหน?' },
     { number: 2, label: 'วันเวลา & สถานที่' },
-    { number: 3, label: 'งบประมาณ' },
+    { number: 3, label: 'ผู้ดูแล' },
   ],
   en: [
     { number: 1, label: 'Activity' },
     { number: 2, label: 'Schedule & Location' },
-    { number: 3, label: 'Budget' },
+    { number: 3, label: 'Caretaker' },
   ],
 };
 
@@ -21,9 +21,9 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
   const progressPercent = currentStep === 1 ? '33.33%' : currentStep === 2 ? '66.66%' : '100%';
 
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={`space-y-[0.7dvh] sm:space-y-3 ${className}`}>
       {/* Progress bar */}
-      <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+      <div className="h-[0.55dvh] w-full overflow-hidden rounded-full bg-slate-200 sm:h-1.5">
         <div
           className="h-full bg-gradient-to-r from-sky-500 to-emerald-500 rounded-full transition-all duration-500 ease-out"
           style={{ width: progressPercent }}
@@ -31,7 +31,7 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
       </div>
 
       {/* Step pills */}
-      <div className="flex gap-2">
+      <div className="flex gap-[1.6vw] sm:gap-2">
         {steps.map((step) => {
           const isActive = currentStep === step.number;
           const isCompleted = currentStep > step.number;
@@ -40,7 +40,7 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
               key={step.number}
               type="button"
               onClick={() => onStepClick?.(step.number)}
-              className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl border px-2 py-2 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex flex-1 items-center justify-center gap-[1vw] rounded-[min(3.2vw,0.8rem)] border px-[1.8vw] py-[0.75dvh] text-[clamp(0.54rem,2.35vw,0.66rem)] font-black transition-all cursor-pointer sm:gap-1.5 sm:rounded-xl sm:px-2 sm:py-2 sm:text-xs ${
                 isActive
                   ? 'bg-sky-500 text-white border-sky-500 shadow-md shadow-sky-500/20 ring-2 ring-sky-500/20'
                   : isCompleted
@@ -49,8 +49,8 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
               }`}
             >
               {isCompleted
-                ? <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                : <span className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-black shrink-0 ${isActive ? 'bg-white/30' : 'bg-slate-200 text-slate-600'}`}>{step.number}</span>
+                ? <Check className="h-[1.65dvh] w-[1.65dvh] shrink-0 text-emerald-600 sm:h-3.5 sm:w-3.5" />
+                : <span className={`inline-flex h-[2.15dvh] w-[2.15dvh] shrink-0 items-center justify-center rounded-full text-[clamp(0.46rem,1.9vw,0.56rem)] font-black sm:h-4 sm:w-4 sm:text-[10px] ${isActive ? 'bg-white/30' : 'bg-slate-200 text-slate-600'}`}>{step.number}</span>
               }
               <span className="truncate">{step.label}</span>
             </button>

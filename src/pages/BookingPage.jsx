@@ -31,11 +31,13 @@ export default function BookingPage() {
   const [hours, setHours] = useState(searchCriteria?.durationHours || 4);
   const [serviceDate] = useState(searchCriteria?.date || '2026-08-28');
   const [timeSlot] = useState(
-    searchCriteria?.timeSlot === 'morning'
+    searchCriteria?.startTime && searchCriteria?.endTime
+      ? `${searchCriteria.startTime} - ${searchCriteria.endTime}`
+      : searchCriteria?.timeSlot === 'morning'
       ? '08:30 - 12:30'
       : searchCriteria?.timeSlot === 'afternoon'
       ? '13:00 - 17:00'
-      : '08:30 - 12:30'
+      : searchCriteria?.timeSlot || '08:30 - 12:30'
   );
   const [activityType] = useState(searchCriteria?.activityType || APPOINTMENT_EVENTS.HOSPITAL);
   const [paymentMethod, setPaymentMethod] = useState('promptpay');
