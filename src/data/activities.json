@@ -1,0 +1,86 @@
+[
+  {
+    "id": "act-hospital",
+    "type": "hospital",
+    "title": { "th": "พาพบแพทย์ & โรงพยาบาล", "en": "Hospital & Medical Escort" },
+    "subtitle": { "th": "ยอดนิยมอันดับ 1", "en": "Most Popular #1" },
+    "description": {
+      "th": "ช่วยเข็นวีลแชร์ รอคิวพบแพทย์ จดบันทึกคำสั่งแพทย์ ประสานงานรับยา และพาเดินทางกลับบ้านอย่างปลอดภัย",
+      "en": "Dedicated wheelchair assistance, OPD queue management, doctor instruction notes, and safe pharmacy pickup."
+    },
+    "priceEstimate": { "th": "฿350 - ฿500 / ชม.", "en": "฿350 - ฿500 / hr" },
+    "avgDuration": { "th": "3 - 5 ชั่วโมง", "en": "3 - 5 Hours" },
+    "icon": "Stethoscope",
+    "badgeColor": "bg-sky-100 text-sky-700 border-sky-200",
+    "gradient": "from-sky-500 to-blue-600",
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80",
+    "highlights": [
+      { "th": "ผู้ช่วยพยาบาล & ผู้ผ่านการอบรม", "en": "Certified nurse assistants" },
+      { "th": "จดรายงานพบแพทย์ส่งผู้ปกครอง", "en": "Detailed medical notes for guardians" },
+      { "th": "เชี่ยวชาญขั้นตอนทางการแพทย์", "en": "Familiar with medical procedures" }
+    ]
+  },
+  {
+    "id": "act-temple",
+    "type": "temple",
+    "title": { "th": "ไหว้พระ ทำบุญ & นันทนาการ", "en": "Temple & Merit Outing" },
+    "subtitle": { "th": "อิ่มบุญ สุขใจ", "en": "Spiritual & Peaceful" },
+    "description": {
+      "th": "พาเดินทางไปสักการะสิ่งศักดิ์สิทธิ์ตามวัดสำคัญ ช่วยพยุงขึ้นบันได ถวายสังฆทาน และดูแลความปลอดภัยอย่างใกล้ชิด",
+      "en": "Escort to sacred Buddhist sites, merit-making assistance, stairway support, and serene spiritual accompaniment."
+    },
+    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "avgDuration": { "th": "2 - 4 ชั่วโมง", "en": "2 - 4 Hours" },
+    "icon": "Sun",
+    "badgeColor": "bg-amber-100 text-amber-700 border-amber-200",
+    "gradient": "from-amber-500 to-yellow-600",
+    "image": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=600&auto=format&fit=crop&q=80",
+    "highlights": [
+      { "th": "ช่วยพยุงและเข็นวีลแชร์", "en": "Stairway & wheelchair assistance" },
+      { "th": "ดูแลเรื่องร่ม แดด และน้ำดื่ม", "en": "Sunshade and hydration care" },
+      { "th": "พาทำกิจกรรมอย่างสำรวมและสบายใจ", "en": "Respectful and patient guidance" }
+    ]
+  },
+  {
+    "id": "act-tour",
+    "type": "tour",
+    "title": { "th": "ท่องเที่ยว ชมเมือง & ช็อปปิ้ง", "en": "City Tour & Shopping" },
+    "subtitle": { "th": "สะดวก สบายใจ", "en": "Explore & Enjoy" },
+    "description": {
+      "th": "พาเดินชมสถานที่สำคัญ ซื้อของในห้างสรรพสินค้า ช่วยถือสัมภาระและอำนวยความสะดวกตลอดทริป",
+      "en": "Guided sightseeing, shopping assistance in air-conditioned malls, baggage carrying, and total convenience."
+    },
+    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "avgDuration": { "th": "2 - 5 ชั่วโมง", "en": "2 - 5 Hours" },
+    "icon": "ShoppingBag",
+    "badgeColor": "bg-teal-100 text-teal-700 border-teal-200",
+    "gradient": "from-teal-500 to-emerald-600",
+    "image": "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=600&auto=format&fit=crop&q=80",
+    "highlights": [
+      { "th": "ช่วยเข็นรถเข็นและถือถุงของ", "en": "Cart pushing & package handling" },
+      { "th": "เดินในพื้นที่ปรับอากาศเย็นสบาย", "en": "Comfortable indoor escort" },
+      { "th": "ดูแลความปลอดภัยในที่ชุมชน", "en": "Safe crowd and elevator navigation" }
+    ]
+  },
+  {
+    "id": "act-park",
+    "type": "park",
+    "title": { "th": "เดินเล่น สวนสาธารณะ & พักผ่อน", "en": "Park Stroll & Leisure" },
+    "subtitle": { "th": "สดชื่น แข็งแรง", "en": "Fresh Air & Vitality" },
+    "description": {
+      "th": "สูดอากาศบริสุทธิ์ ออกกำลังกายเบาๆ ช่วยพยุงและฟื้นฟูกล้ามเนื้ออย่างปลอดภัย",
+      "en": "Gentle outdoor mobility, guided exercise, and refreshing botanical strolls."
+    },
+    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "avgDuration": { "th": "2 - 4 ชั่วโมง", "en": "2 - 4 Hours" },
+    "icon": "Trees",
+    "badgeColor": "bg-emerald-100 text-emerald-700 border-emerald-200",
+    "gradient": "from-emerald-500 to-teal-600",
+    "image": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=600&auto=format&fit=crop&q=80",
+    "highlights": [
+      { "th": "ช่วยพยุงและเข็นวีลแชร์", "en": "Wheelchair & walking guide" },
+      { "th": "ชวนคุยสนุกสนาน สดชื่นไม่เหงา", "en": "Engaging, cheerful companionship" },
+      { "th": "ดูแลความปลอดภัยทุกย่างก้าว", "en": "Step-by-step gait & balance support" }
+    ]
+  }
+]

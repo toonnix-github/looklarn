@@ -1,0 +1,101 @@
+{
+  "id": "elder-001",
+  "name": {
+    "th": "นางสมพร ใจดี",
+    "en": "Grandma Somporn Jaidee"
+  },
+  "nickname": {
+    "th": "ยายพร",
+    "en": "Grandma Porn"
+  },
+  "age": 74,
+  "gender": "female",
+  "bloodType": "O+",
+  "photo": "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=500&auto=format&fit=crop&q=80",
+  "relationship": {
+    "th": "คุณแม่",
+    "en": "Mother"
+  },
+  "guardian": {
+    "name": {
+      "th": "นายธนกร ใจดี",
+      "en": "Thanakorn Jaidee"
+    },
+    "relationship": {
+      "th": "บุตรชาย",
+      "en": "Son"
+    },
+    "phone": "081-987-6543",
+    "email": "thanakorn.j@gmail.com"
+  },
+  "emergencyContact": {
+    "name": {
+      "th": "นายธนกร ใจดี",
+      "en": "Thanakorn Jaidee"
+    },
+    "relation": {
+      "th": "บุตรชาย",
+      "en": "Son"
+    },
+    "phone": "081-987-6543",
+    "secondaryPhone": "02-345-6789"
+  },
+  "address": {
+    "th": "128/4 ซอยสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110",
+    "en": "128/4 Sukhumvit 39, Khlong Tan Nuea, Watthana, Bangkok 10110"
+  },
+  "mobilityLevel": "wheelchair_assisted",
+  "mobilityText": {
+    "th": "ต้องการคนช่วยพยุง / ใช้วีลแชร์เมื่อเดินทางไกล",
+    "en": "Assisted walking / Wheelchair for long distances"
+  },
+  "medicalConditions": [
+    "hypertension",
+    "diabetes_type_2",
+    "knee_osteoarthritis"
+  ],
+  "medicalConditionsList": [
+    {
+      "th": "ความดันโลหิตสูง (ทานยาทุกเช้า)",
+      "en": "Hypertension (Morning Medication)"
+    },
+    {
+      "th": "เบาหวานชนิดที่ 2 (คุมอาหาร)",
+      "en": "Type 2 Diabetes (Diet Controlled)"
+    },
+    {
+      "th": "ข้อเข่าเสื่อมระยะเริ่มต้น (เดินช้าๆ)",
+      "en": "Early Stage Knee Osteoarthritis (Slow Walker)"
+    }
+  ],
+  "allergies": {
+    "th": "แพ้ยาเพนิซิลลิน (Penicillin), อาหารทะเลที่มีเปลือก",
+    "en": "Penicillin allergy, Shellfish"
+  },
+  "medications": {
+    "th": "Amlodipine 5mg (หลังอาหารเช้า 1 เม็ด), Metformin 500mg (หลังอาหารเช้า-เย็น)",
+    "en": "Amlodipine 5mg (1 tab post-breakfast), Metformin 500mg (post-breakfast & dinner)"
+  },
+  "preferredHospital": {
+    "th": "โรงพยาบาลศิริราช / โรงพยาบาลจุฬาลงกรณ์",
+    "en": "Siriraj Hospital / Chulalongkorn Hospital"
+  },
+  "hospitalHn": "HN-5948201",
+  "dietaryPreferences": {
+    "th": "อาหารรสอ่อน โซเดียมต่ำ หวานน้อย ไม่ทานเนื้อวัว ชอบดื่มน้ำอุ่น",
+    "en": "Low sodium, low sugar, no beef, prefers warm water"
+  },
+  "religion": {
+    "th": "พุทธ (ชอบสวดมนต์และไหว้พระตอนเช้า)",
+    "en": "Buddhism (Enjoys morning chanting and temple merit)"
+  },
+  "preferredLanguages": ["Thai", "Isan"],
+  "preferredDialect": {
+    "th": "ภาษาไทยกลาง / ภาษาอีสาน",
+    "en": "Central Thai / Isan Dialect"
+  },
+  "specialNotes": {
+    "th": "เดินได้เองระยะสั้น 50-100 เมตร หากเดินทางไกลต้องใช้วีลแชร์ ไม่ชอบที่อากาศร้อนจัดและเสียงดัง ชอบคนพูดจาเพราะและสุภาพ",
+    "en": "Can walk short distances (50-100m). Needs wheelchair for longer outings. Sensitive to heat and loud noise. Appreciates gentle and polite conversations."
+  }
+}

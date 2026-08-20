@@ -1,0 +1,343 @@
+[
+  {
+    "id": "ct-001",
+    "name": { "th": "สมชาย ประเสริฐ", "en": "Somchai Prasert" },
+    "nickname": { "th": "สมชาย", "en": "Somchai" },
+    "gender": "male",
+    "age": 34,
+    "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
+    "matchScore": 96,
+    "isBestMatch": true,
+    "tier": "specialist",
+    "tierName": {
+      "th": "ผู้เชี่ยวชาญพาพบแพทย์และประสานงาน รพ.",
+      "en": "Hospital Medical Escort Specialist"
+    },
+    "hourlyRate": 350,
+    "rating": 4.95,
+    "reviewsCount": 58,
+    "completedTrips": 142,
+    "experienceYears": 6,
+    "verifiedBadges": [
+      "criminal_record_checked",
+      "certified_caregiver",
+      "cpr_first_aid",
+      "hospital_escort_trained"
+    ],
+    "specialties": [
+      { "th": "พาพบแพทย์ & ประสานงานโรงพยาบาล", "en": "Hospital Escort & OPD Coordination" },
+      { "th": "ช่วยเหลือผู้ใช้วีลแชร์และพยุงเดิน", "en": "Wheelchair Handling & Mobility Support" },
+      { "th": "ตรวจวัดสัญญาณชีพและเตือนทานยา", "en": "Vital Signs Check & Medication Reminders" },
+      { "th": "จดบันทึกคำสั่งแพทย์ส่งครอบครัว", "en": "Medical Notes & Guardian Reporting" }
+    ],
+    "languages": [
+      { "th": "ภาษาไทย (กลาง)", "en": "Central Thai" },
+      { "th": "ภาษาอังกฤษ (สื่อสารได้)", "en": "English (Conversational)" }
+    ],
+    "education": {
+      "th": "ประกาศนียบัตรผู้ช่วยพยาบาล (PN) วิทยาลัยพยาบาลสภากาชาดไทย",
+      "en": "Practical Nursing Certificate (PN), Red Cross Nursing College"
+    },
+    "vehicle": {
+      "type": "sedan",
+      "th": "รถเก๋งส่วนบุคคล สะอาด นุ่มนวล มีพื้นที่เก็บวีลแชร์ท้ายรถ",
+      "en": "Clean private sedan with trunk capacity for foldable wheelchair"
+    },
+    "serviceAreas": [
+      { "th": "ปทุมวัน, สุขุมวิท, บางรัก, สาทร, พญาไท", "en": "Pathum Wan, Sukhumvit, Bang Rak, Sathorn, Phaya Thai" }
+    ],
+    "bio": {
+      "th": "อดีตผู้ช่วยพยาบาลวิชาชีพ ประสบการณ์ดูแลผู้สูงอายุและพาพบแพทย์โรงพยาบาลรัฐและเอกชนกว่า 6 ปี เชี่ยวชาญขั้นตอนการรอคิว การประสานงานแผนกผู้ป่วยนอก (OPD) และการดูแลผู้ใช้วีลแชร์อย่างนุ่มนวลและปลอดภัย",
+      "en": "Former practical nurse with 6+ years of experience in elderly hospital escort and OPD coordination. Specialized in wheelchair assistance, vital signs monitoring, and comprehensive physician instruction reporting."
+    },
+    "availableSlots": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "reviews": [
+      {
+        "id": "rev-101",
+        "reviewerName": "ธนกร ใจดี",
+        "relationship": { "th": "บุตรชาย", "en": "Son" },
+        "rating": 5.0,
+        "date": "2026-08-14",
+        "comment": {
+          "th": "คุณสมชายดูแลคุณแม่ดีมากครับ คอยประคองและประสานงานห้องตรวจ รพ.ศิริราช ได้อย่างรวดเร็ว คุณแม่ไม่เหนื่อยเลย แนะนำเลยครับ",
+          "en": "Somchai was exceptional with mom at Siriraj Hospital. Guided through OPD smoothly and kept me updated throughout. Highly recommended!"
+        }
+      },
+      {
+        "id": "rev-102",
+        "reviewerName": "พญ. วรรณภา",
+        "relationship": { "th": "บุตรสาว", "en": "Daughter" },
+        "rating": 4.9,
+        "date": "2026-08-02",
+        "comment": {
+          "th": "ตรงเวลา สุภาพ มีความรู้เรื่องขั้นตอนโรงพยาบาลดีเยี่ยม ช่วยเข็นวีลแชร์ขึ้นลงทางลาดอย่างระมัดระวังมาก",
+          "en": "Punctual, polite, and very knowledgeable about hospital routines. Very attentive on wheelchair ramps."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ct-002",
+    "name": { "th": "พว. อารียา รัตนกุล (อารี)", "en": "Nurse Areeya Rattanakul (Aree)" },
+    "nickname": { "th": "อารี", "en": "Aree" },
+    "gender": "female",
+    "age": 38,
+    "photo": "https://images.unsplash.com/photo-1594824813589-cf722bda7ec1?w=500&auto=format&fit=crop&q=80",
+    "matchScore": 88,
+    "isBestMatch": false,
+    "tier": "specialist",
+    "tierName": {
+      "th": "พยาบาลวิชาชีพดูแลผู้สูงอายุและพักฟื้น",
+      "en": "Registered Geriatric Nurse & Recovery Escort"
+    },
+    "hourlyRate": 450,
+    "rating": 4.98,
+    "reviewsCount": 74,
+    "completedTrips": 198,
+    "experienceYears": 8,
+    "verifiedBadges": [
+      "criminal_record_checked",
+      "registered_nurse",
+      "cpr_first_aid",
+      "dementia_certified"
+    ],
+    "specialties": [
+      { "th": "พยาบาลวิชาชีพดูแลผู้ป่วยพักฟื้น", "en": "Registered Nurse Geriatric & Post-Op Care" },
+      { "th": "การดูแลผู้มีภาวะสมองเสื่อม / อัลไซเมอร์", "en": "Dementia & Alzheimer's Compassionate Care" },
+      { "th": "การจัดการยาและดูแลสายยางให้อาหาร", "en": "Medication Administration & Tube Care" },
+      { "th": "การปฐมพยาบาลฉุกเฉินระดับสูง (ACLS)", "en": "Advanced Cardiac Life Support & First Aid" }
+    ],
+    "languages": [
+      { "th": "ภาษาไทย (กลาง)", "en": "Central Thai" },
+      { "th": "ภาษาอีสาน", "en": "Isan Dialect" },
+      { "th": "ภาษาอังกฤษ", "en": "English" }
+    ],
+    "education": {
+      "th": "พยาบาลศาสตรบัณฑิต (B.N.S.) คณะพยาบาลศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล",
+      "en": "Bachelor of Nursing Science (B.N.S.), Siriraj Faculty of Nursing, Mahidol University"
+    },
+    "vehicle": {
+      "type": "suv",
+      "th": "รถ SUV กว้างขวาง มีชุดปฐมพยาบาลครบครันและทางลาดขึ้นวีลแชร์",
+      "en": "Spacious SUV with comprehensive medical kit and portable wheelchair ramp"
+    },
+    "serviceAreas": [
+      { "th": "บางกอกน้อย, ธนบุรี, พระนคร, บางพลัด, ราชเทวี", "en": "Bangkok Noi, Thon Buri, Phra Nakhon, Bang Phlat, Ratchathewi" }
+    ],
+    "bio": {
+      "th": "พยาบาลวิชาชีพ (RN) ประสบการณ์แผนกอายุรกรรมและผู้สูงอายุกว่า 8 ปี เชี่ยวชาญการดูแลผู้ป่วยความจำเสื่อม การพาพบแพทย์เฉพาะทาง และการดูแลภาวะฉุกเฉิน ให้บริการด้วยความอบอุ่น ใจเย็น ดุจญาติมิตร",
+      "en": "Registered Nurse (RN) with 8+ years in geriatric wards. Expert in dementia care, specialized clinic escort, and emergency triage. Committed to providing empathetic, family-like care."
+    },
+    "availableSlots": ["Mon", "Tue", "Thu", "Fri", "Sat"],
+    "reviews": [
+      {
+        "id": "rev-201",
+        "reviewerName": "กิตติศักดิ์ วรเดช",
+        "relationship": { "th": "บุตรชาย", "en": "Son" },
+        "rating": 5.0,
+        "date": "2026-08-10",
+        "comment": {
+          "th": "คุณพยาบาลอารีมืออาชีพมาก ช่วยวัดความดันและดูแลคุณแม่อย่างใกล้ชิดตลอดเวลาที่ รพ.ศิริราช รู้สึกอุ่นใจมากครับ",
+          "en": "Nurse Aree was profoundly professional. Monitored mom's vitals closely at Siriraj Hospital. Total peace of mind!"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ct-003",
+    "name": { "th": "พลอย ชิดชนก วงศ์สวัสดิ์", "en": "Ploy Chidchanok Wongsawat" },
+    "nickname": { "th": "พลอย", "en": "Ploy" },
+    "gender": "female",
+    "age": 28,
+    "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
+    "matchScore": 81,
+    "isBestMatch": false,
+    "tier": "trained",
+    "tierName": {
+      "th": "นักกายภาพบำบัดฝึกหัด & เพื่อนพาเที่ยวพักผ่อน",
+      "en": "Physical Therapy Assistant & Leisure Companion"
+    },
+    "hourlyRate": 320,
+    "rating": 4.86,
+    "reviewsCount": 42,
+    "completedTrips": 89,
+    "experienceYears": 3,
+    "verifiedBadges": [
+      "criminal_record_checked",
+      "certified_caregiver",
+      "cpr_first_aid"
+    ],
+    "specialties": [
+      { "th": "เดินเล่นสวนสาธารณะ & กายภาพบำบัดเบาๆ", "en": "Park Walks & Gentle Mobility Exercise" },
+      { "th": "ช่วยพยุงเดินและฝึกการทรงตัว", "en": "Gait Training & Balance Assistance" },
+      { "th": "พาซื้อของและช็อปปิ้งในห้าง", "en": "Shopping & Mall Leisure Escort" },
+      { "th": "เพื่อนพูดคุยสร้างพลังบวกและคลายเหงา", "en": "Cheerful Conversation & Emotional Well-being" }
+    ],
+    "languages": [
+      { "th": "ภาษาไทย (กลาง)", "en": "Central Thai" },
+      { "th": "ภาษาอังกฤษ", "en": "English" }
+    ],
+    "education": {
+      "th": "อนุปริญญากายภาพบำบัด มหาวิทยาลัยมหิดล",
+      "en": "Diploma in Physical Therapy Assistance, Mahidol University"
+    },
+    "vehicle": {
+      "type": "eco_car",
+      "th": "รถยนต์ Eco Car ขนาดกะทัดรัด แอร์เย็น สบาย",
+      "en": "Compact, comfortable air-conditioned eco car"
+    },
+    "serviceAreas": [
+      { "th": "คลองเตย, วัฒนา, จตุจักร, ลาดพร้าว, อารีย์", "en": "Khlong Toei, Watthana, Chatuchak, Lat Phrao, Ari" }
+    ],
+    "bio": {
+      "th": "นักกายภาพบำบัดฝึกหัดและผู้ช่วยดูแลผู้สูงอายุ มีความเชี่ยวชาญด้านการช่วยพยุงเดิน การเดินออกกำลังกายในสวนสาธารณะ และการชวนคุยสร้างรอยยิ้ม ให้ผู้สูงอายุรู้สึกสดชื่นและกระปรี้กระเปร่า",
+      "en": "Physical therapy assistant and companion. Specialized in gentle mobility walks in botanical parks, shopping mall strolls, and cheerful companionship to brighten your parent's day."
+    },
+    "availableSlots": ["Tue", "Wed", "Fri", "Sat", "Sun"],
+    "reviews": [
+      {
+        "id": "rev-301",
+        "reviewerName": "สมศักดิ์ ปรีชา",
+        "relationship": { "th": "บุตรชาย", "en": "Son" },
+        "rating": 5.0,
+        "date": "2026-08-08",
+        "comment": {
+          "th": "น้องพลอยพาคุณแม่เดินเล่นสวนลุมพินีอย่างน่ารักมาก ช่วยจับพยุงและแวะนั่งพักเป็นระยะ คุณแม่ชมว่าคุยสนุกมากครับ",
+          "en": "Ploy was so lovely escorting mom at Lumpini Park. Gentle walking pacing and great chats. Mom had a wonderful time."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ct-004",
+    "name": { "th": "นิภาพร สุขสันต์ (ฟ้า)", "en": "Nipaporn Suksan (Fa)" },
+    "nickname": { "th": "ฟ้า", "en": "Fa" },
+    "gender": "female",
+    "age": 31,
+    "photo": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=80",
+    "matchScore": 76,
+    "isBestMatch": false,
+    "tier": "expert",
+    "tierName": {
+      "th": "ผู้เชี่ยวชาญพาทำบุญไหว้พระ & ท่องเที่ยวเชิงวัฒนธรรม",
+      "en": "Cultural Tour & Temple Merit Escort Specialist"
+    },
+    "hourlyRate": 380,
+    "rating": 4.88,
+    "reviewsCount": 36,
+    "completedTrips": 78,
+    "experienceYears": 4,
+    "verifiedBadges": [
+      "criminal_record_checked",
+      "certified_caregiver",
+      "cpr_first_aid",
+      "tour_guide_licensed"
+    ],
+    "specialties": [
+      { "th": "พาไหว้พระ 9 วัด & กิจกรรมทำบุญวันพระ", "en": "9-Temple Pilgrimage & Merit Making" },
+      { "th": "ดูแลการขึ้นลงบันไดและพื้นต่างระดับ", "en": "Stair & Temple Step Physical Assistance" },
+      { "th": "เตรียมอุปกรณ์สังฆทานและร่มกันแดด", "en": "Offering Supplies & Sun Protection" },
+      { "th": "ท่องเที่ยวเชิงประวัติศาสตร์และริมแม่น้ำ", "en": "Riverside & Heritage Cultural Outings" }
+    ],
+    "languages": [
+      { "th": "ภาษาไทย (กลาง)", "en": "Central Thai" },
+      { "th": "ภาษาอีสาน", "en": "Isan Dialect" },
+      { "th": "ภาษาจีนแต้จิ๋ว", "en": "Teochew Dialect" }
+    ],
+    "education": {
+      "th": "ประกาศนียบัตรผู้ดูแลผู้สูงอายุ และมัคคุเทศก์ท่องเที่ยวเชิงวัฒนธรรม",
+      "en": "Elderly Care Certificate & Cultural Heritage Guide License"
+    },
+    "vehicle": {
+      "type": "mpv",
+      "th": "รถยนต์ MPV 7 ที่นั่ง มีบันไดเสริมขึ้นรถและร่มกันแดดขนาดใหญ่",
+      "en": "7-Seater MPV equipped with boarding step stool and large sun canopies"
+    },
+    "serviceAreas": [
+      { "th": "พระนคร, ธนบุรี, บางกอกใหญ่, ดุสิต, สัมพันธวงศ์", "en": "Phra Nakhon, Thon Buri, Bangkok Yai, Dusit, Samphanthawong" }
+    ],
+    "bio": {
+      "th": "ผู้ดูแลใจเย็นและรักวัฒนธรรมไทย เชี่ยวชาญการพาผู้สูงอายุทำบุญไหว้พระ ไหว้พระ 9 วัด ท่องเที่ยวริมแม่น้ำเจ้าพระยา ใส่ใจเรื่องบันไดวัดและการป้องกันแดดร้อนอย่างใกล้ชิด",
+      "en": "Gentle, culturally passionate certified caregiver. Expert in temple pilgrimages, 9-temple merit trips, and Chao Phraya riverside leisure with strict attention to stairs and hydration."
+    },
+    "availableSlots": ["Mon", "Wed", "Fri", "Sat", "Sun"],
+    "reviews": [
+      {
+        "id": "rev-401",
+        "reviewerName": "มาลี วงศ์สว่าง",
+        "relationship": { "th": "บุตรสาว", "en": "Daughter" },
+        "rating": 5.0,
+        "date": "2026-07-28",
+        "comment": {
+          "th": "คุณฟ้าพาคุณยายไปไหว้พระวัดอรุณและวัดระฆัง ดูแลเรื่องบันไดและถือร่มให้ตลอดทาง ประทับใจมากค่ะ",
+          "en": "Fa escorted grandmother to Wat Arun and Wat Rakhang. Handled temple stairs and sun shading impeccably."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ct-005",
+    "name": { "th": "อารักษ์ บุญมี (ลุงรักษ์)", "en": "Arak Boonmee (Uncle Rak)" },
+    "nickname": { "th": "ลุงรักษ์", "en": "Uncle Rak" },
+    "gender": "male",
+    "age": 44,
+    "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
+    "matchScore": 72,
+    "isBestMatch": false,
+    "tier": "trained",
+    "tierName": {
+      "th": "ผู้ช่วยเดินทาง & ขับรถพาผู้สูงอายุร่วมงานสังคม",
+      "en": "Senior Mobility Driver & Social Event Escort"
+    },
+    "hourlyRate": 300,
+    "rating": 4.82,
+    "reviewsCount": 51,
+    "completedTrips": 165,
+    "experienceYears": 7,
+    "verifiedBadges": [
+      "criminal_record_checked",
+      "cpr_first_aid",
+      "defensive_driving_licensed"
+    ],
+    "specialties": [
+      { "th": "ขับรถรับส่ง VIP พร้อมทางลาดวีลแชร์", "en": "VIP Van Transport with Wheelchair Ramp" },
+      { "th": "พาไปร่วมงานแต่ง งานเลี้ยง และงานรวมญาติ", "en": "Weddings, Banquets & Reunion Escort" },
+      { "th": "ช่วยยกของหนักและพยุงเคลื่อนย้าย", "en": "Heavy Lifting & Transfer Assistance" },
+      { "th": "เดินทางข้ามจังหวัดระยะใกล้", "en": "Inter-provincial Outing Assistance" }
+    ],
+    "languages": [
+      { "th": "ภาษาไทย (กลาง)", "en": "Central Thai" },
+      { "th": "ภาษาเหนือ (คำเมือง)", "en": "Northern Dialect" }
+    ],
+    "education": {
+      "th": "ใบอนุญาตขับขี่สาธารณะ & ผ่านการอบรมการขับขี่ปลอดภัยและดูแลผู้โดยสารสูงอายุ",
+      "en": "Public Transport Driving License & Defensive Senior Transport Certified"
+    },
+    "vehicle": {
+      "type": "van",
+      "th": "รถตู้ VIP พร้อมทางลาดไฮดรอลิกสำหรับวีลแชร์และเข็มขัดนิรภัย 4 จุด",
+      "en": "VIP Commuter Van with hydraulic wheelchair lift and 4-point safety harness"
+    },
+    "serviceAreas": [
+      { "th": "กรุงเทพมหานครและปริมณฑล, นนทบุรี, สมุทรปราการ, ปทุมธานี", "en": "Bangkok Metro, Nonthaburi, Samut Prakan, Pathum Thani" }
+    ],
+    "bio": {
+      "th": "คนขับรถและผู้ช่วยดูแลผู้สูงอายุ ขับรถนุ่มนวล ปลอดภัย มีรถตู้พร้อมทางลาดขึ้นวีลแชร์ เหมาะสำหรับการพาผู้สูงอายุไปร่วมงานมงคล งานรวมญาติ หรือเดินทางต่างจังหวัด",
+      "en": "Senior transportation specialist with wheelchair-ramp van. Smooth, defensive driving style ideal for family weddings, banquets, and out-of-town gatherings."
+    },
+    "availableSlots": ["Everyday with 24h notice"],
+    "reviews": [
+      {
+        "id": "rev-501",
+        "reviewerName": "ประเสริฐ ชัยยศ",
+        "relationship": { "th": "บุตรชาย", "en": "Son" },
+        "rating": 4.8,
+        "date": "2026-07-15",
+        "comment": {
+          "th": "ลุงรักษ์ขับรถนิ่มมาก พาคุณพ่อไปร่วมงานแต่งหลานที่ต่างจังหวัด ช่วยพยุงขึ้นลงรถอย่างระมัดระวัง",
+          "en": "Uncle Rak drove very smoothly. Escorted dad to a family wedding in the countryside safely."
+        }
+      }
+    ]
+  }
+]

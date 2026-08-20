@@ -1,0 +1,173 @@
+[
+  {
+    "id": "bk-001",
+    "status": "upcoming",
+    "caretakerId": "ct-002",
+    "caretakerName": {
+      "th": "พว. อารียา รัตนกุล (อารี)",
+      "en": "Nurse Areeya Rattanakul"
+    },
+    "caretakerNickname": { "th": "อารี", "en": "Aree" },
+    "caretakerPhoto": "https://images.unsplash.com/photo-1594824813589-cf722bda7ec1?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhone": "089-123-4567",
+    "elderId": "elder-001",
+    "elderName": {
+      "th": "นางสมพร ใจดี",
+      "en": "Grandma Somporn Jaidee"
+    },
+    "serviceDate": "2026-08-26",
+    "timeSlot": "08:30 - 12:30",
+    "durationHours": 4,
+    "activityType": "hospital",
+    "activityTitle": {
+      "th": "พาพบแพทย์ตรวจสุขภาพ & รับยาประจำตัว รพ.ศิริราช",
+      "en": "Doctor Appointment & Prescription Refill Escort at Siriraj Hospital"
+    },
+    "destinationName": {
+      "th": "โรงพยาบาลศิริราช (อาคารนวมินทรบพิตร ๘๔ พรรษา)",
+      "en": "Siriraj Hospital (Navamindrapobitr 84th Anniversary Bldg)"
+    },
+    "destinationAddress": {
+      "th": "2 ถนนวังหลัง แขวงศิริราช เขตบางกอกน้อย กรุงเทพฯ 10700",
+      "en": "2 Wanglang Rd, Siriraj, Bangkok Noi, Bangkok 10700"
+    },
+    "pickupAddress": {
+      "th": "128/4 ซอยสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110",
+      "en": "128/4 Sukhumvit 39, Khlong Tan Nuea, Watthana, Bangkok 10110"
+    },
+    "hourlyRate": 450,
+    "basePrice": 1800,
+    "serviceFee": 100,
+    "discount": 0,
+    "totalPrice": 1900,
+    "paymentMethod": "promptpay",
+    "paymentMethodName": {
+      "th": "พร้อมเพย์ QR Code",
+      "en": "PromptPay QR Code"
+    },
+    "paymentStatus": "paid",
+    "meetingPoint": {
+      "th": "จุดรับส่งผู้ป่วย ชั้น 1 อาคารนวมินทรบพิตร ๘๔ พรรษา",
+      "en": "Patient Drop-off Point, 1st Floor, Navamindrapobitr Bldg"
+    },
+    "notes": {
+      "th": "มีนัดพบแพทย์อายุรกรรมเวลา 09:30 น. และตรวจเลือด คุณยายต้องงดน้ำงดอาหารหลังเที่ยงคืน มีสมุดประจำตัวผู้ป่วยเตรียมไว้ให้แล้ว",
+      "en": "Internal medicine consult at 09:30 AM with blood test. Fasting required after midnight. Patient medical handbook prepared."
+    },
+    "hasReview": false
+  },
+  {
+    "id": "bk-002",
+    "status": "upcoming",
+    "caretakerId": "ct-003",
+    "caretakerName": {
+      "th": "พลอย ชิดชนก วงศ์สวัสดิ์",
+      "en": "Ploy Chidchanok"
+    },
+    "caretakerNickname": { "th": "พลอย", "en": "Ploy" },
+    "caretakerPhoto": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhone": "086-987-6543",
+    "elderId": "elder-001",
+    "elderName": {
+      "th": "นางสมพร ใจดี",
+      "en": "Grandma Somporn Jaidee"
+    },
+    "serviceDate": "2026-08-30",
+    "timeSlot": "07:00 - 10:00",
+    "durationHours": 3,
+    "activityType": "park",
+    "activityTitle": {
+      "th": "เดินเล่นรับลมยามเช้า & กายภาพบำบัดเบาๆ สวนลุมพินี",
+      "en": "Morning Fresh Air Stroll & Gentle Exercise at Lumpini Park"
+    },
+    "destinationName": {
+      "th": "สวนลุมพินี (ประตู 1 ด้านถนนพระราม 4)",
+      "en": "Lumpini Park (Gate 1, Rama IV Road)"
+    },
+    "destinationAddress": {
+      "th": "ถนนพระรามที่ 4 แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330",
+      "en": "Rama IV Rd, Lumphini, Pathum Wan, Bangkok 10330"
+    },
+    "pickupAddress": {
+      "th": "128/4 ซอยสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110",
+      "en": "128/4 Sukhumvit 39, Khlong Tan Nuea, Watthana, Bangkok 10110"
+    },
+    "hourlyRate": 320,
+    "basePrice": 960,
+    "serviceFee": 100,
+    "discount": 0,
+    "totalPrice": 1060,
+    "paymentMethod": "promptpay",
+    "paymentMethodName": {
+      "th": "พร้อมเพย์ QR Code",
+      "en": "PromptPay QR Code"
+    },
+    "paymentStatus": "paid",
+    "meetingPoint": {
+      "th": "ลานจอดรถประตู 1 สวนลุมพินี",
+      "en": "Gate 1 Parking Lot, Lumpini Park"
+    },
+    "notes": {
+      "th": "พาเดินรับแสงแดดยามเช้า พักผ่อนและช่วยพยุงเดิน 15-20 นาที สลับกับนั่งพักชมวิวริมน้ำ เตรียมน้ำดื่มอุณหภูมิห้องไปด้วยครับ",
+      "en": "Morning sunshine stroll, assisted walking for 15-20 mins alternating with seated lakeside rest. Room-temp drinking water prepared."
+    },
+    "hasReview": false
+  },
+  {
+    "id": "bk-003",
+    "status": "completed",
+    "caretakerId": "ct-001",
+    "caretakerName": {
+      "th": "สมชาย ประเสริฐ",
+      "en": "Somchai Prasert"
+    },
+    "caretakerNickname": { "th": "สมชาย", "en": "Somchai" },
+    "caretakerPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhone": "081-234-5678",
+    "elderId": "elder-001",
+    "elderName": {
+      "th": "นางสมพร ใจดี",
+      "en": "Grandma Somporn Jaidee"
+    },
+    "serviceDate": "2026-08-14",
+    "timeSlot": "08:00 - 12:00",
+    "durationHours": 4,
+    "activityType": "hospital",
+    "activityTitle": {
+      "th": "ติดตามอาการโรคข้อเข่า & ฉีดยา รพ.พระมงกุฎเกล้า",
+      "en": "Knee Osteoarthritis Follow-up & Joint Injection at Phramongkutklao Hospital"
+    },
+    "destinationName": {
+      "th": "โรงพยาบาลพระมงกุฎเกล้า (อาคารเฉลิมพระเกียรติ)",
+      "en": "Phramongkutklao Hospital (Chaloem Phra Kiat Bldg)"
+    },
+    "destinationAddress": {
+      "th": "315 ถนนราชวิถี แขวงทุ่งพญาไท เขตราชเทวี กรุงเทพฯ 10400",
+      "en": "315 Ratchawithi Rd, Thung Phaya Thai, Ratchathewi, Bangkok 10400"
+    },
+    "pickupAddress": {
+      "th": "128/4 ซอยสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110",
+      "en": "128/4 Sukhumvit 39, Khlong Tan Nuea, Watthana, Bangkok 10110"
+    },
+    "hourlyRate": 350,
+    "basePrice": 1400,
+    "serviceFee": 100,
+    "discount": 150,
+    "totalPrice": 1350,
+    "paymentMethod": "credit_card",
+    "paymentMethodName": {
+      "th": "บัตรเครดิต",
+      "en": "Credit Card"
+    },
+    "paymentStatus": "paid",
+    "meetingPoint": {
+      "th": "หน้าแผนกกระดูกและข้อ ชั้น 3",
+      "en": "Orthopedic Clinic, 3rd Floor"
+    },
+    "notes": {
+      "th": "ฉีดยาข้อเข่าเรียบร้อยดี คุณสมชายช่วยเข็นวีลแชร์และรอรับยาครบถ้วน ส่งคุณแม่กลับถึงบ้านอย่างปลอดภัย",
+      "en": "Knee joint injection done smoothly. Somchai handled wheelchair navigation and pharmacy pickup."
+    },
+    "hasReview": false
+  }
+]
