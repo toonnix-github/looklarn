@@ -72,8 +72,8 @@ The AI returns the **top 3 matched caretakers** with a compatibility score, allo
 
 ## 📌 Status
 
-> **Stage**: Planning / Pitching Prototype  
-> This repository contains the design plan. Implementation coming next.
+> **Stage**: Implemented Pitch Prototype  
+> The React/Vite prototype is implemented with 7 routes, bilingual Thai/English UI, mock elder-care data, booking flows, and Vitest coverage for the core product journeys.
 
 ---
 

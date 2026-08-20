@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { HeartPulse, AlertCircle, Pill, Building2, FileCheck } from 'lucide-react';
+import { getEnumLabel, medicalConditionOptions } from '../../constants/careEnums';
 
 export function MedicalConditionsSection({
   conditions = [],
@@ -12,18 +13,7 @@ export function MedicalConditionsSection({
   onChange,
   className = '',
 }) {
-  const { t } = useLanguage();
-
-  const chronicConditionList = [
-    { id: 'hypertension', th: 'ความดันโลหิตสูง', en: 'Hypertension' },
-    { id: 'diabetes_type_2', th: 'เบาหวานชนิดที่ 2', en: 'Type 2 Diabetes' },
-    { id: 'knee_osteoarthritis', th: 'ข้อเข่าเสื่อม / ปวดข้อ', en: 'Knee Osteoarthritis' },
-    { id: 'heart_disease', th: 'โรคหัวใจ', en: 'Heart Disease' },
-    { id: 'dyslipidemia', th: 'ไขมันในเลือดสูง', en: 'Dyslipidemia' },
-    { id: 'dementia', th: 'ภาวะสมองเสื่อม / อัลไซเมอร์', en: 'Dementia / Alzheimer' },
-    { id: 'kidney_disease', th: 'โรคไตเรื้อรัง', en: 'Chronic Kidney Disease' },
-    { id: 'eye_cataract', th: 'ต้อกระจก / ปัญหาการมองเห็น', en: 'Cataract / Visual Impairment' },
-  ];
+  const { t, language } = useLanguage();
 
   const handleToggleCondition = (condId) => {
     const current = Array.isArray(conditions) ? conditions : [];
@@ -59,7 +49,7 @@ export function MedicalConditionsSection({
             {t('elderProfile.chronicConditionsLabel', 'รายการภาวะสุขภาพเรื้อรัง:')}
           </label>
           <div className="flex flex-wrap gap-2">
-            {chronicConditionList.map((cond) => {
+            {medicalConditionOptions.map((cond) => {
               const isSelected = (conditions || []).includes(cond.id);
               return (
                 <button
@@ -72,7 +62,7 @@ export function MedicalConditionsSection({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  {cond.th}
+                  {getEnumLabel(cond, language)}
                 </button>
               );
             })}

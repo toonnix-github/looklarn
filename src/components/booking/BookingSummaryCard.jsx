@@ -3,8 +3,49 @@ import { useLanguage } from '../../context/LanguageContext';
 import { MatchScoreRing } from '../ui/MatchScoreRing';
 import { Badge } from '../ui/Badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { Calendar, Clock, MapPin, ShieldCheck, Heart, User, Sparkles, Building2, Trees, ShoppingBag, Users } from 'lucide-react';
+import {
+  Activity,
+  Building2,
+  Calendar,
+  Clock,
+  ClipboardList,
+  Coffee,
+  Heart,
+  HeartPulse,
+  Home as HomeIcon,
+  Landmark,
+  MapPin,
+  Pill,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Stethoscope,
+  Trees,
+  User,
+  Users,
+} from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
+import {
+  APPOINTMENT_EVENTS,
+  getAppointmentEventMeta,
+  getElderMobilityMeta,
+  getEnumLabel,
+} from '../../constants/careEnums';
+
+const eventIconMap = {
+  Activity,
+  Building2,
+  ClipboardList,
+  Coffee,
+  HeartPulse,
+  Home: HomeIcon,
+  Landmark,
+  Pill,
+  ShoppingBag,
+  Stethoscope,
+  Trees,
+  Users,
+};
 
 export function BookingSummaryCard({
   caretaker,
@@ -12,7 +53,7 @@ export function BookingSummaryCard({
   serviceDate,
   timeSlot,
   durationHours = 4,
-  activityType = 'hospital',
+  activityType = APPOINTMENT_EVENTS.HOSPITAL,
   className = '',
 }) {
   const { t, language, getLocalized } = useLanguage();
@@ -20,34 +61,28 @@ export function BookingSummaryCard({
   if (!caretaker) return null;
 
   const getActivityIcon = (type) => {
-    switch (type) {
-      case 'hospital':
-        return <Building2 className="w-5 h-5 text-rose-500" />;
-      case 'park':
-        return <Trees className="w-5 h-5 text-emerald-500" />;
-      case 'shopping':
-        return <ShoppingBag className="w-5 h-5 text-amber-500" />;
-      case 'social':
-      case 'temple':
-        return <Users className="w-5 h-5 text-sky-500" />;
-      default:
-        return <Building2 className="w-5 h-5 text-sky-500" />;
-    }
+    const meta = getAppointmentEventMeta(type);
+    const ActivityIcon = eventIconMap[meta.icon] || Building2;
+    return <ActivityIcon className="w-5 h-5 text-sky-500" />;
   };
 
   const getMobilityBadge = (level) => {
+    const label = getEnumLabel(getElderMobilityMeta(level), language, 'shortLabel');
     switch (level) {
       case 'independent':
-        return <Badge variant="success">{t('find.mobilityWalk', 'เดินได้ปกติ')}</Badge>;
+        return <Badge variant="success">{label}</Badge>;
       case 'cane':
-        return <Badge variant="warning">{t('find.mobilityCane', 'ใช้ไม้เท้า')}</Badge>;
+      case 'walker':
+      case 'assisted_walking':
+        return <Badge variant="warning">{label}</Badge>;
       case 'wheelchair_assisted':
       case 'wheelchair':
-        return <Badge variant="info">{t('find.mobilityWheelchair', 'ใช้วีลแชร์')}</Badge>;
+        return <Badge variant="info">{label}</Badge>;
       case 'full_assistance':
-        return <Badge variant="danger">{t('find.mobilityBed', 'ต้องการผู้ช่วยพยุง')}</Badge>;
+      case 'bed_bound':
+        return <Badge variant="danger">{label}</Badge>;
       default:
-        return <Badge variant="neutral">{level}</Badge>;
+        return <Badge variant="neutral">{label || level}</Badge>;
     }
   };
 
@@ -116,7 +151,7 @@ export function BookingSummaryCard({
                   <span>•</span>
                   <span className="flex items-center gap-1 text-sky-600 font-medium">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    {t('common.verified', 'ยืนยันตัวตนแล้ว')}
+                    {t('common.verifiedCaregiver', 'ผู้ดูแลยืนยันตัวตนแล้ว')}
                   </span>
                 </div>
               </div>

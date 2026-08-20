@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { Star, ShieldCheck, MessageSquareQuote, ThumbsUp } from 'lucide-react';
+import { Star, ShieldCheck, MessageSquareQuote, ThumbsUp, Filter } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
 
 export function CaretakerReviews({
@@ -11,6 +11,7 @@ export function CaretakerReviews({
   className = '',
 }) {
   const { t, getLocalized, language } = useLanguage();
+  const [selectedFilter, setSelectedFilter] = useState('all');
 
   const starDistribution = [
     { stars: 5, percentage: 92, count: Math.round(reviewsCount * 0.92) },
@@ -19,6 +20,25 @@ export function CaretakerReviews({
     { stars: 2, percentage: 0, count: 0 },
     { stars: 1, percentage: 0, count: 0 },
   ];
+
+  const filterOptions = [
+    { id: 'all', labelTh: 'ทั้งหมด', labelEn: 'All Reviews' },
+    { id: '5star', labelTh: '5 ดาว (ดีเยี่ยม)', labelEn: '5 Stars (Excellent)' },
+    { id: 'hospital', labelTh: 'พาพบแพทย์/รพ.', labelEn: 'Hospital Escort' },
+  ];
+
+  const filteredReviews = useMemo(() => {
+    if (selectedFilter === '5star') {
+      return reviews.filter((r) => r.rating >= 5.0);
+    }
+    if (selectedFilter === 'hospital') {
+      return reviews.filter((r) => {
+        const comment = (r.comment?.th || '') + ' ' + (r.comment?.en || '');
+        return /รพ|โรงพยาบาล|แพทย์|Hospital|OPD|Doctor/i.test(comment);
+      });
+    }
+    return reviews;
+  }, [reviews, selectedFilter]);
 
   return (
     <Card className={`space-y-6 ${className}`}>
@@ -31,7 +51,7 @@ export function CaretakerReviews({
             </CardTitle>
           </div>
           <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
-            {reviewsCount} {language === 'th' ? 'รายการ' : 'entries'}
+            {reviewsCount} {language === 'th' ? 'รีวิว' : 'reviews'}
           </span>
         </div>
       </CardHeader>
@@ -77,9 +97,31 @@ export function CaretakerReviews({
           </div>
         </div>
 
+        {/* Filter Chips */}
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <span className="text-xs font-bold text-slate-500 flex items-center gap-1 mr-1">
+            <Filter className="w-3.5 h-3.5" />
+            {language === 'th' ? 'ตัวกรอง:' : 'Filter:'}
+          </span>
+          {filterOptions.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              onClick={() => setSelectedFilter(opt.id)}
+              className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                selectedFilter === opt.id
+                  ? 'bg-sky-600 text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              {language === 'th' ? opt.labelTh : opt.labelEn}
+            </button>
+          ))}
+        </div>
+
         {/* Verified Reviews List */}
         <div className="space-y-4">
-          {reviews.map((rev) => (
+          {(filteredReviews.length > 0 ? filteredReviews : reviews).map((rev) => (
             <div
               key={rev.id}
               className="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-3 hover:bg-white hover:shadow-xs transition-all"
@@ -122,3 +164,4 @@ export function CaretakerReviews({
 }
 
 export default CaretakerReviews;
+

@@ -8,10 +8,19 @@ import { ReviewModal } from '../components/bookings/ReviewModal';
 import { CancelConfirmModal } from '../components/bookings/CancelConfirmModal';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
-import { Calendar, Sparkles, Search, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import {
+  Calendar,
+  CalendarDays,
+  Clock,
+  History,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  UserRound,
+} from 'lucide-react';
 
 export default function MyBookingsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { bookings, cancelBooking, addReview } = useApp();
   const { toast } = useToast();
 
@@ -48,38 +57,97 @@ export default function MyBookingsPage() {
     }
   };
 
+  const tabUpcomingText = t('bookings.tabUpcoming', { count: upcomingBookings.length }) || `กำลังมาถึง (${upcomingBookings.length})`;
+  const tabPastText = t('bookings.tabPast', { count: pastBookings.length }) || `ประวัติ / ที่ผ่านมา (${pastBookings.length})`;
+
   return (
-    <div data-testid="page-bookings" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div data-testid="page-bookings" className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8 space-y-6">
       {/* Header & Tabs */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
-        <div>
-          <div className="flex items-center gap-2 text-sky-600 text-xs font-bold uppercase tracking-wider mb-1">
-            <Calendar className="w-4 h-4" />
-            <span>{t('bookings.headerBadge', 'รายการนัดหมาย & ประวัติการดูแล')}</span>
+      <div className="space-y-4 sm:space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-sky-600 text-xs font-bold uppercase tracking-wider mb-1">
+              <Calendar className="w-4 h-4" />
+              <span>{t('bookings.headerBadge', 'รายการนัดหมาย & ประวัติการดูแล')}</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              {t('bookings.pageHeading', 'รายการนัดหมายและการดูแล')}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              {t('bookings.subtitle', 'ติดตามสถานะการดูแล ติดต่อผู้ดูแล และดูประวัติการใช้บริการที่ผ่านมา')}
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            {t('bookings.pageHeading', 'รายการนัดหมายและการดูแล')}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {t('bookings.subtitle', 'ติดตามสถานะการดูแล ติดต่อผู้ดูแล และดูประวัติการใช้บริการที่ผ่านมา')}
-          </p>
+
+          <div className="flex items-center gap-3">
+            <Link to="/find">
+              <Button
+                variant="accent"
+                size="md"
+                leftIcon={<Sparkles className="w-4 h-4" />}
+                className="font-bold text-xs sm:text-sm shadow-md shadow-emerald-500/15 cursor-pointer"
+              >
+                {t('bookings.findCaretakerBtn', 'ค้นหาผู้ดูแลใหม่')}
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Quick Stats Banner */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div
+            onClick={() => setActiveTab('upcoming')}
+            className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+              activeTab === 'upcoming'
+                ? 'border-sky-300 bg-sky-50/90 shadow-xs'
+                : 'border-slate-200 bg-white hover:border-slate-300'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-sky-100 flex items-center justify-center text-sky-600 shrink-0">
+                <CalendarDays className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500">{t('bookings.upcomingLabel', 'กำลังจะมาถึง')}</p>
+                <p className="text-2xl font-black text-sky-700">{upcomingBookings.length}</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            onClick={() => setActiveTab('past')}
+            className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+              activeTab === 'past'
+                ? 'border-teal-300 bg-teal-50/90 shadow-xs'
+                : 'border-slate-200 bg-white hover:border-slate-300'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center text-teal-700 shrink-0">
+                <History className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500">{t('bookings.pastLabel', 'ประวัติการดูแล')}</p>
+                <p className="text-2xl font-black text-teal-700">{pastBookings.length}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Tab Switcher */}
         <div
           role="tablist"
           aria-label="Booking categories"
-          className="inline-flex bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 shrink-0 self-start md:self-auto shadow-inner"
+          className="flex rounded-2xl border border-slate-200 bg-slate-100/90 p-1.5 shadow-inner gap-1"
         >
           <button
             role="tab"
-            aria-label={`กำลังมาถึง (${upcomingBookings.length})`}
+            aria-label={language === 'th' ? `กำลังมาถึง (${upcomingBookings.length})` : `Upcoming (${upcomingBookings.length})`}
             aria-selected={activeTab === 'upcoming'}
             type="button"
             onClick={() => setActiveTab('upcoming')}
-            className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-2 ${
+            className={`flex-1 justify-center px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'upcoming'
-                ? 'bg-white text-sky-600 shadow-xs scale-100'
+                ? 'bg-white text-sky-700 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -88,13 +156,13 @@ export default function MyBookingsPage() {
 
           <button
             role="tab"
-            aria-label={`ประวัติ / ที่ผ่านมา (${pastBookings.length})`}
+            aria-label={language === 'th' ? `ประวัติ / ที่ผ่านมา (${pastBookings.length})` : `Past (${pastBookings.length})`}
             aria-selected={activeTab === 'past'}
             type="button"
             onClick={() => setActiveTab('past')}
-            className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-2 ${
+            className={`flex-1 justify-center px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'past'
-                ? 'bg-white text-sky-600 shadow-xs scale-100'
+                ? 'bg-white text-sky-700 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -143,6 +211,16 @@ export default function MyBookingsPage() {
           ))}
         </div>
       )}
+
+      {/* Trust Footer Note */}
+      <div className="flex items-center justify-center gap-2 text-center text-xs font-semibold text-slate-500 pt-4">
+        <ShieldCheck className="w-4 h-4 text-emerald-600" />
+        <span>
+          {language === 'th'
+            ? 'ทุกการจองได้รับความคุ้มครองจาก Looklarn Care ประกันอุบัติเหตุ 100%'
+            : 'Every booking is protected by Looklarn Care with 100% accident insurance'}
+        </span>
+      </div>
 
       {/* Cancel Confirmation Modal */}
       <CancelConfirmModal

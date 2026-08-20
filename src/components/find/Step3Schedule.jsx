@@ -1,108 +1,43 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { CardTitle } from '../ui/Card';
-import { Calendar, Clock, DollarSign, MapPin, FileText, Sparkles } from 'lucide-react';
+import { DollarSign, FileText, Users, Sparkles } from 'lucide-react';
 
-export default function Step3Schedule({ formData, setFormData }) {
-  const { t } = useLanguage();
+const GENDERS = [
+  { id: 'any',    th: 'เพศใดก็ได้',      en: 'Any Gender' },
+  { id: 'female', th: 'ผู้หญิงเท่านั้น', en: 'Female Only' },
+  { id: 'male',   th: 'ผู้ชายเท่านั้น',  en: 'Male Only' },
+];
 
-  const timeSlots = [
-    { id: 'morning', label: t('find.step3.timeMorning', 'ช่วงเช้า (08:00 - 12:00)') },
-    { id: 'afternoon', label: t('find.step3.timeAfternoon', 'ช่วงบ่าย (13:00 - 17:00)') },
-    { id: 'evening', label: t('find.step3.timeEvening', 'ช่วงเย็น (17:00 - 21:00)') },
-    { id: 'full_day', label: t('find.step3.timeFullDay', 'เต็มวัน (08:00 - 16:00)') },
-  ];
-
-  const durations = [2, 3, 4, 6, 8];
+export default function Step3Budget({ formData, setFormData }) {
+  const { language } = useLanguage();
+  const totalEst = (formData.budgetMax || 500) * (formData.durationHours || 4);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="space-y-1">
-        <CardTitle as="h2" className="text-xl sm:text-2xl font-bold text-slate-900">
-          {t('find.step3.title', 'วันและเวลานัดหมาย')}
+        <CardTitle as="h2" className="text-xl sm:text-2xl font-black text-slate-900">
+          {language === 'th' ? 'งบประมาณและรายละเอียดเพิ่มเติม' : 'Budget & Final Details'}
         </CardTitle>
-        <p className="text-xs sm:text-sm text-slate-500">
-          {t('find.step3.desc', 'กำหนดวันที่ ระยะเวลานัดหมาย และช่วงงบประมาณที่เหมาะสม')}
+        <p className="text-sm text-slate-500">
+          {language === 'th'
+            ? 'กำหนดอัตราที่ต้องการ และเพิ่มข้อความถึงผู้ดูแลโดยตรง'
+            : 'Set your rate and add a personal message to the caretaker.'}
         </p>
       </div>
 
-      {/* 1. Date & Duration */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Calendar className="w-4 h-4 text-sky-500" />
-            {t('find.step3.dateLabel', 'เลือกวันที่รับบริการ')}
-          </label>
-          <input
-            type="date"
-            value={formData.date || '2026-08-28'}
-            min={new Date().toISOString().split('T')[0]}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-emerald-500" />
-            {t('find.step3.durationLabel', 'ชั่วโมงที่ต้องการรับบริการ')}
-          </label>
-          <div className="flex items-center gap-2">
-            {durations.map((hrs) => (
-              <button
-                key={hrs}
-                type="button"
-                onClick={() => setFormData({ ...formData, durationHours: hrs })}
-                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer ${
-                  formData.durationHours === hrs
-                    ? 'bg-emerald-500 text-white border-emerald-500 shadow-xs ring-2 ring-emerald-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                {hrs} {t('common.hrShort', 'ชม.')}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Preferred Time Slot */}
-      <div className="space-y-3 pt-2">
-        <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-          <Clock className="w-4 h-4 text-sky-500" />
-          {t('find.step3.timeSlotLabel', 'ช่วงเวลาที่สะดวก')}
-        </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {timeSlots.map((slot) => {
-            const isSelected = formData.timeSlot === slot.id;
-            return (
-              <button
-                key={slot.id}
-                type="button"
-                onClick={() => setFormData({ ...formData, timeSlot: slot.id })}
-                className={`p-3 rounded-2xl border text-xs sm:text-sm font-semibold transition-all cursor-pointer text-left ${
-                  isSelected
-                    ? 'bg-sky-500 text-white border-sky-500 shadow-xs ring-2 ring-sky-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                {slot.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 3. Budget Range Slider */}
-      <div className="space-y-3 p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+      {/* Budget Slider */}
+      <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-sky-50/40 border border-slate-200/80 p-5 space-y-4">
         <div className="flex items-center justify-between">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
+          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
             <DollarSign className="w-4 h-4 text-emerald-600" />
-            {t('find.step3.budgetLabel', 'อัตราค่าตอบแทนสูงสุดต่อชั่วโมง (บาท/ชม.)')}
+            {language === 'th' ? 'ค่าตอบแทนสูงสุด (บาท/ชั่วโมง)' : 'Max Rate (THB/hr)'}
           </label>
-          <span className="text-base sm:text-lg font-black text-emerald-600">
-            ฿{formData.budgetMax || 500} / {t('common.hrShort', 'ชม.')}
+          <span className="text-xl font-black text-emerald-600">
+            ฿{formData.budgetMax || 500}
+            <span className="text-xs font-bold text-slate-400 ml-1">
+              / {language === 'th' ? 'ชม.' : 'hr'}
+            </span>
           </span>
         </div>
 
@@ -113,60 +48,78 @@ export default function Step3Schedule({ formData, setFormData }) {
           step={25}
           value={formData.budgetMax || 500}
           onChange={(e) => setFormData({ ...formData, budgetMax: Number(e.target.value) })}
-          className="w-full accent-emerald-500 cursor-pointer h-2 bg-slate-200 rounded-lg appearance-none"
+          className="w-full h-2.5 rounded-full accent-emerald-500 cursor-pointer"
         />
 
-        <div className="flex justify-between items-center text-[11px] text-slate-400 font-medium">
-          <span>฿300 / ชม.</span>
-          <span>{t('find.step3.budgetHint', 'อัตราเฉลี่ย ฿300 - ฿500 ต่อชั่วโมง')}</span>
-          <span>฿1,000 / ชม.</span>
+        <div className="flex justify-between text-[11px] text-slate-400 font-medium">
+          <span>฿300</span>
+          <span className="text-slate-500">{language === 'th' ? 'เฉลี่ย ฿350–500/ชม.' : 'Avg ฿350–500/hr'}</span>
+          <span>฿1,000</span>
+        </div>
+
+        {/* Estimated total */}
+        <div className="flex items-center justify-between rounded-xl bg-white border border-emerald-100 px-4 py-3 shadow-xs">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-emerald-500" />
+            <span className="text-sm font-bold text-slate-700">
+              {language === 'th' ? `ค่าใช้จ่ายรวมประมาณ (${formData.durationHours || 4} ชม.)` : `Estimated Total (${formData.durationHours || 4} hrs)`}
+            </span>
+          </div>
+          <span className="text-base font-black text-emerald-600">
+            ฿{totalEst.toLocaleString()}
+          </span>
         </div>
       </div>
 
-      {/* 4. Pickup Address & Destination */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-        <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-sky-500" />
-            {t('find.step3.pickupAddressLabel', 'สถานที่รับ-ส่ง (จุดเริ่มต้น)')}
-          </label>
-          <input
-            type="text"
-            value={formData.pickupAddress || ''}
-            onChange={(e) => setFormData({ ...formData, pickupAddress: e.target.value })}
-            placeholder={t('find.step3.pickupAddressPlaceholder', 'เช่น 128/4 ซอยสุขุมวิท 39 เขตวัฒนา กรุงเทพฯ')}
-            className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-rose-500" />
-            {t('find.step3.destinationLabel', 'สถานที่ปลายทาง / โรงพยาบาล')}
-          </label>
-          <input
-            type="text"
-            value={formData.destination || ''}
-            onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-            placeholder={t('find.step3.destinationPlaceholder', 'เช่น โรงพยาบาลศิริราช อาคารนวมินทรบพิตร')}
-            className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs"
-          />
+      {/* Gender Preference */}
+      <div className="space-y-2.5">
+        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+          <Users className="w-4 h-4 text-purple-500" />
+          {language === 'th' ? 'เพศของผู้ดูแลที่ต้องการ' : 'Caretaker Gender Preference'}
+        </label>
+        <div className="grid grid-cols-3 gap-2.5">
+          {GENDERS.map((g) => {
+            const isSelected = formData.genderPref === g.id;
+            return (
+              <button
+                key={g.id}
+                type="button"
+                onClick={() => setFormData({ ...formData, genderPref: g.id })}
+                className={`rounded-2xl border py-3 text-sm font-bold transition-all cursor-pointer text-center ${
+                  isSelected
+                    ? 'bg-sky-500 text-white border-sky-500 shadow-sm ring-2 ring-sky-500/20'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                {language === 'th' ? g.th : g.en}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* 5. Special Notes */}
-      <div className="space-y-2 pt-2">
-        <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
+      {/* Notes for caretaker */}
+      <div className="space-y-2.5">
+        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
           <FileText className="w-4 h-4 text-slate-500" />
-          {t('find.step3.notesLabel', 'หมายเหตุเพิ่มเติมสำหรับผู้ดูแล')}
+          {language === 'th' ? 'ข้อความถึงผู้ดูแล (ถ้ามี)' : 'Message to Caretaker (optional)'}
         </label>
         <textarea
-          rows={3}
+          rows={4}
           value={formData.notes || ''}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          placeholder={t('find.step3.notesPlaceholder', 'ระบุความต้องการเพิ่มเติม เช่น คุณยายเดินช้า, มีรถเข็นส่วนตัว, ต้องการคนช่วยยกของ...')}
-          className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs resize-none"
+          placeholder={
+            language === 'th'
+              ? 'เช่น "คุณแม่เดินช้า กรุณาอดทนรอ ชอบคุยเรื่องบุญและวัด ไม่ชอบอากาศร้อน..." '
+              : 'e.g. "Mom walks slowly, please be patient. She enjoys talking about Buddhism and dislikes heat..."'
+          }
+          className="w-full rounded-2xl border border-slate-200 bg-white p-3.5 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 resize-none leading-relaxed"
         />
+        <p className="text-[11px] text-slate-400">
+          {language === 'th'
+            ? 'ข้อความนี้จะส่งให้ผู้ดูแลอ่านก่อนรับงาน'
+            : 'This message will be shared with the caretaker before they accept.'}
+        </p>
       </div>
     </div>
   );

@@ -21,9 +21,15 @@ const renderApp = (initialRoute = '/') => {
   );
 };
 
+const firstButton = (name) => screen.getAllByRole('button', { name })[0];
+const expectSomeText = (matcher) => {
+  expect(screen.getAllByText(matcher).length).toBeGreaterThan(0);
+};
+
 describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
 
   beforeEach(() => {
+    localStorage.clear();
     vi.clearAllMocks();
   });
 
@@ -52,12 +58,12 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
 
     it('1.4 should render bookings list directly on fresh session', () => {
       renderApp('/bookings');
-      expect(screen.getByText(/การจองของฉัน|My Bookings/i)).toBeInTheDocument();
+      expectSomeText(/การจองของฉัน|My Bookings/i);
     });
 
     it('1.5 should render elder profile directly on fresh session', () => {
       renderApp('/elder-profile');
-      expect(screen.getByText(/ข้อมูลผู้สูงอายุ|โปรไฟล์|Elder Profile/i)).toBeInTheDocument();
+      expectSomeText(/ข้อมูลผู้สูงอายุ|โปรไฟล์|Elder Profile/i);
     });
   });
 
@@ -67,18 +73,15 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
   describe('Boundary 2: Invalid IDs & 404 Fallback Handling', () => {
     it('2.1 should render 404 Not Found page for completely unknown paths', () => {
       renderApp('/some-random-unknown-route-xyz');
-      expect(screen.getByText(/ไม่พบหน้านี้|404|Page Not Found|หน้าไม่พบ/i)).toBeInTheDocument();
-      const backHomeLink = screen.getByRole('link', { name: /กลับสู่หน้าหลัก|หน้าแรก|Back to Home|Home/i });
+      expectSomeText(/ไม่พบหน้านี้|404|Page Not Found|หน้าไม่พบ/i);
+      const backHomeLink = screen.getAllByRole('link', { name: /กลับสู่หน้าแรก|Back to Home/i })[0];
       expect(backHomeLink).toBeInTheDocument();
     });
 
     it('2.2 should handle non-existent caretaker ID gracefully', () => {
       renderApp('/caretaker/non-existent-caretaker-999');
       // Should show caretaker not found or fallback message
-      expect(
-        screen.getByText(/ไม่พบผู้ดูแล|ไม่พบข้อมูล|Caretaker not found|404/i) ||
-        screen.getByText(/กลับ|Back/i)
-      ).toBeInTheDocument();
+      expectSomeText(/ไม่พบผู้ดูแล|ไม่พบข้อมูล|Caretaker not found|404/i);
     });
 
     it('2.3 should handle non-existent booking caretaker ID gracefully', () => {
@@ -98,14 +101,14 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       const user = userEvent.setup();
       renderApp('/');
 
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
-      const thToggle = screen.getByRole('button', { name: /TH|ไทย/i });
+      const enToggle = firstButton(/^EN$/i);
+      const thToggle = firstButton(/^TH$/i);
 
       for (let i = 0; i < 5; i++) {
         await user.click(enToggle);
-        expect(screen.getByText(/Find a Caretaker/i)).toBeInTheDocument();
+        expectSomeText(/Find a Caretaker/i);
         await user.click(thToggle);
-        expect(screen.getByText(/ค้นหาผู้ดูแล/i)).toBeInTheDocument();
+        expectSomeText(/ค้นหาผู้ดูแล/i);
       }
     });
 
@@ -117,18 +120,18 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       await user.click(screen.getByRole('button', { name: /ถัดไป|Next|ต่อไป/i }));
 
       // Switch language to EN
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
+      const enToggle = firstButton(/^EN$/i);
       await user.click(enToggle);
 
       // Verify we are still on Step 2 in English
-      expect(screen.getByText(/Preferences|Language|Religion|Step 2/i)).toBeInTheDocument();
+      expectSomeText(/Preferences|Language|Religion|Step 2/i);
 
       // Switch back to TH
-      const thToggle = screen.getByRole('button', { name: /TH|ไทย/i });
+      const thToggle = firstButton(/^TH$/i);
       await user.click(thToggle);
 
       // Still on Step 2 in Thai
-      expect(screen.getByText(/ความต้องการเฉพาะ|ขั้นตอนที่ 2|ภาษา/i)).toBeInTheDocument();
+      expectSomeText(/ความต้องการเฉพาะ|ขั้นตอนที่ 2|ภาษา/i);
     });
 
     it('3.3 should maintain open success modal with translated text upon language switch', async () => {
@@ -140,14 +143,14 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       await user.click(confirmBtn);
 
       // Modal is visible
-      expect(screen.getByText(/จองสำเร็จ|Booking Successful/i)).toBeInTheDocument();
+      expectSomeText(/การนัดหมายเสร็จสมบูรณ์|บันทึกการนัดหมาย|หมายเลขอ้างอิง|Booking Confirmed|#LK-/i);
 
       // Switch language to EN while modal is open
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
+      const enToggle = firstButton(/^EN$/i);
       await user.click(enToggle);
 
       // Modal should still be open, showing English confirmation
-      expect(screen.getByText(/Booking Successful|Confirmed|#LK-/i)).toBeInTheDocument();
+      expectSomeText(/Booking Confirmed|Confirmed|#LK-/i);
     });
   });
 
@@ -159,10 +162,9 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       const user = userEvent.setup();
       renderApp('/elder-profile');
 
-      const nameInput = screen.getByDisplayValue(/สมพร|Somporn/i) || screen.getByLabelText(/ชื่อ|Name/i);
-      await user.clear(nameInput);
+      const nameInput = document.getElementById('name-input');
       const longSpecialName = 'คุณยายทองดี สมบัติมหาศาล & <Special Characters> #1234567890 (Very Long Name Test Case)';
-      await user.type(nameInput, longSpecialName);
+      fireEvent.change(nameInput, { target: { value: longSpecialName } });
 
       const saveBtn = screen.getByRole('button', { name: /บันทึกข้อมูล|บันทึก|Save Profile|Save/i });
       await user.click(saveBtn);
@@ -175,7 +177,7 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       const user = userEvent.setup();
       renderApp('/elder-profile');
 
-      const ageInput = screen.getByDisplayValue(/78|80/i) || screen.getByLabelText(/อายุ|Age/i);
+      const ageInput = document.getElementById('age-input');
       await user.clear(ageInput);
       await user.type(ageInput, '105');
 
@@ -190,8 +192,7 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       renderApp('/book/ct-1');
 
       // Check pickup location input
-      const pickupInput = screen.getByPlaceholderText(/ระบุจุดรับ|Enter pickup location|สถานที่/i) ||
-                          screen.getByLabelText(/จุดรับ|Pickup/i);
+      const pickupInput = screen.getByLabelText(/จุดรับ|Pickup/i);
       if (pickupInput) {
         await user.clear(pickupInput);
         await user.type(pickupInput, 'อาคารภูมิสิริมังคลานุสรณ์ รพ.จุฬาฯ ประตู 4');
@@ -214,7 +215,7 @@ describe('Tier 2: Boundary, Corner Cases & Error Handling', () => {
       renderApp('/');
       const nav = screen.getByRole('navigation');
       expect(nav).toBeInTheDocument();
-      expect(within(nav).getByText(/Looklarn|ลูกหลาน/i)).toBeInTheDocument();
+      expect(within(nav).getAllByText(/Looklarn|ลูกหลาน/i).length).toBeGreaterThan(0);
     });
   });
 });

@@ -3,15 +3,20 @@ import initialCaretakers from '../data/caretakers.json';
 import initialBookings from '../data/bookings.json';
 import initialActivities from '../data/activities.json';
 import initialElder from '../data/elder.json';
+import { APPOINTMENT_EVENTS, ELDER_MOBILITY, MEDICAL_CONDITIONS } from '../constants/careEnums';
 
 export const AppContext = createContext();
 
 const defaultSearchCriteria = {
-  mobility: 'wheelchair_assisted',
-  conditions: ['hypertension', 'diabetes_type_2', 'knee_osteoarthritis'],
+  mobility: ELDER_MOBILITY.WHEELCHAIR_ASSISTED,
+  conditions: [
+    MEDICAL_CONDITIONS.HYPERTENSION,
+    MEDICAL_CONDITIONS.DIABETES_TYPE_2,
+    MEDICAL_CONDITIONS.KNEE_OSTEOARTHRITIS,
+  ],
   needsMedicationReminder: true,
   specialCareType: 'none',
-  activityType: 'hospital',
+  activityType: APPOINTMENT_EVENTS.HOSPITAL,
   language: 'Thai',
   religion: 'Buddhism',
   dietary: 'low_sodium',
@@ -77,7 +82,7 @@ export const AppProvider = ({ children }) => {
       serviceDate: newBookingData.serviceDate || new Date().toISOString().split('T')[0],
       timeSlot: newBookingData.timeSlot || '09:00 - 13:00',
       durationHours: newBookingData.durationHours || 4,
-      activityType: newBookingData.activityType || 'hospital',
+      activityType: newBookingData.activityType || APPOINTMENT_EVENTS.HOSPITAL,
       activityTitle: newBookingData.activityTitle || {
         th: 'บริการพาพบแพทย์และดูแลผู้สูงอายุ',
         en: 'Senior Escort & Medical Outing Service',

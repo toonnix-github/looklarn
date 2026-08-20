@@ -1,207 +1,134 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { CardTitle } from '../ui/Card';
-import { Stethoscope, Sun, Trees, ShoppingBag, Coffee, Languages, HeartHandshake, Utensils, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin } from 'lucide-react';
 
-export default function Step2Preferences({ formData, setFormData }) {
-  const { t } = useLanguage();
+const TIME_SLOTS = [
+  { id: 'morning',   th: 'ช่วงเช้า', en: 'Morning',   range: '08:00 – 12:00' },
+  { id: 'afternoon', th: 'ช่วงบ่าย', en: 'Afternoon', range: '13:00 – 17:00' },
+  { id: 'evening',   th: 'ช่วงเย็น', en: 'Evening',   range: '17:00 – 21:00' },
+  { id: 'full_day',  th: 'เต็มวัน',  en: 'Full Day',  range: '08:00 – 17:00' },
+];
 
-  const activities = [
-    {
-      id: 'hospital',
-      title: t('find.step2.actHospital', 'พาไปโรงพยาบาล / พบแพทย์ & รับยา'),
-      icon: <Stethoscope className="w-5 h-5 text-sky-500" />,
-    },
-    {
-      id: 'temple',
-      title: t('find.step2.actTemple', 'ไหว้พระทำบุญ & วันพระ'),
-      icon: <Sun className="w-5 h-5 text-amber-500" />,
-    },
-    {
-      id: 'park',
-      title: t('find.step2.actPark', 'เดินเล่นสวนสาธารณะ & ออกกำลังกายเบาๆ'),
-      icon: <Trees className="w-5 h-5 text-emerald-500" />,
-    },
-    {
-      id: 'shopping',
-      title: t('find.step2.actShopping', 'ซื้อของใช้ & ช็อปปิ้งในห้าง'),
-      icon: <ShoppingBag className="w-5 h-5 text-teal-500" />,
-    },
-    {
-      id: 'social',
-      title: t('find.step2.actSocial', 'ร้านอาหาร คาเฟ่ & ร่วมงานสังคม'),
-      icon: <Coffee className="w-5 h-5 text-purple-500" />,
-    },
-  ];
+const DURATIONS = [2, 3, 4, 6, 8];
 
-  const languages = [
-    { id: 'Thai', label: t('find.step2.langThaiCentral', 'ภาษาไทย (กลาง)') },
-    { id: 'Isan', label: t('find.step2.langIsan', 'ภาษาอีสาน') },
-    { id: 'Northern', label: t('find.step2.langNorthern', 'ภาษาเหนือ (คำเมือง)') },
-    { id: 'Southern', label: t('find.step2.langSouthern', 'ภาษาใต้') },
-    { id: 'English', label: t('find.step2.langEnglish', 'English (ภาษาอังกฤษ)') },
-    { id: 'Chinese', label: t('find.step2.langChinese', 'ภาษาจีน / แต้จิ๋ว') },
-  ];
-
-  const religions = [
-    { id: 'Buddhism', label: t('find.step2.relBuddhism', 'ศาสนาพุทธ (ชอบไหว้พระ/ทำบุญ)') },
-    { id: 'Christianity', label: t('find.step2.relChristianity', 'ศาสนาคริสต์') },
-    { id: 'Islam', label: t('find.step2.relIslam', 'ศาสนาอิสลาม (ฮาลาล)') },
-    { id: 'Any', label: t('find.step2.relAny', 'ศาสนาใดก็ได้') },
-  ];
-
-  const diets = [
-    { id: 'normal', label: t('find.step2.dietNormal', 'ทานอาหารทั่วไปได้') },
-    { id: 'low_sodium', label: t('find.step2.dietLowSodium', 'อาหารรสอ่อน / โซเดียมต่ำ / หวานน้อย') },
-    { id: 'halal', label: t('find.step2.dietHalal', 'อาหารฮาลาล') },
-    { id: 'vegetarian', label: t('find.step2.dietVegetarian', 'มังสวิรัติ / เจ') },
-    { id: 'no_beef', label: t('find.step2.dietNoBeef', 'ไม่ทานเนื้อวัว') },
-  ];
-
-  const genders = [
-    { id: 'any', label: t('find.step2.genderAny', 'เพศใดก็ได้') },
-    { id: 'female', label: t('find.step2.genderFemale', 'ผู้หญิงเท่านั้น') },
-    { id: 'male', label: t('find.step2.genderMale', 'ผู้ชายเท่านั้น') },
-  ];
+export default function Step2Schedule({ formData, setFormData }) {
+  const { language } = useLanguage();
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="space-y-1">
-        <CardTitle as="h2" className="text-xl sm:text-2xl font-bold text-slate-900">
-          {t('find.step2.title', 'ความต้องการเฉพาะ & ภาษา')}
+        <CardTitle as="h2" className="text-xl sm:text-2xl font-black text-slate-900">
+          {language === 'th' ? 'นัดหมายวันและสถานที่' : 'Schedule & Location'}
         </CardTitle>
-        <p className="text-xs sm:text-sm text-slate-500">
-          {t('find.step2.desc', 'เลือกประเภทกิจกรรม ภาษา และความชอบส่วนบุคคลเพื่อให้เข้ากันได้อย่างดีเยี่ยม')}
+        <p className="text-sm text-slate-500">
+          {language === 'th'
+            ? 'กำหนดวันที่ เวลา และสถานที่สำหรับการออกไปครั้งนี้'
+            : 'Set the date, time, and locations for this outing.'}
         </p>
       </div>
 
-      {/* 1. Primary Activity Selection */}
-      <div className="space-y-3">
-        <label className="text-xs sm:text-sm font-bold text-slate-900 block">
-          {t('find.step2.activityLabel', 'ประเภทกิจกรรมหลักที่ต้องการรับบริการ')}
-        </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {activities.map((act) => {
-            const isSelected = formData.activityType === act.id;
-            return (
-              <label
-                key={act.id}
-                className={`flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${
-                  isSelected
-                    ? 'border-sky-500 bg-sky-50/60 text-sky-950 ring-2 ring-sky-500/20 shadow-xs'
-                    : 'border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="activityType"
-                  value={act.id}
-                  checked={isSelected}
-                  onChange={() => setFormData({ ...formData, activityType: act.id })}
-                  className="text-sky-600 focus:ring-sky-500 shrink-0"
-                />
-                <div className="p-1 rounded-lg bg-white border border-slate-100 shadow-2xs shrink-0">
-                  {act.icon}
-                </div>
-                <span className="text-xs sm:text-sm font-bold truncate">{act.title}</span>
-              </label>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 2. Language & Religion Preferences */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+      {/* Date + Duration */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <Languages className="w-4 h-4 text-sky-500" />
-            {t('find.step2.langPrefLabel', 'การสื่อสารและสำเนียง')}
+          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+            <Calendar className="w-4 h-4 text-sky-500" />
+            {language === 'th' ? 'วันที่รับบริการ' : 'Date'}
           </label>
-          <select
-            value={formData.language}
-            onChange={(e) => setFormData({ ...formData, language: e.target.value })}
-            className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs"
-          >
-            {languages.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.label}
-              </option>
-            ))}
-          </select>
+          <input
+            type="date"
+            value={formData.date || ''}
+            min={new Date().toISOString().split('T')[0]}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <HeartHandshake className="w-4 h-4 text-amber-500" />
-            {t('find.step2.religionLabel', 'ความเชื่อและประเพณี')}
+          <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+            <Clock className="w-4 h-4 text-emerald-500" />
+            {language === 'th' ? 'ระยะเวลาที่ต้องการ (ชั่วโมง)' : 'Duration (hours)'}
           </label>
-          <select
-            value={formData.religion}
-            onChange={(e) => setFormData({ ...formData, religion: e.target.value })}
-            className="w-full p-3 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 shadow-xs"
-          >
-            {religions.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* 3. Dietary Restrictions */}
-      <div className="space-y-3 pt-2">
-        <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-          <Utensils className="w-4 h-4 text-emerald-500" />
-          {t('find.step2.dietLabel', 'ข้อจำกัดและความชอบด้านอาหาร')}
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {diets.map((d) => {
-            const isSelected = formData.dietary === d.id;
-            return (
+          <div className="flex gap-2">
+            {DURATIONS.map((hrs) => (
               <button
-                key={d.id}
+                key={hrs}
                 type="button"
-                onClick={() => setFormData({ ...formData, dietary: d.id })}
-                className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-sky-500 text-white border-sky-500 shadow-xs ring-2 ring-sky-500/20'
+                onClick={() => setFormData({ ...formData, durationHours: hrs })}
+                className={`flex-1 rounded-xl border py-2.5 text-sm font-bold transition-all cursor-pointer ${
+                  formData.durationHours === hrs
+                    ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm ring-2 ring-emerald-500/20'
                     : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                {d.label}
+                {hrs}
+                <span className="text-[10px] font-normal ml-0.5">
+                  {language === 'th' ? 'ชม.' : 'hr'}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Time Slot */}
+      <div className="space-y-2">
+        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+          <Clock className="w-4 h-4 text-sky-500" />
+          {language === 'th' ? 'ช่วงเวลาที่สะดวก' : 'Preferred Time'}
+        </label>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          {TIME_SLOTS.map((slot) => {
+            const isSelected = formData.timeSlot === slot.id;
+            return (
+              <button
+                key={slot.id}
+                type="button"
+                onClick={() => setFormData({ ...formData, timeSlot: slot.id })}
+                className={`flex flex-col items-center gap-0.5 rounded-2xl border p-3 text-center transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-sky-500 text-white border-sky-500 shadow-sm ring-2 ring-sky-500/20'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <span className="text-sm font-black">{language === 'th' ? slot.th : slot.en}</span>
+                <span className={`text-[11px] font-medium ${isSelected ? 'text-sky-100' : 'text-slate-400'}`}>
+                  {slot.range}
+                </span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 4. Caretaker Gender Preference */}
-      <div className="space-y-3 pt-2">
-        <label className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
-          <Users className="w-4 h-4 text-purple-500" />
-          {t('find.step2.genderPrefLabel', 'เพศของผู้ดูแลที่ต้องการ')}
+      {/* Pickup Address */}
+      <div className="space-y-2">
+        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+          <MapPin className="w-4 h-4 text-sky-500" />
+          {language === 'th' ? 'จุดรับ (บ้านหรือสถานที่ปัจจุบัน)' : 'Pickup Location'}
         </label>
-        <div className="grid grid-cols-3 gap-3">
-          {genders.map((g) => {
-            const isSelected = formData.genderPref === g.id;
-            return (
-              <button
-                key={g.id}
-                type="button"
-                onClick={() => setFormData({ ...formData, genderPref: g.id })}
-                className={`p-3 rounded-2xl border text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
-                  isSelected
-                    ? 'bg-sky-500 text-white border-sky-500 shadow-xs ring-2 ring-sky-500/20'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                {g.label}
-              </button>
-            );
-          })}
-        </div>
+        <input
+          type="text"
+          value={formData.pickupAddress || ''}
+          onChange={(e) => setFormData({ ...formData, pickupAddress: e.target.value })}
+          placeholder={language === 'th' ? 'เช่น 128/4 ซอยสุขุมวิท 39 เขตวัฒนา กรุงเทพฯ' : 'e.g. 128/4 Sukhumvit 39, Bangkok'}
+          className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+        />
+      </div>
+
+      {/* Destination */}
+      <div className="space-y-2">
+        <label className="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+          <MapPin className="w-4 h-4 text-rose-500" />
+          {language === 'th' ? 'สถานที่ปลายทาง' : 'Destination'}
+        </label>
+        <input
+          type="text"
+          value={formData.destination || ''}
+          onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
+          placeholder={language === 'th' ? 'เช่น โรงพยาบาลศิริราช, วัดพระแก้ว' : 'e.g. Siriraj Hospital, Wat Phra Kaew'}
+          className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm font-medium shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
+        />
       </div>
     </div>
   );

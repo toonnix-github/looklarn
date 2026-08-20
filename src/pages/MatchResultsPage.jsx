@@ -33,7 +33,7 @@ export default function MatchResultsPage() {
   const topMatches = sortedCaretakers.slice(0, 3);
 
   return (
-    <div data-testid="page-matches" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+    <div data-testid="page-matches" className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8 space-y-6">
       {/* 1. Header with search summary & sorting controls */}
       <MatchSummaryHeader
         searchCriteria={searchCriteria}
@@ -43,7 +43,7 @@ export default function MatchResultsPage() {
       />
 
       {/* 2. Top 3 Caretaker Match Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {topMatches.map((caretaker, index) => (
           <CaretakerMatchCard
             key={caretaker.id}
@@ -55,8 +55,8 @@ export default function MatchResultsPage() {
       </div>
 
       {/* 3. Trust & Safety Guarantee Banner */}
-      <div className="p-6 sm:p-8 bg-gradient-to-r from-sky-50 via-ice-100 to-emerald-50 rounded-3xl border border-sky-100/80 shadow-xs">
-        <div className="text-center max-w-2xl mx-auto mb-6">
+      <div className="p-5 sm:p-6 bg-white rounded-2xl border border-sky-100 shadow-sm">
+        <div className="max-w-2xl mb-5">
           <h2 className="text-lg sm:text-xl font-extrabold text-slate-900">
             {t('matches.trustBannerTitle', 'มั่นใจทุกการดูแลด้วยมาตรฐาน Looklarn')}
           </h2>

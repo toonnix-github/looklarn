@@ -6,6 +6,7 @@ import { useToast } from '../components/ui/Toast';
 import { ElderProfileForm } from '../components/elder/ElderProfileForm';
 import { Button } from '../components/ui/Button';
 import { Save, Search, Sparkles, UserCheck } from 'lucide-react';
+import { ELDER_MOBILITY, MEDICAL_CONDITIONS, MOBILITY_AIDS } from '../constants/careEnums';
 
 export default function ElderProfilePage() {
   const { t, language } = useLanguage();
@@ -23,9 +24,13 @@ export default function ElderProfilePage() {
     age: elder?.age || 74,
     gender: elder?.gender || 'female',
     bloodType: elder?.bloodType || 'O+',
-    mobilityLevel: elder?.mobilityLevel || 'wheelchair_assisted',
-    mobilityAids: elder?.mobilityAids || ['wheelchair'],
-    conditions: elder?.medicalConditions || ['hypertension', 'diabetes_type_2', 'knee_osteoarthritis'],
+    mobilityLevel: elder?.mobilityLevel || ELDER_MOBILITY.WHEELCHAIR_ASSISTED,
+    mobilityAids: elder?.mobilityAids || [MOBILITY_AIDS.WHEELCHAIR],
+    conditions: elder?.medicalConditions || [
+      MEDICAL_CONDITIONS.HYPERTENSION,
+      MEDICAL_CONDITIONS.DIABETES_TYPE_2,
+      MEDICAL_CONDITIONS.KNEE_OSTEOARTHRITIS,
+    ],
     allergies: elder?.allergies?.th || elder?.allergies?.en || 'ไม่มีประวัติแพ้ยา',
     medications: elder?.medications?.th || elder?.medications?.en || 'Amlodipine 5mg (หลังอาหารเช้า 1 เม็ด)',
     preferredHospital: elder?.preferredHospital?.th || 'โรงพยาบาลศิริราช',
@@ -123,9 +128,9 @@ export default function ElderProfilePage() {
   };
 
   return (
-    <div data-testid="page-elder" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div data-testid="page-elder" className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8 space-y-6">
       {/* Top Header & CTAs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
+      <div className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-sky-600 text-xs font-bold uppercase tracking-wider mb-1">
             <UserCheck className="w-4 h-4" />
@@ -163,7 +168,7 @@ export default function ElderProfilePage() {
       />
 
       {/* Bottom Save Bar */}
-      <div className="pt-4 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="sticky bottom-20 z-20 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-lg shadow-slate-900/10 backdrop-blur-md lg:bottom-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs text-slate-500 text-center sm:text-left">
           {t('elderProfile.privacyNote', 'ประวัติการดูแลของผู้สูงอายุจะถูกเก็บรักษาอย่างปลอดภัยและแชร์เฉพาะผู้ดูแลที่ได้รับการยืนยันเท่านั้น')}
         </p>

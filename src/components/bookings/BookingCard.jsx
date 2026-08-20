@@ -5,10 +5,17 @@ import { Card, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import {
+  Activity,
   Calendar,
   Clock,
+  ClipboardList,
+  Coffee,
+  HeartPulse,
+  Home as HomeIcon,
+  Landmark,
   MapPin,
   Phone,
+  Pill,
   Star,
   CheckCircle2,
   XCircle,
@@ -19,8 +26,25 @@ import {
   Trees,
   ShoppingBag,
   Users,
+  Stethoscope,
 } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
+import { getAppointmentEventMeta } from '../../constants/careEnums';
+
+const eventIconMap = {
+  Activity,
+  Building2,
+  ClipboardList,
+  Coffee,
+  HeartPulse,
+  Home: HomeIcon,
+  Landmark,
+  Pill,
+  ShoppingBag,
+  Stethoscope,
+  Trees,
+  Users,
+};
 
 export function BookingCard({
   booking,
@@ -33,19 +57,9 @@ export function BookingCard({
   if (!booking) return null;
 
   const getActivityIcon = (type) => {
-    switch (type) {
-      case 'hospital':
-        return <Building2 className="w-4 h-4 text-rose-500" />;
-      case 'park':
-        return <Trees className="w-4 h-4 text-emerald-500" />;
-      case 'shopping':
-        return <ShoppingBag className="w-4 h-4 text-amber-500" />;
-      case 'social':
-      case 'temple':
-        return <Users className="w-4 h-4 text-sky-500" />;
-      default:
-        return <Building2 className="w-4 h-4 text-sky-500" />;
-    }
+    const meta = getAppointmentEventMeta(type);
+    const ActivityIcon = eventIconMap[meta.icon] || Building2;
+    return <ActivityIcon className="w-4 h-4 text-sky-500" />;
   };
 
   const renderStatusBadge = () => {
@@ -230,8 +244,8 @@ export function BookingCard({
               </>
             )}
 
-            {/* Completed & Not Reviewed Action */}
-            {booking.status === 'completed' && !booking.hasReview && (
+            {/* Completed bookings can receive or update review feedback. */}
+            {booking.status === 'completed' && (
               <Button
                 variant="accent"
                 size="sm"
@@ -239,7 +253,9 @@ export function BookingCard({
                 leftIcon={<Star className="w-3.5 h-3.5 fill-current" />}
                 className="text-xs font-bold shadow-xs cursor-pointer"
               >
-                {t('bookings.leaveReviewBtn', 'เขียนรีวิวผู้ดูแล (Leave Review)')}
+                {booking.hasReview
+                  ? t('bookings.editReviewBtn', 'แก้ไขรีวิวผู้ดูแล (Review)')
+                  : t('bookings.leaveReviewBtn', 'เขียนรีวิวผู้ดูแล (Leave Review)')}
               </Button>
             )}
 

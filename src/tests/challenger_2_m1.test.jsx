@@ -92,7 +92,7 @@ describe('Challenger 2 Empirical Verification: Milestone M1', () => {
       renderWithRoute('/bookings');
       const page = screen.getByTestId('page-bookings');
       expect(page).toBeInTheDocument();
-      expect(within(page).getByRole('heading', { level: 1 })).toHaveTextContent(/การจองของฉัน/i);
+      expect(within(page).getByRole('heading', { level: 1 })).toHaveTextContent(/การจองของฉัน|รายการนัดหมายและการดูแล/i);
     });
 
     it('renders "/elder" route alias -> ElderProfilePage cleanly', () => {

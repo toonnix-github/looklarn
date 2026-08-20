@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
@@ -43,9 +43,15 @@ const renderWithProviders = (ui, { route = '/' } = {}) => {
   );
 };
 
+const firstButton = (name) => screen.getAllByRole('button', { name })[0];
+const expectSomeText = (matcher) => {
+  expect(screen.getAllByText(matcher).length).toBeGreaterThan(0);
+};
+
 describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
 
   beforeEach(() => {
+    localStorage.clear();
     vi.clearAllMocks();
   });
 
@@ -58,30 +64,30 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
       // In Thai, find caretaker CTA or heading should be present
       expect(screen.getByRole('banner')).toBeInTheDocument();
       // Should show Thai navigation links / text
-      const thToggle = screen.getByRole('button', { name: /TH|ไทย/i });
+      const thToggle = firstButton(/^TH$/i);
       expect(thToggle).toBeInTheDocument();
     });
 
     it('1.2 should switch all UI text to English when EN toggle is clicked', async () => {
       const user = userEvent.setup();
       renderApp('/');
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
+      const enToggle = firstButton(/^EN$/i);
       await user.click(enToggle);
 
       // Verify English text is rendered
-      expect(screen.getByText(/Find a Caretaker/i)).toBeInTheDocument();
+      expectSomeText(/Find a Caretaker/i);
     });
 
     it('1.3 should toggle back to Thai when TH is clicked again', async () => {
       const user = userEvent.setup();
       renderApp('/');
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
+      const enToggle = firstButton(/^EN$/i);
       await user.click(enToggle);
-      expect(screen.getByText(/Find a Caretaker/i)).toBeInTheDocument();
+      expectSomeText(/Find a Caretaker/i);
 
-      const thToggle = screen.getByRole('button', { name: /TH|ไทย/i });
+      const thToggle = firstButton(/^TH$/i);
       await user.click(thToggle);
-      expect(screen.getByText(/ค้นหาผู้ดูแล/i)).toBeInTheDocument();
+      expectSomeText(/ค้นหาผู้ดูแล/i);
     });
 
     it('1.4 should not display mixed dual-language labels (e.g. Hospital / โรงพยาบาล in same label)', () => {
@@ -94,10 +100,10 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
     it('1.5 should highlight the currently active language pill', async () => {
       const user = userEvent.setup();
       renderApp('/');
-      const thToggle = screen.getByRole('button', { name: /TH|ไทย/i });
+      const thToggle = firstButton(/^TH$/i);
       expect(thToggle.className).toMatch(/bg-|text-white|active|font-bold|shadow/i);
 
-      const enToggle = screen.getByRole('button', { name: /EN|English/i });
+      const enToggle = firstButton(/^EN$/i);
       await user.click(enToggle);
       expect(enToggle.className).toMatch(/bg-|text-white|active|font-bold|shadow/i);
     });
@@ -162,24 +168,25 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
   describe('Feature 3: Find Caretaker 3-Step Wizard (/find)', () => {
     it('3.1 should render step indicator showing Step 1, Step 2, Step 3', () => {
       renderApp('/find');
-      expect(screen.getByText(/1|ร่างกาย|Physical/i)).toBeInTheDocument();
-      expect(screen.getByText(/2|ความชอบ|Preferences/i)).toBeInTheDocument();
-      expect(screen.getByText(/3|วันเวลา|Schedule/i)).toBeInTheDocument();
+      expectSomeText(/ร่างกาย|Physical/i);
+      expectSomeText(/ความชอบ|Preferences/i);
+      expectSomeText(/วันเวลา|Schedule/i);
     });
 
     it('3.2 should allow selecting mobility level and medical conditions in Step 1', async () => {
       const user = userEvent.setup();
       renderApp('/find');
       // Step 1 mobility selection
-      const mobilityOption = screen.getByLabelText(/ใช้วีลแชร์|Wheelchair|ใช้ไม้เท้า|Cane|เดินได้ปกติ|Independent/i) ||
-                             screen.getByText(/ใช้วีลแชร์|Wheelchair|ใช้ไม้เท้า|Cane|เดินได้ปกติ|Independent/i);
+      const mobilityOption = screen.getAllByRole('radio', {
+        name: /ใช้วีลแชร์|Wheelchair|ใช้ไม้เท้า|Cane|เดินได้ปกติ|Independent/i,
+      })[0];
       await user.click(mobilityOption);
 
       const nextBtn = screen.getByRole('button', { name: /ถัดไป|Next|ต่อไป/i });
       await user.click(nextBtn);
 
       // Should now be on Step 2
-      expect(screen.getByText(/ความต้องการเฉพาะ|ภาษา|ศาสนา|Preferences|Language|Religion/i)).toBeInTheDocument();
+      expectSomeText(/ความต้องการเฉพาะ|ภาษา|ศาสนา|Preferences|Language|Religion/i);
     });
 
     it('3.3 should allow moving back from Step 2 to Step 1', async () => {
@@ -216,14 +223,14 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
       fireEvent.click(submitBtn);
 
       // AI Matching animation should appear
-      expect(screen.getByText(/AI กำลังค้นหา|กำลังวิเคราะห์|Matching|AI is analyzing/i)).toBeInTheDocument();
+      expectSomeText(/AI กำลังค้นหา|กำลังวิเคราะห์|Matching|AI is analyzing/i);
 
       // Fast forward 2.5 seconds
-      vi.advanceTimersByTime(2500);
-
-      await waitFor(() => {
-        expect(screen.getByText(/ผลการจับคู่|Match Results|96%/i)).toBeInTheDocument();
+      await act(async () => {
+        vi.advanceTimersByTime(2500);
       });
+
+      expectSomeText(/ผลการจับคู่|Match Results|96%/i);
 
       vi.useRealTimers();
     });
@@ -259,7 +266,7 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
       expect(viewProfileBtns.length).toBeGreaterThanOrEqual(3);
 
       await user.click(viewProfileBtns[0]);
-      expect(screen.getByText(/ความเชี่ยวชาญ|Specialties|ประสบการณ์|Experience|รีวิว|Reviews/i)).toBeInTheDocument();
+      expectSomeText(/ความเชี่ยวชาญ|Specialties|ประสบการณ์|Experience|รีวิว|Reviews/i);
     });
 
     it('4.5 should have "Book Now" link navigating to /book/:id', async () => {
@@ -285,12 +292,12 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
 
     it('5.2 should display verified badges (e.g. Background check, Certified, First Aid)', () => {
       renderApp('/caretaker/ct-1');
-      expect(screen.getByText(/ผ่านการตรวจสอบประวัติ|Background Check|ผ่านการรับรอง|Certified|ปฐมพยาบาล|First Aid/i)).toBeInTheDocument();
+      expectSomeText(/ผ่านการตรวจสอบประวัติ|Background Check|ผ่านการรับรอง|Certified|ปฐมพยาบาล|First Aid/i);
     });
 
     it('5.3 should display caretaker bio and experience details', () => {
       renderApp('/caretaker/ct-1');
-      expect(screen.getByText(/เกี่ยวกับผู้ดูแล|ประวัติ|Bio|About/i)).toBeInTheDocument();
+      expectSomeText(/เกี่ยวกับผู้ดูแล|ประวัติ|Bio|About/i);
     });
 
     it('5.4 should display availability calendar with selectable dates/slots', () => {
@@ -300,7 +307,7 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
 
     it('5.5 should render reviews section with rating breakdowns and guardian testimonials', () => {
       renderApp('/caretaker/ct-1');
-      expect(screen.getByText(/รีวิว|ความคิดเห็น|Reviews|Feedback/i)).toBeInTheDocument();
+      expectSomeText(/รีวิว|ความคิดเห็น|Reviews|Feedback/i);
     });
 
     it('5.6 should render sticky bottom booking bar with rate and CTA button', () => {
@@ -322,12 +329,12 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
 
     it('6.2 should render location picker for pickup and destination', () => {
       renderApp('/book/ct-1');
-      expect(screen.getByText(/จุดรับ|สถานที่นัดพบ|Pickup Location|ปลายทาง|Destination/i)).toBeInTheDocument();
+      expectSomeText(/จุดรับ|สถานที่นัดพบ|Pickup Location|ปลายทาง|Destination/i);
     });
 
     it('6.3 should display transparent price breakdown (hourly rate * hours + platform fee)', () => {
       renderApp('/book/ct-1');
-      expect(screen.getByText(/รายละเอียดราคา|Price Breakdown|ยอดรวม|Total Price|ค่าบริการ|Service Fee/i)).toBeInTheDocument();
+      expectSomeText(/รายละเอียดราคา|Price Breakdown|ยอดรวม|Total Price|ค่าบริการ|Service Fee/i);
     });
 
     it('6.4 should show booking success modal with reference ID on confirm click', async () => {
@@ -338,7 +345,7 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
       await user.click(confirmBtn);
 
       // Modal should appear
-      expect(screen.getByText(/จองสำเร็จ|Booking Successful|รหัสการจอง|#LK-/i)).toBeInTheDocument();
+      expectSomeText(/จองสำเร็จ|Booking Successful|รหัสการจอง|#LK-/i);
     });
 
     it('6.5 should navigate to /bookings when clicking view bookings inside success modal', async () => {
@@ -352,7 +359,7 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
                             screen.getByRole('link', { name: /ดูรายการจองของฉัน|ไปที่การจอง|View My Bookings|Go to Bookings/i });
       await user.click(toBookingsBtn);
 
-      expect(screen.getByText(/การจองของฉัน|My Bookings|กำลังมาถึง|Upcoming/i)).toBeInTheDocument();
+      expectSomeText(/การจองของฉัน|My Bookings|กำลังมาถึง|Upcoming/i);
     });
   });
 

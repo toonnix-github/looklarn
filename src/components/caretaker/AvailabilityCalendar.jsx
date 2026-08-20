@@ -6,26 +6,48 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Clock, Check } fro
 export function AvailabilityCalendar({
   caretaker,
   selectedDate: initialSelectedDate,
+  selectedTimeSlot: initialSelectedTimeSlot = 'morning',
   onSelectDate,
+  onSelectTimeSlot,
   className = '',
 }) {
   const { t, language } = useLanguage();
-  const [selectedDay, setSelectedDay] = useState(initialSelectedDate || 28);
-  const [selectedSlot, setSelectedSlot] = useState('morning');
-  const [currentMonthIndex, setCurrentMonthIndex] = useState(0); // 0 = Aug 2026
+  const [selectedDay, setSelectedDay] = useState(
+    typeof initialSelectedDate === 'number' ? initialSelectedDate : 28
+  );
+  const [selectedSlot, setSelectedSlot] = useState(initialSelectedTimeSlot);
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(0); // 0 = Aug 2026, 1 = Sep 2026
 
-  const monthNames = {
-    th: ['สิงหาคม 2569', 'กันยายน 2569'],
-    en: ['August 2026', 'September 2026'],
-  };
+  const monthsData = [
+    {
+      monthNum: '08',
+      yearTh: 2569,
+      yearEn: 2026,
+      nameTh: 'สิงหาคม 2569',
+      nameEn: 'August 2026',
+      shortMonthTh: 'ส.ค.',
+      shortMonthEn: 'Aug',
+      daysCount: 31,
+      startDayOfWeek: 6, // Aug 1, 2026 is Saturday (6)
+    },
+    {
+      monthNum: '09',
+      yearTh: 2569,
+      yearEn: 2026,
+      nameTh: 'กันยายน 2569',
+      nameEn: 'September 2026',
+      shortMonthTh: 'ก.ย.',
+      shortMonthEn: 'Sep',
+      daysCount: 30,
+      startDayOfWeek: 2, // Sep 1, 2026 is Tuesday (2)
+    },
+  ];
 
   const weekDays = {
     th: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
     en: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
   };
 
-  // Available days of week from caretaker: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-  const availableSlotsList = caretaker?.availableSlots || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const daySlotMap = {
     0: 'Sun',
     1: 'Mon',
@@ -36,11 +58,12 @@ export function AvailabilityCalendar({
     6: 'Sat',
   };
 
-  // August 2026 starts on Saturday (Aug 1 = index 6)
-  // Total 31 days
-  const augustDays = Array.from({ length: 31 }, (_, i) => {
+  const activeMonth = monthsData[currentMonthIndex];
+  const availableSlotsList = caretaker?.availableSlots || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const monthDays = Array.from({ length: activeMonth.daysCount }, (_, i) => {
     const dayNumber = i + 1;
-    const dayOfWeek = (6 + i) % 7; // Aug 1, 2026 is Saturday (6)
+    const dayOfWeek = (activeMonth.startDayOfWeek + i) % 7;
     const slotCode = daySlotMap[dayOfWeek];
     const isAvailable = availableSlotsList.includes(slotCode);
     return {
@@ -55,11 +78,22 @@ export function AvailabilityCalendar({
     if (!dayObj.isAvailable) return;
     setSelectedDay(dayObj.day);
     if (onSelectDate) {
-      const monthStr = currentMonthIndex === 0 ? '08' : '09';
       const dayStr = String(dayObj.day).padStart(2, '0');
-      onSelectDate(`2026-${monthStr}-${dayStr}`);
+      onSelectDate(`2026-${activeMonth.monthNum}-${dayStr}`);
     }
   };
+
+  const handleSelectSlot = (slotId) => {
+    setSelectedSlot(slotId);
+    if (onSelectTimeSlot) {
+      onSelectTimeSlot(slotId);
+    }
+  };
+
+  const formattedSelectedDate =
+    language === 'th'
+      ? `วันที่ ${selectedDay} ${activeMonth.shortMonthTh} ${activeMonth.yearTh}`
+      : `${selectedDay} ${activeMonth.shortMonthEn} ${activeMonth.yearEn}`;
 
   return (
     <Card className={`space-y-4 ${className}`}>
@@ -76,6 +110,7 @@ export function AvailabilityCalendar({
           <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-xl border border-slate-200 text-xs">
             <button
               type="button"
+              aria-label="Previous Month"
               onClick={() => setCurrentMonthIndex((prev) => Math.max(0, prev - 1))}
               disabled={currentMonthIndex === 0}
               className="p-1 text-slate-500 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
@@ -83,12 +118,13 @@ export function AvailabilityCalendar({
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
             <span className="px-2 font-bold text-slate-800">
-              {monthNames[language][currentMonthIndex]}
+              {language === 'th' ? activeMonth.nameTh : activeMonth.nameEn}
             </span>
             <button
               type="button"
-              onClick={() => setCurrentMonthIndex((prev) => Math.min(1, prev + 1))}
-              disabled={currentMonthIndex === 1}
+              aria-label="Next Month"
+              onClick={() => setCurrentMonthIndex((prev) => Math.min(monthsData.length - 1, prev + 1))}
+              disabled={currentMonthIndex === monthsData.length - 1}
               className="p-1 text-slate-500 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               <ChevronRight className="w-3.5 h-3.5" />
@@ -107,13 +143,13 @@ export function AvailabilityCalendar({
           ))}
         </div>
 
-        {/* Calendar Grid (Padding before Aug 1 Saturday: 6 empty cells) */}
+        {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-1.5 text-center">
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: activeMonth.startDayOfWeek }).map((_, i) => (
             <div key={`empty-${i}`} className="h-8 sm:h-9" />
           ))}
 
-          {augustDays.map((d) => {
+          {monthDays.map((d) => {
             const isSelected = selectedDay === d.day;
             return (
               <button
@@ -159,7 +195,7 @@ export function AvailabilityCalendar({
           <div className="flex items-center justify-between text-xs font-bold text-slate-700">
             <span>{t('caretaker.calendar.selectSlot', 'เลือกช่วงเวลาที่ต้องการ:')}</span>
             <span className="text-emerald-700 font-extrabold">
-              {language === 'th' ? `วันที่ ${selectedDay} ส.ค. 2569` : `${selectedDay} Aug 2026`}
+              {formattedSelectedDate}
             </span>
           </div>
 
@@ -172,7 +208,7 @@ export function AvailabilityCalendar({
               <button
                 key={slot.id}
                 type="button"
-                onClick={() => setSelectedSlot(slot.id)}
+                onClick={() => handleSelectSlot(slot.id)}
                 className={`px-2 py-2 rounded-xl text-[11px] font-semibold text-center transition-all cursor-pointer ${
                   selectedSlot === slot.id
                     ? 'bg-white text-emerald-700 border-2 border-emerald-500 shadow-xs'
@@ -194,3 +230,4 @@ export function AvailabilityCalendar({
 }
 
 export default AvailabilityCalendar;
+

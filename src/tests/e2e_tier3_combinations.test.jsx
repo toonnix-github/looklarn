@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
@@ -21,9 +21,14 @@ const renderApp = (initialRoute = '/') => {
   );
 };
 
+const expectSomeText = (matcher) => {
+  expect(screen.getAllByText(matcher).length).toBeGreaterThan(0);
+};
+
 describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', () => {
 
   beforeEach(() => {
+    localStorage.clear();
     vi.clearAllMocks();
   });
 
@@ -40,51 +45,51 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     fireEvent.click(heroCta);
 
     // 2. Find Caretaker: Step 1 Physical Needs
-    expect(screen.getByText(/ความต้องการด้านร่างกาย|Physical Needs|ขั้นตอนที่ 1|Step 1/i)).toBeInTheDocument();
+    expectSomeText(/ความต้องการด้านร่างกาย|Physical Needs|ขั้นตอนที่ 1|Step 1/i);
     const nextBtn1 = screen.getByRole('button', { name: /ถัดไป|Next|ต่อไป/i });
     fireEvent.click(nextBtn1);
 
     // 3. Step 2: Preferences
-    expect(screen.getByText(/ความต้องการเฉพาะ|Preferences|ขั้นตอนที่ 2|Step 2/i)).toBeInTheDocument();
+    expectSomeText(/ความต้องการเฉพาะ|Preferences|ขั้นตอนที่ 2|Step 2/i);
     const nextBtn2 = screen.getByRole('button', { name: /ถัดไป|Next|ต่อไป/i });
     fireEvent.click(nextBtn2);
 
     // 4. Step 3: Schedule & Submit
-    expect(screen.getByText(/วันและเวลา|งบประมาณ|Schedule|Budget/i)).toBeInTheDocument();
+    expectSomeText(/วันและเวลา|งบประมาณ|Schedule|Budget/i);
     const submitBtn = screen.getByRole('button', { name: /ค้นหาผู้ดูแลที่เหมาะสม|จับคู่ AI|Find Matches|Match Now/i });
     fireEvent.click(submitBtn);
 
     // 5. AI Matching Animation -> Matches Page
-    expect(screen.getByText(/AI กำลังค้นหา|กำลังวิเคราะห์|Matching|AI is analyzing/i)).toBeInTheDocument();
-    vi.advanceTimersByTime(2500);
-
-    await waitFor(() => {
-      expect(screen.getByText(/96%/i)).toBeInTheDocument();
+    expectSomeText(/AI กำลังค้นหา|กำลังวิเคราะห์|Matching|AI is analyzing/i);
+    await act(async () => {
+      vi.advanceTimersByTime(2500);
     });
+
+    expectSomeText(/96%/i);
 
     // 6. Match Results: Click "View Profile" on top match
     const viewProfileBtns = screen.getAllByRole('link', { name: /ดูโปรไฟล์|View Profile/i });
     fireEvent.click(viewProfileBtns[0]);
 
     // 7. Caretaker Profile: Verify profile details & Click Book
-    expect(screen.getByText(/ความเชี่ยวชาญ|Specialties|ประสบการณ์|Experience/i)).toBeInTheDocument();
+    expectSomeText(/ความเชี่ยวชาญ|Specialties|ประสบการณ์|Experience/i);
     const bookCta = screen.getAllByRole('link', { name: /จองผู้ดูแลคนนี้|จองเลย|Book Caretaker|Book Now/i })[0] ||
                     screen.getAllByRole('button', { name: /จองผู้ดูแลคนนี้|จองเลย|Book Caretaker|Book Now/i })[0];
     fireEvent.click(bookCta);
 
     // 8. Booking Screen: Fill location and Confirm
-    expect(screen.getByText(/สรุปข้อมูลการจอง|Booking Summary/i)).toBeInTheDocument();
+    expectSomeText(/สรุปข้อมูลการจอง|Booking Summary/i);
     const confirmBookingBtn = screen.getByRole('button', { name: /ยืนยันการจอง|Confirm Booking|ชำระเงิน/i });
     fireEvent.click(confirmBookingBtn);
 
     // 9. Success Modal -> Navigate to Bookings
-    expect(screen.getByText(/จองสำเร็จ|Booking Successful|#LK-/i)).toBeInTheDocument();
+    expectSomeText(/จองสำเร็จ|Booking Successful|#LK-/i);
     const toBookingsBtn = screen.getByRole('button', { name: /ดูรายการจองของฉัน|ไปที่การจอง|View My Bookings|Go to Bookings/i }) ||
                           screen.getByRole('link', { name: /ดูรายการจองของฉัน|ไปที่การจอง|View My Bookings|Go to Bookings/i });
     fireEvent.click(toBookingsBtn);
 
     // 10. My Bookings Page: Verify new booking is listed under Upcoming
-    expect(screen.getByText(/การจองของฉัน|My Bookings/i)).toBeInTheDocument();
+    expectSomeText(/การจองของฉัน|My Bookings/i);
 
     vi.useRealTimers();
   });
@@ -97,7 +102,7 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     renderApp('/elder-profile');
 
     // 1. Edit Elder Profile
-    const nameInput = screen.getByDisplayValue(/สมพร|Somporn/i) || screen.getByLabelText(/ชื่อ|Name/i);
+    const nameInput = document.getElementById('name-input');
     await user.clear(nameInput);
     await user.type(nameInput, 'คุณยายบุญมี มณีโชติ');
 
@@ -105,11 +110,11 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     await user.click(saveBtn);
 
     // 2. Navigate to /find via navbar
-    const findNav = screen.getByRole('link', { name: /ค้นหาผู้ดูแล|Find a Caretaker/i });
+    const findNav = screen.getAllByRole('link', { name: /ค้นหาผู้ดูแล|Find a Caretaker/i })[0];
     await user.click(findNav);
 
     // 3. Verify elder info is reflected or auto-filled
-    expect(screen.getByText(/บุญมี|คุณยายบุญมี|สมพร|Physical Needs|ร่างกาย/i)).toBeInTheDocument();
+    expectSomeText(/บุญมี|คุณยายบุญมี|สมพร|Physical Needs|ร่างกาย/i);
   });
 
   // ==========================================
@@ -120,7 +125,7 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     renderApp('/bookings');
 
     // 1. Click Past tab
-    const pastTab = screen.getByRole('tab', { name: /ประวัติ|ที่ผ่านมา|Past/i }) || screen.getByText(/ประวัติ|ที่ผ่านมา|Past/i);
+    const pastTab = screen.getAllByRole('tab', { name: /ประวัติ|ที่ผ่านมา|Past/i })[0];
     await user.click(pastTab);
 
     // 2. Click "Leave Review"
@@ -128,11 +133,10 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     await user.click(reviewBtn);
 
     // 3. Fill star rating and feedback in modal
-    const reviewModal = screen.getByRole('dialog') || screen.getByText(/ให้คะแนนผู้ดูแล|รีวิวบริการ|Rate Caretaker/i).closest('div');
+    const reviewModal = screen.getByRole('dialog');
     expect(reviewModal).toBeInTheDocument();
 
-    const commentInput = screen.getByPlaceholderText(/แสดงความคิดเห็น|เขียนความประทับใจ|Enter feedback|Write a review/i) ||
-                         screen.getByRole('textbox');
+    const commentInput = screen.getByRole('textbox');
     if (commentInput) {
       await user.type(commentInput, 'คุณพยาบาลดูแลคุณยายดีมาก ตรงต่อเวลาและใจเย็นมากครับ');
     }
@@ -154,13 +158,13 @@ describe('Tier 3: Cross-Feature Multi-Page Combinations & State Persistence', ()
     const user = userEvent.setup();
     renderApp('/');
 
-    const hospitalCard = screen.getByText(/โรงพยาบาล|พาไปหาหมอ|Hospital Visit|Hospital/i).closest('a') ||
-                         screen.getByText(/โรงพยาบาล|พาไปหาหมอ|Hospital Visit|Hospital/i).closest('div');
+    const hospitalText = screen.getAllByText(/โรงพยาบาล|พาไปหาหมอ|Hospital Visit|Hospital/i)[0];
+    const hospitalCard = hospitalText.closest('a') || hospitalText.closest('div');
 
     if (hospitalCard) {
       await user.click(hospitalCard);
       // Should land on /find
-      expect(screen.getByText(/ค้นหาผู้ดูแล|ความต้องการ|Physical Needs|Step 1/i)).toBeInTheDocument();
+      expectSomeText(/ค้นหาผู้ดูแล|ความต้องการ|Physical Needs|Step 1/i);
     }
   });
 });

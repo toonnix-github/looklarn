@@ -10,6 +10,7 @@ import { PaymentMethodSelector } from '../components/booking/PaymentMethodSelect
 import { PriceBreakdown } from '../components/booking/PriceBreakdown';
 import { BookingSuccessModal } from '../components/booking/BookingSuccessModal';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
+import { APPOINTMENT_EVENTS } from '../constants/careEnums';
 
 export default function BookingPage() {
   const { id } = useParams();
@@ -36,7 +37,7 @@ export default function BookingPage() {
       ? '13:00 - 17:00'
       : '08:30 - 12:30'
   );
-  const [activityType] = useState(searchCriteria?.activityType || 'hospital');
+  const [activityType] = useState(searchCriteria?.activityType || APPOINTMENT_EVENTS.HOSPITAL);
   const [paymentMethod, setPaymentMethod] = useState('promptpay');
 
   // Promo Code State
@@ -124,9 +125,9 @@ export default function BookingPage() {
   };
 
   return (
-    <div data-testid="page-book" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div data-testid="page-book" className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8 space-y-5">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
+      <div className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-sky-600 text-xs font-bold uppercase tracking-wider mb-1">
             <Sparkles className="w-4 h-4" />
@@ -148,9 +149,9 @@ export default function BookingPage() {
       </div>
 
       {/* Main Grid Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         {/* Left Column: Summary, Locations & Payment */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-8 space-y-5">
           <BookingSummaryCard
             caretaker={caretaker}
             elder={elder}
@@ -178,7 +179,7 @@ export default function BookingPage() {
         </div>
 
         {/* Right Column: Price Breakdown Sticky Card */}
-        <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+        <div className="lg:col-span-4 lg:sticky lg:top-8 space-y-4">
           <PriceBreakdown
             hourlyRate={caretaker.hourlyRate || 350}
             durationHours={hours}

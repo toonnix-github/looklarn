@@ -12,10 +12,10 @@ export function ElderProfileForm({
   className = '',
 }) {
   const handleFieldChange = (field, value) => {
-    onChange?.({
-      ...formData,
+    onChange?.((current) => ({
+      ...current,
       [field]: value,
-    });
+    }));
   };
 
   return (

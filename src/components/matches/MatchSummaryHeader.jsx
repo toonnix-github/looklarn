@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../ui/Button';
 import { Sparkles, SlidersHorizontal, Calendar, Clock, MapPin, DollarSign, Activity, ArrowUpDown } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
+import { getAppointmentEventLabel, getElderMobilityMeta, getEnumLabel } from '../../constants/careEnums';
 
 export function MatchSummaryHeader({
   searchCriteria = {},
@@ -13,35 +14,8 @@ export function MatchSummaryHeader({
 }) {
   const { t, language } = useLanguage();
 
-  // Helper for activity name
-  const getActivityLabel = (type) => {
-    switch (type) {
-      case 'hospital':
-        return language === 'th' ? 'พาไปโรงพยาบาล' : 'Hospital Escort';
-      case 'park':
-        return language === 'th' ? 'เดินเล่นสวนสาธารณะ' : 'Park Stroll';
-      case 'temple':
-        return language === 'th' ? 'ไหว้พระทำบุญ' : 'Temple Outing';
-      case 'shopping':
-        return language === 'th' ? 'ซื้อของและช็อปปิ้ง' : 'Shopping Mall';
-      default:
-        return language === 'th' ? 'พาพบแพทย์และดูแล' : 'Companion Care';
-    }
-  };
-
   const getMobilityLabel = (mob) => {
-    switch (mob) {
-      case 'wheelchair_assisted':
-        return language === 'th' ? 'ใช้วีลแชร์' : 'Wheelchair Assisted';
-      case 'walking_cane':
-        return language === 'th' ? 'ใช้ไม้เท้าช่วยพยุง' : 'Walking Cane';
-      case 'independent':
-        return language === 'th' ? 'เดินได้ปกติ' : 'Independent';
-      case 'full_assistance':
-        return language === 'th' ? 'ต้องการดูแลพิเศษ' : 'Full Assistance';
-      default:
-        return language === 'th' ? 'ใช้วีลแชร์' : 'Wheelchair';
-    }
+    return getEnumLabel(getElderMobilityMeta(mob), language, 'shortLabel');
   };
 
   const formattedDate = searchCriteria.date
@@ -50,11 +24,11 @@ export function MatchSummaryHeader({
 
   const budget = searchCriteria.budgetMax || 500;
   const duration = searchCriteria.durationHours || 4;
-  const activityName = getActivityLabel(searchCriteria.activityType);
+  const activityName = getAppointmentEventLabel(searchCriteria.activityType, language, 'fullLabel');
   const mobilityName = getMobilityLabel(searchCriteria.mobility);
 
   return (
-    <div className="space-y-6">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-5">
       {/* Top Banner & Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -79,7 +53,7 @@ export function MatchSummaryHeader({
       </div>
 
       {/* Search Criteria Pill Overview */}
-      <div className="p-4 bg-white rounded-2xl border border-sky-100 shadow-xs flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           <span className="font-bold text-slate-700">{t('matches.criteriaTitle', 'เงื่อนไขการค้นหาของคุณ')}:</span>
           
@@ -110,7 +84,7 @@ export function MatchSummaryHeader({
       </div>
 
       {/* Sort Bar & Count Indicator */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 border-b border-slate-200 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
         <div className="text-sm font-semibold text-slate-700">
           {t('matches.resultsFound', { count: totalMatches })}
         </div>
@@ -120,11 +94,11 @@ export function MatchSummaryHeader({
             <ArrowUpDown className="w-3.5 h-3.5" />
             {t('matches.sortByLabel', 'เรียงตาม:')}
           </span>
-          <div className="inline-flex p-0.5 bg-slate-100 rounded-xl border border-slate-200 text-xs">
+          <div className="inline-flex max-w-full overflow-x-auto p-0.5 bg-slate-100 rounded-xl border border-slate-200 text-xs">
             <button
               type="button"
               onClick={() => onSortChange && onSortChange('matchScore')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg font-semibold transition-all ${
                 sortBy === 'matchScore'
                   ? 'bg-white text-sky-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -135,7 +109,7 @@ export function MatchSummaryHeader({
             <button
               type="button"
               onClick={() => onSortChange && onSortChange('rating')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg font-semibold transition-all ${
                 sortBy === 'rating'
                   ? 'bg-white text-sky-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -146,7 +120,7 @@ export function MatchSummaryHeader({
             <button
               type="button"
               onClick={() => onSortChange && onSortChange('price_asc')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg font-semibold transition-all ${
                 sortBy === 'price_asc'
                   ? 'bg-white text-sky-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'

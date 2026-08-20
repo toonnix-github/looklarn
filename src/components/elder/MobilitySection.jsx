@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Accessibility, CheckCircle2 } from 'lucide-react';
+import { elderMobilityOptions, getEnumLabel, mobilityAidOptions } from '../../constants/careEnums';
 
 export function MobilitySection({
   mobilityLevel = 'wheelchair_assisted',
@@ -9,37 +10,7 @@ export function MobilitySection({
   onChange,
   className = '',
 }) {
-  const { t } = useLanguage();
-
-  const mobilityOptions = [
-    {
-      id: 'independent',
-      title: 'เดินได้ปกติ / คล่องแคล่ว (Independent)',
-      desc: 'สามารถเดินและขึ้นลงบันไดได้เองอย่างมั่นคง ไม่ต้องใช้อุปกรณ์ช่วย',
-    },
-    {
-      id: 'cane',
-      title: 'ใช้ไม้เท้า / พยุงเดิน (Cane Assisted)',
-      desc: 'เดินได้ด้วยตัวเองแต่ต้องการไม้เท้าช่วยทรงตัว หรือมีคนช่วยพยุงแขน',
-    },
-    {
-      id: 'wheelchair_assisted',
-      title: 'ใช้วีลแชร์เมื่อเดินทางไกล (Wheelchair Assisted)',
-      desc: 'เดินระยะสั้นได้ แต่ต้องใช้วีลแชร์เมื่อไปโรงพยาบาลหรือเดินทางไกล',
-    },
-    {
-      id: 'full_assistance',
-      title: 'ต้องการผู้ช่วยพยุงตลอดเวลา (Full Assistance)',
-      desc: 'ต้องการผู้ดูแลประกบดูแลการเคลื่อนย้ายตัวและเข็นวีลแชร์ตลอดเวลา',
-    },
-  ];
-
-  const availableAids = [
-    { id: 'wheelchair', labelTh: 'รถเข็นวีลแชร์พับได้', labelEn: 'Foldable Wheelchair' },
-    { id: 'cane', labelTh: 'ไม้เท้าช่วยพยุง', labelEn: 'Walking Cane' },
-    { id: 'quad_cane', labelTh: 'ไม้เท้า 4 ขา', labelEn: 'Quad Cane' },
-    { id: 'walker', labelTh: 'วอล์คเกอร์หัดเดิน', labelEn: 'Walker Frame' },
-  ];
+  const { t, language } = useLanguage();
 
   const handleAidToggle = (aidId) => {
     const current = Array.isArray(mobilityAids) ? mobilityAids : [];
@@ -85,15 +56,16 @@ export function MobilitySection({
             onChange={(e) => onChange('mobilityLevel', e.target.value)}
             className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 shadow-2xs mb-3"
           >
-            <option value="independent">เดินได้ปกติ / คล่องแคล่ว (Independent)</option>
-            <option value="cane">ใช้ไม้เท้า / พยุงเดิน (Cane Assisted)</option>
-            <option value="wheelchair_assisted">ใช้วีลแชร์เมื่อเดินทางไกล (Wheelchair Assisted)</option>
-            <option value="full_assistance">ต้องการผู้ช่วยพยุงตลอดเวลา (Full Assistance)</option>
+            {elderMobilityOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {getEnumLabel(option, language)}
+              </option>
+            ))}
           </select>
 
           {/* Interactive Card Options */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            {mobilityOptions.map((opt) => {
+            {elderMobilityOptions.map((opt) => {
               const isSelected = mobilityLevel === opt.id;
               return (
                 <div
@@ -107,7 +79,7 @@ export function MobilitySection({
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="font-bold text-xs sm:text-sm text-slate-900">
-                      {opt.title}
+                      {getEnumLabel(opt, language)}
                     </span>
                     <div
                       className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${
@@ -120,7 +92,7 @@ export function MobilitySection({
                     </div>
                   </div>
                   <p className="text-[11px] text-slate-500 leading-relaxed">
-                    {opt.desc}
+                    {getEnumLabel(opt, language, 'description')}
                   </p>
                 </div>
               );
@@ -134,7 +106,7 @@ export function MobilitySection({
             {t('elderProfile.mobilityAidsLabel', 'อุปกรณ์ช่วยเหลือที่นำติดตัวไป:')}
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {availableAids.map((aid) => {
+            {mobilityAidOptions.map((aid) => {
               const isChecked = (mobilityAids || []).includes(aid.id);
               return (
                 <label
@@ -151,7 +123,7 @@ export function MobilitySection({
                     onChange={() => handleAidToggle(aid.id)}
                     className="w-4 h-4 rounded-md text-sky-600 focus:ring-sky-500"
                   />
-                  <span className="text-xs">{aid.labelTh}</span>
+                  <span className="text-xs">{getEnumLabel(aid, language)}</span>
                 </label>
               );
             })}

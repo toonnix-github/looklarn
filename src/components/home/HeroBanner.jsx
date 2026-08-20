@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { Sparkles, Search, Calendar, ShieldCheck, Heart, Award, Star } from 'lucide-react';
 
-export default function HeroBanner({ onFindClick, className = '' }) {
+export default function HeroBanner({ onFindClick, className = '', headingAs = 'h1' }) {
   const { t } = useLanguage();
+  const Heading = headingAs;
 
   return (
     <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-600 via-sky-500 to-teal-500 text-white p-8 sm:p-12 lg:p-16 shadow-xl shadow-sky-500/10 ${className}`}>
@@ -20,9 +21,9 @@ export default function HeroBanner({ onFindClick, className = '' }) {
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+        <Heading className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
           {t('home.hero.title', 'ให้ "ลูกหลาน" ดูแลคนที่คุณรัก ในทุกช่วงเวลาสำคัญ')}
-        </h1>
+        </Heading>
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg lg:text-xl text-sky-50 max-w-2xl mx-auto leading-relaxed">

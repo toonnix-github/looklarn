@@ -36,7 +36,7 @@ export default function CaretakerProfilePage() {
         </div>
         <Link to="/matches">
           <Button variant="primary" leftIcon={<ArrowLeft className="w-4 h-4" />}>
-            {t('common.back', 'กลับสู่ผลการจับคู่')}
+            {t('caretaker.backToMatches', 'กลับสู่ผลการจับคู่')}
           </Button>
         </Link>
       </div>
@@ -46,7 +46,7 @@ export default function CaretakerProfilePage() {
   return (
     <div
       data-testid="page-caretaker"
-      className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 pb-36 sm:pb-40"
+      className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-8 space-y-5 pb-36 sm:pb-40"
     >
       {/* 1. Wave Gradient Hero Banner */}
       <CaretakerWaveHero caretaker={caretaker} />
@@ -55,9 +55,9 @@ export default function CaretakerProfilePage() {
       <TrustBadges />
 
       {/* 3. Main Grid Layout (2 Columns on Desktop) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left / Primary Column (2/3 width on desktop) */}
-        <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+        <div className="lg:col-span-2 space-y-5">
           {/* Caretaker Biography & Specialties */}
           <CaretakerBio caretaker={caretaker} />
 
@@ -70,7 +70,7 @@ export default function CaretakerProfilePage() {
         </div>
 
         {/* Right / Sidebar Column (1/3 width on desktop) */}
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-5 lg:sticky lg:top-8 lg:self-start">
           {/* Quick Performance Stats Cards */}
           <CaretakerStats caretaker={caretaker} />
 

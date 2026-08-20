@@ -8,14 +8,14 @@
       "en": "Nurse Areeya Rattanakul"
     },
     "caretakerNickname": { "th": "อารี", "en": "Aree" },
-    "caretakerPhoto": "https://images.unsplash.com/photo-1594824813589-cf722bda7ec1?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhoto": "/assets/caretaker-aree.png",
     "caretakerPhone": "089-123-4567",
     "elderId": "elder-001",
     "elderName": {
       "th": "นางสมพร ใจดี",
       "en": "Grandma Somporn Jaidee"
     },
-    "serviceDate": "2026-08-26",
+    "serviceDate": "2026-08-28",
     "timeSlot": "08:30 - 12:30",
     "durationHours": 4,
     "activityType": "hospital",
@@ -65,15 +65,15 @@
       "en": "Ploy Chidchanok"
     },
     "caretakerNickname": { "th": "พลอย", "en": "Ploy" },
-    "caretakerPhoto": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhoto": "/assets/caretaker-aree.png",
     "caretakerPhone": "086-987-6543",
     "elderId": "elder-001",
     "elderName": {
       "th": "นางสมพร ใจดี",
       "en": "Grandma Somporn Jaidee"
     },
-    "serviceDate": "2026-08-30",
-    "timeSlot": "07:00 - 10:00",
+    "serviceDate": "2026-08-31",
+    "timeSlot": "09:00 - 13:00",
     "durationHours": 3,
     "activityType": "park",
     "activityTitle": {
@@ -122,7 +122,7 @@
       "en": "Somchai Prasert"
     },
     "caretakerNickname": { "th": "สมชาย", "en": "Somchai" },
-    "caretakerPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
+    "caretakerPhoto": "/assets/caretaker-aree.png",
     "caretakerPhone": "081-234-5678",
     "elderId": "elder-001",
     "elderName": {
@@ -168,6 +168,11 @@
       "th": "ฉีดยาข้อเข่าเรียบร้อยดี คุณสมชายช่วยเข็นวีลแชร์และรอรับยาครบถ้วน ส่งคุณแม่กลับถึงบ้านอย่างปลอดภัย",
       "en": "Knee joint injection done smoothly. Somchai handled wheelchair navigation and pharmacy pickup."
     },
-    "hasReview": false
+    "hasReview": true,
+    "reviewRating": 5,
+    "reviewText": {
+      "th": "ดูแลดีมาก สุภาพ ใจเย็น และพาคุณแม่กลับถึงบ้านอย่างปลอดภัย",
+      "en": "Excellent care, polite and patient, and brought Mom home safely."
+    }
   }
 ]
