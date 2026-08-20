@@ -1,198 +1,135 @@
-﻿# Implementation Plan — Looklarn (ลูกหลาน)
+# Implementation Plan - Looklarn
 
 ## Overview
 
-**Looklarn** is an AI-powered elder care companion matching app targeting **family guardians** (sons, daughters, grandchildren) who need to find trusted, verified caretakers to accompany their elders to outings — hospitals, temples, events, tourist locations, etc.
-
-The deliverable is an **interactive web prototype** built with **React (Vite) + Tailwind CSS + shadcn/ui**, using **mock data** to simulate all functionality for pitching to investors.
+AI-powered elder care companion matching app for family guardians.
+Interactive web prototype: React (Vite) + Tailwind CSS + shadcn/ui + mock data.
 
 ---
 
 ## Tech Stack
 
-| Layer | Choice | Reason |
-|---|---|---|
-| Framework | React + Vite | Fast dev, modern |
-| Styling | Tailwind CSS + shadcn/ui | Warm, polished UI quickly |
-| Routing | React Router v6 | Multi-page prototype navigation |
-| State | React Context / useState | Lightweight, no backend needed |
-| Language | Bilingual (Thai + English) | Toggle in header |
-| Data | Mock JSON (hardcoded) | Pitch prototype, no backend |
-| Icons | Lucide React | Consistent icon set |
+| Layer | Choice |
+|---|---|
+| Framework | React + Vite |
+| Styling | Tailwind CSS + shadcn/ui |
+| Routing | React Router v6 |
+| State | React Context / useState |
+| Language | Thai default with EN toggle |
+| Data | Mock JSON |
+| Icons | Lucide React |
 
 ---
 
 ## Design System
 
-- **Primary Color**: Warm amber/orange (#F59E0B) — warmth & trust
-- **Accent**: Soft teal (#14B8A6) — calm & health
-- **Background**: Cream white (#FFFBF5) — soft, non-clinical
-- **Typography**: Sarabun (Google Fonts) — supports Thai + Latin beautifully
-- **Radius**: Rounded corners (xl / 2xl) — approachable feel
-- **Tone**: Warm, trustworthy, family-oriented
+| Role | Color | Hex |
+|---|---|---|
+| Primary | Ocean Blue | #0EA5E9 |
+| Accent / CTA | Emerald Green | #10B981 |
+| Background | Ice Blue | #F0F9FF |
+| Text | Dark Navy | #0F172A |
+| Subtext | Gray | #6B7280 |
+
+Font: Sarabun (Google Fonts) - supports Thai + Latin
+Radius: Rounded xl/2xl - approachable, modern feel
+
+---
+
+## Language Implementation
+
+- Single language displayed at a time (no mixed Thai/English on same label)
+- Language toggle pill TH | EN pinned in the top navbar
+- Active language highlighted
+- Default language: Thai
+- All UI strings in /src/i18n/th.js and /src/i18n/en.js
+- useLanguage() context hook - switching re-renders all text instantly
+- Mock data also has Thai and English versions
 
 ---
 
 ## App Structure (7 Screens)
 
-```
-/                       → Home (Landing)
-/find                   → Find a Caretaker (AI Matching Form)
-/matches                → Match Results (Top 3 with AI Score)
-/caretaker/:id          → Caretaker Profile Detail
-/book/:id               → Booking / Confirmation
-/bookings               → My Bookings / History
-/elder-profile          → Elder Profile (guardian manages elder's info)
-```
+- /                  Home (Landing)
+- /find              Find a Caretaker (AI Matching Form - 3 steps)
+- /matches           Match Results (Top 3 with AI Score)
+- /caretaker/:id     Caretaker Profile Detail
+- /book/:id          Booking / Confirmation
+- /bookings          My Bookings / History
+- /elder-profile     Elder Profile
 
 ---
 
-## Screen-by-Screen Breakdown
+## Screen Details
 
-### 1. 🏠 Home — Landing Page (`/`)
-- **Hero banner**: "ดูแลผู้สูงอายุที่คุณรัก / Care for your loved elders" — CTA button → `/find`
-- **Activity cards**: Featured outings (Hospital visit, Temple tour, Family event, Tourist spot)
-- **Promotions/Events strip**: Seasonal deals, partner hospitals
-- **How it works**: 3-step explainer (Fill form → Get AI matches → Book instantly)
-- **Testimonials**: 2-3 mock guardian quotes
+### 1. Home (/)
+- Hero banner: blue-to-teal gradient, CTA to /find
+- Activity cards: Hospital visit, Temple tour, City tour
+- Promotions strip: Partner hospitals deals
+- How it works: 3-step explainer
+- Testimonials: mock guardian quotes
 
----
+### 2. Find a Caretaker (/find)
+Step 1 - Physical Needs: mobility, medical conditions, medication
+Step 2 - Preferences: language, religion, diet, activity type
+Step 3 - Schedule and Budget: date, duration, budget slider
+Submit -> AI Matching animation -> /matches
 
-### 2. 🔍 Find a Caretaker — AI Matching Form (`/find`)
-Multi-step form (3 steps):
+### 3. Match Results (/matches)
+- Top 3 caretaker cards with circular AI Match Score ring
+- Score: 96% / 88% / 81%
+- Specialty badges, star rating, availability status
+- View Profile and Book Now buttons
 
-**Step 1: Elder's Physical Needs**
-- Mobility level (Independent / Needs assistance / Wheelchair)
-- Medical conditions (multi-select: diabetes, heart, dementia, etc.)
-- Medication management needed (yes/no)
+### 4. Caretaker Profile (/caretaker/:id)
+- Wave header banner in ocean blue gradient
+- AI Match Score badge in emerald green
+- Verified badges: Background check, Certified, First Aid
+- Experience level, specialty tags, bio
+- Reviews section, availability calendar
+- Sticky bottom Book button
 
-**Step 2: Personality & Preferences**
-- Language preference (Thai, English, Isaan, etc.)
-- Religion (Buddhism, Christianity, Islam, etc.)
-- Diet (regular, vegetarian, halal, etc.)
-- Activity type (Hospital, Temple, Tourism, Event)
+### 5. Booking (/book/:id)
+- Summary: elder info, caretaker, date/time, activity
+- Location picker, price breakdown
+- Confirm -> success modal -> /bookings
 
-**Step 3: Schedule & Budget**
-- Date & time picker
-- Duration (2h, 4h, full day)
-- Budget range (slider)
-- Number of outings per month
+### 6. My Bookings (/bookings)
+- Tabs: Upcoming | Past
+- Booking cards with status badge
+- Past: Leave Review CTA
 
-→ Submit triggers "AI Matching" loading animation → redirects to `/matches`
-
----
-
-### 3. 🤖 Match Results — AI Score Cards (`/matches`)
-- Header: "เราพบผู้ดูแลที่เหมาะสมที่สุด 3 คน / We found your top 3 matches"
-- 3 caretaker cards, each showing:
-  - Profile photo, name, age
-  - **AI Match Score** (e.g. 96%, 88%, 81%) — displayed as animated progress ring
-  - Specialty badges (Medical escort, Dementia care, etc.)
-  - Star rating + # of reviews
-  - Availability status (Available today ✅)
-  - "View Profile" and "Book Now" CTAs
-
----
-
-### 4. 👤 Caretaker Profile Detail (`/caretaker/:id`)
-- Large header photo + name, age, location
-- AI Match Score banner
-- Verified badges (Background check ✅, Certified ✅, First Aid ✅)
-- Experience level (e.g., Expert — 5+ years)
-- Specialty tags
-- About me (bio in Thai + English)
-- Reviews section (3 mock reviews from families)
-- Availability calendar (mock)
-- **"Book This Caretaker"** CTA → `/book/:id`
-
----
-
-### 5. 📅 Booking / Confirmation (`/book/:id`)
-- Summary of: Elder info, Caretaker, Date/Time, Duration, Activity
-- Location picker (mock — where to take the elder)
-- Price breakdown (hourly rate × hours + platform fee)
-- **"Confirm Booking"** button → shows success modal + redirects to `/bookings`
-
----
-
-### 6. 📋 My Bookings / History (`/bookings`)
-- Tab: Upcoming | Past
-- Booking cards showing: caretaker photo, date, activity, status badge
-- Past bookings have a "Leave Review" CTA
-
----
-
-### 7. 👴 Elder Profile (`/elder-profile`)
-- Guardian can manage their elder's saved info:
-  - Photo, Name, Age, Gender
-  - Medical conditions
-  - Preferences & personality
-  - Mobility level
-- "Edit" button for each section
-- Note: This info auto-fills the matching form next time
+### 7. Elder Profile (/elder-profile)
+- Edit elder info: photo, name, age, medical, preferences, mobility
+- Auto-fills matching form on next use
 
 ---
 
 ## Mock Data
 
-All data will be hardcoded in `/src/data/`:
-- `caretakers.json` — 5 caretaker profiles
-- `bookings.json` — 3 sample bookings (2 upcoming, 1 past)
-- `activities.json` — featured activities/events for homepage
-- `elder.json` — sample elder profile
-
----
-
-## Bilingual Implementation
-
-- Language toggle (🇹🇭 / 🇬🇧) in the nav header
-- All UI strings stored in `/src/i18n/th.js` and `/src/i18n/en.js`
-- `useLanguage()` context hook used app-wide
+- caretakers.json - 5 caretaker profiles
+- bookings.json - 3 sample bookings
+- activities.json - featured activities for homepage
+- elder.json - sample elder profile
 
 ---
 
 ## Project Structure
 
-```
 src/
-├── main.jsx
-├── App.jsx
-├── i18n/
-│   ├── en.js
-│   └── th.js
-├── context/
-│   ├── LanguageContext.jsx
-│   └── BookingContext.jsx
-├── data/
-│   ├── caretakers.json
-│   ├── bookings.json
-│   ├── activities.json
-│   └── elder.json
-├── components/
-│   ├── layout/
-│   │   ├── Navbar.jsx
-│   │   └── Footer.jsx
-│   └── ui/
-│       ├── MatchScoreRing.jsx
-│       ├── CaretakerCard.jsx
-│       ├── ActivityCard.jsx
-│       └── StepForm.jsx
-└── pages/
-    ├── Home.jsx
-    ├── FindCaretaker.jsx
-    ├── MatchResults.jsx
-    ├── CaretakerProfile.jsx
-    ├── Booking.jsx
-    ├── MyBookings.jsx
-    └── ElderProfile.jsx
-```
+  main.jsx
+  App.jsx
+  i18n/ (en.js, th.js)
+  context/ (LanguageContext.jsx, BookingContext.jsx)
+  data/ (caretakers.json, bookings.json, activities.json, elder.json)
+  components/layout/ (Navbar.jsx, Footer.jsx)
+  components/ui/ (MatchScoreRing.jsx, CaretakerCard.jsx, ActivityCard.jsx, StepForm.jsx)
+  pages/ (Home, FindCaretaker, MatchResults, CaretakerProfile, Booking, MyBookings, ElderProfile)
 
 ---
 
 ## Verification Plan
 
-### Manual Verification
-- Navigate all 7 pages via in-app links
-- Complete full flow: Home → Find → Matches → Profile → Book → Bookings
-- Test language toggle (Thai ↔ English)
-- Check responsive layout on desktop and tablet width
+- Complete flow: Home -> Find -> Matches -> Profile -> Book -> Bookings
+- Test language toggle Thai <-> English
+- Check responsive layout: desktop, tablet, mobile
