@@ -35,6 +35,7 @@ export const MEDICAL_CONDITIONS = Object.freeze({
 
 export const APPOINTMENT_EVENTS = Object.freeze({
   HOSPITAL: 'hospital',
+  INPATIENT_WATCH: 'inpatient_watch',
   TEMPLE: 'temple',
   TOUR: 'tour',
   PARK: 'park',
@@ -122,7 +123,7 @@ export const elderMobilityOptions = Object.freeze([
   {
     id: ELDER_MOBILITY.WHEELCHAIR_ASSISTED,
     label: { th: 'ใช้วีลแชร์เมื่อเดินทางไกล (Wheelchair Assisted)', en: 'Wheelchair assisted' },
-    shortLabel: { th: 'วีลแชร์ไกล', en: 'Wheelchair' },
+    shortLabel: { th: 'วีลแชร์', en: 'Wheelchair' },
     description: {
       th: 'เดินระยะสั้นได้ แต่ต้องใช้วีลแชร์เมื่อไปโรงพยาบาลหรือเดินทางไกล',
       en: 'Can walk short distances but needs a wheelchair for long outings.',
@@ -182,6 +183,16 @@ export const appointmentEventOptions = Object.freeze([
     icon: 'Stethoscope',
     tone: 'sky',
     defaultDurationHours: 4,
+  },
+  {
+    id: APPOINTMENT_EVENTS.INPATIENT_WATCH,
+    label: { th: 'เฝ้าไข้', en: 'Patient watch' },
+    fullLabel: { th: 'เฝ้าไข้ / อยู่เป็นเพื่อนที่โรงพยาบาล', en: 'Patient watch / hospital companion' },
+    helper: { th: 'อยู่เป็นเพื่อน รายงานอาการ', en: 'Companion, updates' },
+    description: { th: 'อยู่เป็นเพื่อนผู้ป่วยที่โรงพยาบาล ช่วยดูแลพื้นฐาน และรายงานอาการให้ครอบครัว', en: 'Hospital bedside companion with basic care and family updates' },
+    icon: 'HeartPulse',
+    tone: 'rose',
+    defaultDurationHours: 6,
   },
   {
     id: APPOINTMENT_EVENTS.TEMPLE,

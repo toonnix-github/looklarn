@@ -125,7 +125,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
         </div>
 
         <div
-          className="grid max-h-[13.2dvh] grid-cols-2 gap-[1.6vw] overflow-y-auto rounded-[min(3.6vw,0.9rem)] bg-white pr-[1vw] ring-1 ring-slate-100 sm:max-h-56 sm:gap-2.5 sm:rounded-2xl sm:p-1"
+          className="grid max-h-[17.4dvh] grid-cols-2 gap-[1.8vw] overflow-y-auto rounded-[min(3.8vw,0.95rem)] bg-white pr-[1vw] ring-1 ring-slate-100 sm:max-h-56 sm:gap-2.5 sm:rounded-2xl sm:p-1"
           aria-label={language === 'th' ? 'รายการข้อจำกัดเกี่ยวกับผู้ดูแล' : 'Caretaker constraint options'}
         >
           {caretakerRequirementOptions.map((requirement) => {
@@ -137,7 +137,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
                 type="button"
                 disabled={isDisabled}
                 onClick={() => toggleRequirement(requirement.id)}
-                className={`relative flex min-h-[3.85dvh] items-center justify-center rounded-[min(3vw,0.75rem)] border px-[1.6vw] text-center text-[clamp(0.49rem,2.12vw,0.6rem)] font-black leading-tight transition-all active:scale-[0.985] sm:min-h-12 sm:rounded-2xl sm:px-3 sm:py-3 sm:text-sm ${
+                className={`relative flex min-h-[4.75dvh] items-center justify-center rounded-[min(3.3vw,0.82rem)] border px-[1.9vw] text-center text-[clamp(0.56rem,2.42vw,0.68rem)] font-black leading-tight transition-all active:scale-[0.985] sm:min-h-12 sm:rounded-2xl sm:px-3 sm:py-3 sm:text-sm ${
                   isSelected
                     ? 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm ring-2 ring-emerald-500/15'
                     : isDisabled
@@ -146,7 +146,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
                 }`}
               >
                 {isSelected && (
-                  <CheckCircle2 className="absolute right-[1.4vw] top-[0.55dvh] h-[1.45dvh] w-[1.45dvh] text-emerald-600 sm:h-4 sm:w-4" />
+                  <CheckCircle2 className="absolute right-[1.5vw] top-[0.65dvh] h-[1.65dvh] w-[1.65dvh] text-emerald-600 sm:h-4 sm:w-4" />
                 )}
                 {getEnumLabel(requirement, language, 'label')}
               </button>
@@ -169,11 +169,11 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
               ? 'เช่น คุณแม่เดินช้า ชอบคุยเบา ๆ และไม่ชอบที่ร้อนมาก'
               : 'e.g. Mom walks slowly and prefers calm conversation.'
           }
-          className="h-[9.4dvh] w-full resize-none rounded-[min(3.8vw,0.95rem)] border border-slate-200 bg-white px-[3vw] py-[1.05dvh] text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-snug text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3.5 sm:text-sm"
+          className="h-[7.4dvh] w-full resize-none rounded-[min(3.8vw,0.95rem)] border border-slate-200 bg-white px-[3vw] py-[1.05dvh] text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-snug text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3.5 sm:text-sm"
         />
       </div>
 
-      <div className="flex items-center gap-[2vw] rounded-[min(3.8vw,0.95rem)] bg-sky-50 px-[3vw] py-[0.9dvh] text-[clamp(0.56rem,2.45vw,0.68rem)] font-bold leading-tight text-sky-800 ring-1 ring-sky-100 sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">
+      <div className="hidden items-center gap-[2vw] rounded-[min(3.8vw,0.95rem)] bg-sky-50 px-[3vw] py-[0.9dvh] text-[clamp(0.56rem,2.45vw,0.68rem)] font-bold leading-tight text-sky-800 ring-1 ring-sky-100 sm:flex sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">
         <UserCheck className="h-[1.9dvh] w-[1.9dvh] shrink-0 text-sky-600 sm:h-4 sm:w-4" />
         <span>
           {language === 'th'

@@ -18,7 +18,7 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import { appointmentEventOptions, getEnumLabel } from '../../constants/careEnums';
+import { APPOINTMENT_EVENTS, appointmentEventOptions, getEnumLabel } from '../../constants/careEnums';
 
 const iconMap = {
   Activity,
@@ -47,7 +47,15 @@ const iconToneClass = {
 export default function Step1Activity({ formData, setFormData }) {
   const { language } = useLanguage();
   const [activityModalOpen, setActivityModalOpen] = useState(false);
-  const quickActivities = appointmentEventOptions.slice(0, 4);
+  const quickActivityIds = [
+    APPOINTMENT_EVENTS.HOSPITAL,
+    APPOINTMENT_EVENTS.INPATIENT_WATCH,
+    APPOINTMENT_EVENTS.TEMPLE,
+    APPOINTMENT_EVENTS.TOUR,
+  ];
+  const quickActivities = quickActivityIds
+    .map((id) => appointmentEventOptions.find((activity) => activity.id === id))
+    .filter(Boolean);
   const selectedActivity = appointmentEventOptions.find((act) => act.id === formData.activityType) || appointmentEventOptions[0];
   const selectActivity = (activityType) => setFormData({ ...formData, activityType });
   const renderIcon = (act, className = 'w-6 h-6') => {
