@@ -4,13 +4,13 @@ import { Check } from 'lucide-react';
 
 const STEPS = {
   th: [
-    { number: 1, label: 'ไปไหน?' },
+    { number: 1, label: 'กิจกรรม' },
     { number: 2, label: 'วันเวลา & สถานที่' },
     { number: 3, label: 'ผู้ดูแล' },
   ],
   en: [
     { number: 1, label: 'Activity' },
-    { number: 2, label: 'Schedule & Location' },
+    { number: 2, label: 'Time & Place' },
     { number: 3, label: 'Caretaker' },
   ],
 };
@@ -40,7 +40,7 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
               key={step.number}
               type="button"
               onClick={() => onStepClick?.(step.number)}
-              className={`flex flex-1 items-center justify-center gap-[1vw] rounded-[min(3.2vw,0.8rem)] border px-[1.8vw] py-[0.75dvh] text-[clamp(0.54rem,2.35vw,0.66rem)] font-black transition-all cursor-pointer sm:gap-1.5 sm:rounded-xl sm:px-2 sm:py-2 sm:text-xs ${
+              className={`flex flex-1 items-center justify-center gap-[1vw] rounded-[min(3.2vw,0.8rem)] border px-[1.8vw] py-[0.75dvh] text-[clamp(0.62rem,2.62vw,0.74rem)] font-black transition-all cursor-pointer sm:gap-1.5 sm:rounded-xl sm:px-2 sm:py-2 sm:text-xs ${
                 isActive
                   ? 'bg-sky-500 text-white border-sky-500 shadow-md shadow-sky-500/20 ring-2 ring-sky-500/20'
                   : isCompleted
@@ -50,7 +50,7 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
             >
               {isCompleted
                 ? <Check className="h-[1.65dvh] w-[1.65dvh] shrink-0 text-emerald-600 sm:h-3.5 sm:w-3.5" />
-                : <span className={`inline-flex h-[2.15dvh] w-[2.15dvh] shrink-0 items-center justify-center rounded-full text-[clamp(0.46rem,1.9vw,0.56rem)] font-black sm:h-4 sm:w-4 sm:text-[10px] ${isActive ? 'bg-white/30' : 'bg-slate-200 text-slate-600'}`}>{step.number}</span>
+                : <span className={`inline-flex h-[2.15dvh] w-[2.15dvh] shrink-0 items-center justify-center rounded-full text-[clamp(0.52rem,2.1vw,0.62rem)] font-black sm:h-4 sm:w-4 sm:text-[10px] ${isActive ? 'bg-white/30' : 'bg-slate-200 text-slate-600'}`}>{step.number}</span>
               }
               <span className="truncate">{step.label}</span>
             </button>

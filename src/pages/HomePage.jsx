@@ -98,7 +98,7 @@ export default function HomePage() {
     const ActivityIcon = eventIconMap[meta.icon] || HeartPulse;
     return {
       label: getEnumLabel(meta, language, 'label') || getLocalized(activity, 'title'),
-      helper: getEnumLabel(meta, language, 'helper') || getLocalized(activity, 'subtitle'),
+      helper: getEnumLabel(meta, language, 'shortDesc') || getEnumLabel(meta, language, 'helper') || getLocalized(activity, 'subtitle'),
       icon: ActivityIcon,
     };
   };
@@ -137,7 +137,7 @@ export default function HomePage() {
         <h1 className="sr-only">Looklarn ลูกหลาน</h1>
         <div className="min-h-0 overflow-hidden rounded-[min(5.4vw,1.35rem)] bg-white shadow-sm ring-1 ring-slate-200/75">
           <div className="grid h-full min-h-0 grid-cols-[0.66fr_1.66fr] items-center gap-[2.6vw] p-[2.35vw]">
-            <div className="relative aspect-square w-full self-center overflow-hidden rounded-[min(3.5vw,0.9rem)] bg-sky-50">
+            <div className="relative aspect-square w-full self-center overflow-hidden bg-sky-50">
               <img
                 src={elderPhoto}
                 alt={getLocalized(elder, 'name')}

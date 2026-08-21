@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { CardTitle } from '../ui/Card';
 import {
   Activity,
   Building2,
@@ -66,17 +65,6 @@ export default function Step1Activity({ formData, setFormData }) {
 
   return (
     <div className="h-full min-h-0 space-y-[1.1dvh] sm:h-auto sm:space-y-5">
-      <div className="space-y-[0.25dvh] sm:space-y-1">
-        <CardTitle as="h2" className="text-[clamp(1rem,4.8vw,1.22rem)] font-black leading-tight text-slate-900 sm:text-2xl">
-          {language === 'th' ? 'ครั้งนี้จะพาไปไหน?' : "Where are we going this time?"}
-        </CardTitle>
-        <p className="text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-tight text-slate-500 sm:text-sm">
-          {language === 'th'
-            ? 'เลือกกิจกรรมหลักก่อน แล้วค่อยใส่รายละเอียดนัดหมาย'
-            : 'Choose the activity type so the caretaker can prepare accordingly.'}
-        </p>
-      </div>
-
       <div className="sm:hidden">
         <div className="mb-[1dvh] flex items-center justify-between rounded-[min(3.6vw,0.9rem)] bg-sky-50 px-[3vw] py-[0.9dvh] ring-1 ring-sky-100">
           <span className="flex min-w-0 items-center gap-[2vw]">
@@ -84,15 +72,15 @@ export default function Step1Activity({ formData, setFormData }) {
               {renderIcon(selectedActivity, 'h-[2dvh] w-[2dvh]')}
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[clamp(0.72rem,3.2vw,0.84rem)] font-black text-slate-950">
+              <span className="block truncate text-[clamp(0.82rem,3.55vw,0.96rem)] font-black text-slate-950">
                 {getEnumLabel(selectedActivity, language, 'label')}
               </span>
-              <span className="block truncate text-[clamp(0.52rem,2.25vw,0.62rem)] font-bold text-slate-500">
-                {getEnumLabel(selectedActivity, language, 'helper')}
+              <span className="block truncate text-[clamp(0.64rem,2.7vw,0.76rem)] font-bold text-slate-500">
+                {getEnumLabel(selectedActivity, language, 'shortDesc') || getEnumLabel(selectedActivity, language, 'helper')}
               </span>
             </span>
           </span>
-          <span className="rounded-full bg-white px-[2.2vw] py-[0.4dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-sky-700 ring-1 ring-sky-100">
+          <span className="rounded-full bg-white px-[2.2vw] py-[0.4dvh] text-[clamp(0.6rem,2.55vw,0.7rem)] font-black text-sky-700 ring-1 ring-sky-100">
             เลือกแล้ว
           </span>
         </div>
@@ -117,11 +105,11 @@ export default function Step1Activity({ formData, setFormData }) {
                   <ActivityIcon className={`h-[2.25dvh] w-[2.25dvh] ${iconClassName}`} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block truncate text-[clamp(0.68rem,3vw,0.8rem)] font-black leading-tight">
+                  <span className="block truncate text-[clamp(0.78rem,3.35vw,0.92rem)] font-black leading-tight">
                     {getEnumLabel(act, language, 'label')}
                   </span>
-                  <span className={`block truncate text-[clamp(0.5rem,2.2vw,0.62rem)] font-bold leading-tight ${isSelected ? 'text-sky-100' : 'text-slate-500'}`}>
-                    {getEnumLabel(act, language, 'helper')}
+                  <span className={`block truncate text-[clamp(0.62rem,2.62vw,0.74rem)] font-bold leading-tight ${isSelected ? 'text-sky-100' : 'text-slate-500'}`}>
+                    {getEnumLabel(act, language, 'shortDesc') || getEnumLabel(act, language, 'helper')}
                   </span>
                 </span>
                 {isSelected && (
@@ -135,7 +123,7 @@ export default function Step1Activity({ formData, setFormData }) {
         <button
           type="button"
           onClick={() => setActivityModalOpen(true)}
-          className="mt-[1dvh] flex h-[4.6dvh] w-full items-center justify-center gap-[2vw] rounded-full bg-white text-[clamp(0.64rem,2.85vw,0.76rem)] font-black text-sky-700 shadow-sm ring-1 ring-sky-100 active:scale-[0.985]"
+          className="mt-[1dvh] flex h-[4.6dvh] w-full items-center justify-center gap-[2vw] rounded-full bg-white text-[clamp(0.72rem,3.05vw,0.84rem)] font-black text-sky-700 shadow-sm ring-1 ring-sky-100 active:scale-[0.985]"
         >
           <Plus className="h-[1.9dvh] w-[1.9dvh]" />
           {language === 'th' ? 'ดูกิจกรรมอื่นเพิ่มเติม' : 'More activities'}
@@ -240,7 +228,7 @@ export default function Step1Activity({ formData, setFormData }) {
                         {getEnumLabel(act, language, 'label')}
                       </span>
                       <span className="block truncate text-xs font-bold text-slate-500">
-                        {getEnumLabel(act, language, 'helper')}
+                        {getEnumLabel(act, language, 'shortDesc') || getEnumLabel(act, language, 'helper')}
                       </span>
                     </span>
                   </button>

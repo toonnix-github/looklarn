@@ -50,10 +50,10 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
   return (
     <div className="h-full min-h-0 space-y-[1.15dvh] sm:h-auto sm:space-y-6">
       <div className="space-y-[0.25dvh] sm:space-y-1">
-        <CardTitle as="h2" className="text-[clamp(1rem,4.8vw,1.22rem)] font-black leading-tight text-slate-900 sm:text-2xl">
+        <CardTitle as="h2" className="text-[clamp(1.08rem,5vw,1.28rem)] font-black leading-tight text-slate-900 sm:text-2xl">
           {language === 'th' ? 'ต้องการผู้ดูแลแบบไหน' : 'Caretaker Preferences'}
         </CardTitle>
-        <p className="text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-tight text-slate-500 sm:text-sm">
+        <p className="hidden text-[clamp(0.7rem,2.95vw,0.82rem)] font-semibold leading-tight text-slate-500 sm:block sm:text-sm">
           {language === 'th'
             ? 'เลือกข้อจำกัดที่สำคัญ เพื่อให้เราแนะนำผู้ดูแลได้ตรงขึ้น'
             : 'Choose important constraints so we can recommend a better match.'}
@@ -61,7 +61,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
       </div>
 
       <div className="space-y-[0.75dvh] sm:space-y-2.5">
-        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+        <label className="flex items-center gap-1.5 text-[clamp(0.7rem,2.95vw,0.82rem)] font-black text-slate-800 sm:text-sm">
           <Users className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'เพศของผู้ดูแล' : 'Caretaker gender'}
         </label>
@@ -73,7 +73,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
                 key={gender.id}
                 type="button"
                 onClick={() => setFormData({ ...formData, genderPref: gender.id })}
-                className={`h-[4.8dvh] rounded-[min(3.4vw,0.85rem)] border text-[clamp(0.62rem,2.75vw,0.74rem)] font-black transition-all active:scale-[0.985] sm:h-auto sm:rounded-2xl sm:py-3 sm:text-sm ${
+                className={`h-[4.8dvh] rounded-[min(3.4vw,0.85rem)] border text-[clamp(0.72rem,3vw,0.84rem)] font-black transition-all active:scale-[0.985] sm:h-auto sm:rounded-2xl sm:py-3 sm:text-sm ${
                   isSelected
                     ? 'border-sky-500 bg-sky-500 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500/20'
                     : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
@@ -88,11 +88,11 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
 
       <div className="min-h-0 space-y-[0.7dvh] sm:space-y-2.5">
         <div className="flex items-center justify-between gap-2">
-          <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+          <label className="flex items-center gap-1.5 text-[clamp(0.7rem,2.95vw,0.82rem)] font-black text-slate-800 sm:text-sm">
             <ShieldCheck className="h-[1.8dvh] w-[1.8dvh] text-emerald-500 sm:h-4 sm:w-4" />
             {language === 'th' ? 'ข้อจำกัดเกี่ยวกับผู้ดูแล' : 'Caretaker constraints'}
           </label>
-          <span className="rounded-full bg-slate-100 px-[2vw] py-[0.35dvh] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black text-slate-500">
+          <span className="rounded-full bg-slate-100 px-[2vw] py-[0.35dvh] text-[clamp(0.58rem,2.4vw,0.68rem)] font-black text-slate-500">
             {selectedRequirements.length}/{MAX_REQUIREMENTS}
           </span>
         </div>
@@ -103,7 +103,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
               {selectedRequirementMetas.map((requirement) => (
                 <span
                   key={requirement.id}
-                  className="inline-flex h-[2.55dvh] items-center gap-[0.8vw] rounded-full bg-white px-[1.8vw] text-[clamp(0.5rem,2.15vw,0.6rem)] font-black text-emerald-800 shadow-sm ring-1 ring-emerald-100 sm:h-7 sm:gap-1 sm:px-2.5 sm:text-xs"
+                  className="inline-flex h-[2.55dvh] items-center gap-[0.8vw] rounded-full bg-white px-[1.8vw] text-[clamp(0.58rem,2.4vw,0.68rem)] font-black text-emerald-800 shadow-sm ring-1 ring-emerald-100 sm:h-7 sm:gap-1 sm:px-2.5 sm:text-xs"
                 >
                   {getEnumLabel(requirement, language, 'shortLabel')}
                   <button
@@ -118,7 +118,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
               ))}
             </div>
           ) : (
-            <span className="block text-[clamp(0.5rem,2.15vw,0.6rem)] font-bold text-slate-400 sm:text-xs">
+            <span className="block text-[clamp(0.58rem,2.4vw,0.68rem)] font-bold text-slate-400 sm:text-xs">
               {language === 'th' ? 'ยังไม่ได้เลือกข้อจำกัด' : 'No constraints selected'}
             </span>
           )}
@@ -137,7 +137,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
                 type="button"
                 disabled={isDisabled}
                 onClick={() => toggleRequirement(requirement.id)}
-                className={`relative flex min-h-[4.75dvh] items-center justify-center rounded-[min(3.3vw,0.82rem)] border px-[1.9vw] text-center text-[clamp(0.56rem,2.42vw,0.68rem)] font-black leading-tight transition-all active:scale-[0.985] sm:min-h-12 sm:rounded-2xl sm:px-3 sm:py-3 sm:text-sm ${
+                className={`relative flex min-h-[4.75dvh] items-center justify-center rounded-[min(3.3vw,0.82rem)] border px-[1.9vw] text-center text-[clamp(0.64rem,2.72vw,0.76rem)] font-black leading-tight transition-all active:scale-[0.985] sm:min-h-12 sm:rounded-2xl sm:px-3 sm:py-3 sm:text-sm ${
                   isSelected
                     ? 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm ring-2 ring-emerald-500/15'
                     : isDisabled
@@ -156,7 +156,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
       </div>
 
       <div className="space-y-[0.75dvh] sm:space-y-2.5">
-        <label className="flex items-center gap-1.5 text-[clamp(0.62rem,2.7vw,0.74rem)] font-black text-slate-800 sm:text-sm">
+        <label className="flex items-center gap-1.5 text-[clamp(0.7rem,2.95vw,0.82rem)] font-black text-slate-800 sm:text-sm">
           <FileText className="h-[1.8dvh] w-[1.8dvh] text-slate-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'บอกผู้ดูแลเพิ่มเติม' : 'Caretaker note'}
         </label>
@@ -169,7 +169,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
               ? 'เช่น คุณแม่เดินช้า ชอบคุยเบา ๆ และไม่ชอบที่ร้อนมาก'
               : 'e.g. Mom walks slowly and prefers calm conversation.'
           }
-          className="h-[7.4dvh] w-full resize-none rounded-[min(3.8vw,0.95rem)] border border-slate-200 bg-white px-[3vw] py-[1.05dvh] text-[clamp(0.62rem,2.75vw,0.74rem)] font-semibold leading-snug text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3.5 sm:text-sm"
+          className="h-[7.4dvh] w-full resize-none rounded-[min(3.8vw,0.95rem)] border border-slate-200 bg-white px-[3vw] py-[1.05dvh] text-[clamp(0.72rem,3vw,0.84rem)] font-semibold leading-snug text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3.5 sm:text-sm"
         />
       </div>
 
