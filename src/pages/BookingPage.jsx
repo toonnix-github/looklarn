@@ -11,6 +11,7 @@ import { PriceBreakdown } from '../components/booking/PriceBreakdown';
 import { BookingSuccessModal } from '../components/booking/BookingSuccessModal';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import { APPOINTMENT_EVENTS } from '../constants/careEnums';
+import { calculateCarePrice } from '../utils/pricing';
 
 export default function BookingPage() {
   const { id } = useParams();
@@ -33,10 +34,12 @@ export default function BookingPage() {
   const [timeSlot] = useState(
     searchCriteria?.startTime && searchCriteria?.endTime
       ? `${searchCriteria.startTime} - ${searchCriteria.endTime}`
-      : searchCriteria?.timeSlot === 'morning'
-      ? '08:30 - 12:30'
-      : searchCriteria?.timeSlot === 'afternoon'
+    : searchCriteria?.timeSlot === 'morning'
+      ? '08:00 - 12:00'
+      : searchCriteria?.timeSlot === 'evening'
       ? '13:00 - 17:00'
+      : searchCriteria?.timeSlot === 'full_day'
+      ? '08:00 - 17:00'
       : searchCriteria?.timeSlot || '08:30 - 12:30'
   );
   const [activityType] = useState(searchCriteria?.activityType || APPOINTMENT_EVENTS.HOSPITAL);
@@ -46,6 +49,16 @@ export default function BookingPage() {
   const [promoCode, setPromoCode] = useState('');
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [promoStatus, setPromoStatus] = useState('idle'); // 'idle' | 'applied' | 'invalid'
+
+  const priceQuote = calculateCarePrice({
+    activityType,
+    date: serviceDate,
+    timeSlot: searchCriteria?.timeSlot,
+    durationHours: hours,
+    mobility: searchCriteria?.mobility || elder?.mobilityLevel,
+    caretakerRequirements: searchCriteria?.caretakerRequirements || [],
+  });
+  const totalAmount = Math.max(0, priceQuote.totalPrice - promoDiscount);
 
   // Success Modal State
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
@@ -93,10 +106,6 @@ export default function BookingPage() {
 
   const handleConfirmBooking = () => {
     setIsSubmitting(true);
-    const hourlyRate = caretaker.hourlyRate || 350;
-    const basePrice = hourlyRate * hours;
-    const serviceFee = 100;
-    const totalPrice = Math.max(0, basePrice + serviceFee - promoDiscount);
 
     const newBk = addBooking({
       caretakerId: caretaker.id,
@@ -104,18 +113,20 @@ export default function BookingPage() {
       caretakerNickname: caretaker.nickname,
       caretakerPhoto: caretaker.photo,
       caretakerPhone: caretaker.phone || '089-123-4567',
-      hourlyRate,
       durationHours: hours,
       serviceDate,
       timeSlot,
       activityType,
+      mobility: searchCriteria?.mobility || elder?.mobilityLevel,
+      caretakerRequirements: searchCriteria?.caretakerRequirements || [],
       pickupAddress: { th: pickup, en: pickup },
       destinationName: { th: destination, en: destination },
       destinationAddress: { th: destination, en: destination },
-      basePrice,
-      serviceFee,
+      priceQuote,
+      basePrice: priceQuote.totalPrice,
+      serviceFee: priceQuote.serviceFee,
       discount: promoDiscount,
-      totalPrice,
+      totalPrice: totalAmount,
       paymentMethod,
       specialNotes: notes,
     });
@@ -161,6 +172,7 @@ export default function BookingPage() {
             timeSlot={timeSlot}
             durationHours={hours}
             activityType={activityType}
+            priceQuote={priceQuote}
           />
 
           <LocationPicker
@@ -176,16 +188,15 @@ export default function BookingPage() {
           <PaymentMethodSelector
             selectedMethod={paymentMethod}
             onSelectMethod={setPaymentMethod}
-            totalAmount={Math.max(0, (caretaker.hourlyRate || 350) * hours + 100 - promoDiscount)}
+            totalAmount={totalAmount}
           />
         </div>
 
         {/* Right Column: Price Breakdown Sticky Card */}
         <div className="lg:col-span-4 lg:sticky lg:top-8 space-y-4">
           <PriceBreakdown
-            hourlyRate={caretaker.hourlyRate || 350}
             durationHours={hours}
-            serviceFee={100}
+            priceQuote={priceQuote}
             discount={promoDiscount}
             promoCode={promoCode}
             promoStatus={promoStatus}

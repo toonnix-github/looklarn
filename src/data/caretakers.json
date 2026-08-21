@@ -13,7 +13,6 @@
       "th": "ผู้เชี่ยวชาญพาพบแพทย์และประสานงาน รพ.",
       "en": "Hospital Medical Escort Specialist"
     },
-    "hourlyRate": 350,
     "rating": 4.95,
     "reviewsCount": 58,
     "completedTrips": 142,
@@ -90,7 +89,6 @@
       "th": "พยาบาลวิชาชีพดูแลผู้สูงอายุและพักฟื้น",
       "en": "Registered Geriatric Nurse & Recovery Escort"
     },
-    "hourlyRate": 450,
     "rating": 4.98,
     "reviewsCount": 74,
     "completedTrips": 198,
@@ -157,7 +155,6 @@
       "th": "นักกายภาพบำบัดฝึกหัด & เพื่อนพาเที่ยวพักผ่อน",
       "en": "Physical Therapy Assistant & Leisure Companion"
     },
-    "hourlyRate": 320,
     "rating": 4.86,
     "reviewsCount": 42,
     "completedTrips": 89,
@@ -222,7 +219,6 @@
       "th": "ผู้เชี่ยวชาญพาทำบุญไหว้พระ & ท่องเที่ยวเชิงวัฒนธรรม",
       "en": "Cultural Tour & Temple Merit Escort Specialist"
     },
-    "hourlyRate": 380,
     "rating": 4.88,
     "reviewsCount": 36,
     "completedTrips": 78,
@@ -289,7 +285,6 @@
       "th": "ผู้ช่วยเดินทาง & ขับรถพาผู้สูงอายุร่วมงานสังคม",
       "en": "Senior Mobility Driver & Social Event Escort"
     },
-    "hourlyRate": 300,
     "rating": 4.82,
     "reviewsCount": 51,
     "completedTrips": 165,

@@ -22,6 +22,7 @@ import {
   getElderMobilityMeta,
   getEnumLabel,
 } from '../constants/careEnums';
+import { calculateCarePrice } from '../utils/pricing';
 
 export default function MatchResultsPage() {
   const { t, language, getLocalized } = useLanguage();
@@ -34,10 +35,6 @@ export default function MatchResultsPage() {
     switch (sortBy) {
       case 'rating':
         return list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-      case 'price_asc':
-        return list.sort((a, b) => (a.hourlyRate || 0) - (b.hourlyRate || 0));
-      case 'price_desc':
-        return list.sort((a, b) => (b.hourlyRate || 0) - (a.hourlyRate || 0));
       case 'trips':
         return list.sort((a, b) => (b.completedTrips || 0) - (a.completedTrips || 0));
       case 'matchScore':
@@ -50,6 +47,7 @@ export default function MatchResultsPage() {
   const topMatches = sortedCaretakers.slice(0, 3);
   const topMatch = topMatches[0];
   const secondaryMatches = topMatches.slice(1, 3);
+  const priceQuote = calculateCarePrice(searchCriteria);
   const elderNickname = elder ? getLocalized(elder, 'nickname') : (language === 'th' ? 'ยายพร' : 'Grandma Porn');
   const activityName = getAppointmentEventLabel(searchCriteria.activityType, language, 'label');
   const mobilityName = getEnumLabel(getElderMobilityMeta(searchCriteria.mobility), language, 'shortLabel');
@@ -64,7 +62,7 @@ export default function MatchResultsPage() {
   const sortOptions = [
     { id: 'matchScore', label: language === 'th' ? 'เหมาะสุด' : 'Best' },
     { id: 'rating', label: language === 'th' ? 'รีวิว' : 'Reviews' },
-    { id: 'price_asc', label: language === 'th' ? 'ราคา' : 'Price' },
+    { id: 'trips', label: language === 'th' ? 'ทริป' : 'Trips' },
   ];
 
   const renderScore = (score, className = '') => (
@@ -172,7 +170,7 @@ export default function MatchResultsPage() {
                       {topMatch.experienceYears} ปี
                     </span>
                     <span className="rounded-full bg-white px-[1.6vw] py-[0.38dvh] text-center text-[clamp(0.5rem,2.12vw,0.6rem)] font-black text-emerald-700 shadow-sm">
-                      ฿{topMatch.hourlyRate}/ชม.
+                      ฿{priceQuote.totalPrice}
                     </span>
                   </div>
                 </div>
@@ -227,7 +225,7 @@ export default function MatchResultsPage() {
                     {getLocalized(caretaker, 'tierName')}
                   </p>
                   <p className="text-[clamp(0.5rem,2.12vw,0.6rem)] font-black leading-tight text-slate-500">
-                    ★ {caretaker.rating} · ฿{caretaker.hourlyRate}/ชม.
+                    ★ {caretaker.rating} · ฿{priceQuote.totalPrice}/นัด
                   </p>
                 </div>
                 <Link

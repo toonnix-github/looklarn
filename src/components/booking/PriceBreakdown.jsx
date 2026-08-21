@@ -3,11 +3,11 @@ import { useLanguage } from '../../context/LanguageContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Receipt, Tag, ShieldCheck, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import { calculateCarePrice, formatServicePrice } from '../../utils/pricing';
 
 export function PriceBreakdown({
-  hourlyRate = 350,
   durationHours = 4,
-  serviceFee = 100,
+  priceQuote = null,
   discount = 0,
   promoCode = '',
   promoStatus = 'idle', // 'idle' | 'applied' | 'invalid'
@@ -18,9 +18,16 @@ export function PriceBreakdown({
   className = '',
 }) {
   const { t } = useLanguage();
+  const quote = priceQuote || calculateCarePrice({ durationHours });
 
-  const basePrice = hourlyRate * durationHours;
-  const totalPrice = Math.max(0, basePrice + serviceFee - discount);
+  const basePrice = quote.basePrice;
+  const activitySurcharge = quote.activitySurcharge || 0;
+  const mobilitySurcharge = quote.mobilitySurcharge || 0;
+  const requirementSurcharge = quote.requirementSurcharge || 0;
+  const weekendHolidayDiscount = quote.weekendHolidayDiscount || 0;
+  const effectiveServiceFee = quote.serviceFee || 0;
+  const totalBeforeDiscount = quote.totalPrice;
+  const totalPrice = Math.max(0, totalBeforeDiscount - discount);
 
   const handleApplyClick = (e) => {
     e.preventDefault();
@@ -50,26 +57,54 @@ export function PriceBreakdown({
         <div className="space-y-3 text-xs sm:text-sm text-slate-600 border-b border-slate-100 pb-4">
           <div className="flex justify-between items-center">
             <span>
-              {t('book.baseRateLabel', `อัตราผู้ดูแล (${durationHours} ชม. x ฿${hourlyRate})`)}
+              {t('book.baseRateLabel', quote.durationType === 'full_day' ? 'ราคามาตรฐานเต็มวัน' : 'ราคามาตรฐานครึ่งวัน')}
             </span>
-            <span className="font-semibold text-slate-900">฿{basePrice}</span>
+            <span className="font-semibold text-slate-900">{formatServicePrice(basePrice)}</span>
           </div>
+
+          {activitySurcharge > 0 && (
+            <div className="flex justify-between items-center">
+              <span>{t('book.activitySurchargeLabel', 'ความยากของกิจกรรม')}</span>
+              <span className="font-semibold text-slate-900">+{formatServicePrice(activitySurcharge)}</span>
+            </div>
+          )}
+
+          {mobilitySurcharge > 0 && (
+            <div className="flex justify-between items-center">
+              <span>{t('book.mobilitySurchargeLabel', 'ระดับการช่วยพยุง/การเคลื่อนไหว')}</span>
+              <span className="font-semibold text-slate-900">+{formatServicePrice(mobilitySurcharge)}</span>
+            </div>
+          )}
+
+          {requirementSurcharge > 0 && (
+            <div className="flex justify-between items-center">
+              <span>{t('book.requirementSurchargeLabel', 'ข้อจำกัดผู้ดูแลเพิ่มเติม')}</span>
+              <span className="font-semibold text-slate-900">+{formatServicePrice(requirementSurcharge)}</span>
+            </div>
+          )}
+
+          {weekendHolidayDiscount > 0 && (
+            <div className="flex justify-between items-center text-emerald-700">
+              <span>{t('book.weekendHolidayDiscountLabel', 'ส่วนลดวันเสาร์/อาทิตย์/วันหยุด')}</span>
+              <span className="font-semibold">-{formatServicePrice(weekendHolidayDiscount)}</span>
+            </div>
+          )}
 
           <div className="flex justify-between items-center">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-sky-500" />
               <span>{t('book.insuranceFeeLabel', 'ประกันอุบัติเหตุและความปลอดภัยผู้สูงอายุ')}</span>
             </span>
-            <span className="font-semibold text-slate-900">฿{serviceFee}</span>
+            <span className="font-semibold text-slate-900">{effectiveServiceFee > 0 ? formatServicePrice(effectiveServiceFee) : t('common.included', 'รวมแล้ว')}</span>
           </div>
 
           {discount > 0 && (
             <div className="flex justify-between items-center text-emerald-600 font-semibold bg-emerald-50/80 p-2 rounded-lg">
               <span className="flex items-center gap-1.5">
                 <Tag className="w-4 h-4 text-emerald-500" />
-                <span>{t('book.promoDiscountLabel', 'ส่วนลดโปรโมชั่น')}</span>
+              <span>{t('book.promoDiscountLabel', 'ส่วนลดโปรโมชั่น')}</span>
               </span>
-              <span>-฿{discount}</span>
+              <span>-{formatServicePrice(discount)}</span>
             </div>
           )}
         </div>
@@ -124,7 +159,7 @@ export function PriceBreakdown({
           </div>
           <div className="text-right">
             <span className="text-2xl sm:text-3xl font-black text-emerald-600 tracking-tight">
-              ฿{totalPrice}
+              {formatServicePrice(totalPrice)}
             </span>
           </div>
         </div>

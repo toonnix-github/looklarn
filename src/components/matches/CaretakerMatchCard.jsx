@@ -5,6 +5,8 @@ import { MatchScoreRing } from '../ui/MatchScoreRing';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Star, ShieldCheck, CheckCircle2, Award, Sparkles, Clock, ArrowRight } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
+import { calculateCarePrice } from '../../utils/pricing';
 
 export function CaretakerMatchCard({
   caretaker,
@@ -12,10 +14,12 @@ export function CaretakerMatchCard({
   rank = 1,
 }) {
   const { t, getLocalized, language } = useLanguage();
+  const { searchCriteria } = useApp();
 
   if (!caretaker) return null;
 
   const isBest = isTopMatch || caretaker.matchScore >= 95 || rank === 1;
+  const priceQuote = calculateCarePrice(searchCriteria);
 
   return (
     <div
@@ -95,10 +99,10 @@ export function CaretakerMatchCard({
 
           <div className="text-right">
             <span className="text-base sm:text-lg font-black text-emerald-600">
-              ฿{caretaker.hourlyRate}
+              ฿{priceQuote.totalPrice}
             </span>
             <span className="text-xs font-semibold text-slate-500 ml-1">
-              / {t('common.hrShort', 'ชม.')}
+              {language === 'th' ? '/นัด' : '/booking'}
             </span>
           </div>
         </div>

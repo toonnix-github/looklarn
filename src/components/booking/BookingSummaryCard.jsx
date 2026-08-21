@@ -54,6 +54,7 @@ export function BookingSummaryCard({
   timeSlot,
   durationHours = 4,
   activityType = APPOINTMENT_EVENTS.HOSPITAL,
+  priceQuote = null,
   className = '',
 }) {
   const { t, language, getLocalized } = useLanguage();
@@ -144,7 +145,7 @@ export function BookingSummaryCard({
                 </p>
                 <div className="flex items-center gap-3 text-xs text-slate-600 pt-0.5">
                   <span className="font-bold text-emerald-600 text-sm">
-                    ฿{caretaker.hourlyRate} / {t('common.hrShort', 'ชม.')}
+                    {priceQuote ? `฿${priceQuote.totalPrice}` : t('book.standardPriceLabel', 'ราคามาตรฐาน')}
                   </span>
                   <span>•</span>
                   <span>★ {caretaker.rating} ({caretaker.reviewsCount || caretaker.reviews?.length || 0})</span>

@@ -8,7 +8,7 @@
       "th": "ช่วยเข็นวีลแชร์ รอคิวพบแพทย์ จดบันทึกคำสั่งแพทย์ ประสานงานรับยา และพาเดินทางกลับบ้านอย่างปลอดภัย",
       "en": "Dedicated wheelchair assistance, OPD queue management, doctor instruction notes, and safe pharmacy pickup."
     },
-    "priceEstimate": { "th": "฿350 - ฿500 / ชม.", "en": "฿350 - ฿500 / hr" },
+    "priceEstimate": { "th": "เริ่มต้น ฿650 / นัด", "en": "From ฿650 / booking" },
     "avgDuration": { "th": "3 - 5 ชั่วโมง", "en": "3 - 5 Hours" },
     "icon": "Stethoscope",
     "badgeColor": "bg-sky-100 text-sky-700 border-sky-200",
@@ -29,7 +29,7 @@
       "th": "พาเดินทางไปสักการะสิ่งศักดิ์สิทธิ์ตามวัดสำคัญ ช่วยพยุงขึ้นบันได ถวายสังฆทาน และดูแลความปลอดภัยอย่างใกล้ชิด",
       "en": "Escort to sacred Buddhist sites, merit-making assistance, stairway support, and serene spiritual accompaniment."
     },
-    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "priceEstimate": { "th": "เริ่มต้น ฿650 / นัด", "en": "From ฿650 / booking" },
     "avgDuration": { "th": "2 - 4 ชั่วโมง", "en": "2 - 4 Hours" },
     "icon": "Sun",
     "badgeColor": "bg-amber-100 text-amber-700 border-amber-200",
@@ -50,7 +50,7 @@
       "th": "พาเดินชมสถานที่สำคัญ ซื้อของในห้างสรรพสินค้า ช่วยถือสัมภาระและอำนวยความสะดวกตลอดทริป",
       "en": "Guided sightseeing, shopping assistance in air-conditioned malls, baggage carrying, and total convenience."
     },
-    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "priceEstimate": { "th": "เริ่มต้น ฿650 / นัด", "en": "From ฿650 / booking" },
     "avgDuration": { "th": "2 - 5 ชั่วโมง", "en": "2 - 5 Hours" },
     "icon": "ShoppingBag",
     "badgeColor": "bg-teal-100 text-teal-700 border-teal-200",
@@ -71,7 +71,7 @@
       "th": "สูดอากาศบริสุทธิ์ ออกกำลังกายเบาๆ ช่วยพยุงและฟื้นฟูกล้ามเนื้ออย่างปลอดภัย",
       "en": "Gentle outdoor mobility, guided exercise, and refreshing botanical strolls."
     },
-    "priceEstimate": { "th": "฿300 - ฿400 / ชม.", "en": "฿300 - ฿400 / hr" },
+    "priceEstimate": { "th": "เริ่มต้น ฿650 / นัด", "en": "From ฿650 / booking" },
     "avgDuration": { "th": "2 - 4 ชั่วโมง", "en": "2 - 4 Hours" },
     "icon": "Trees",
     "badgeColor": "bg-emerald-100 text-emerald-700 border-emerald-200",

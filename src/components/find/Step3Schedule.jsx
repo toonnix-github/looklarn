@@ -18,9 +18,10 @@ const MAX_REQUIREMENTS = 5;
 
 export default function Step3CaretakerDetails({ formData, setFormData }) {
   const { language } = useLanguage();
-  const selectedRequirements = Array.isArray(formData.caretakerRequirements)
+  const selectedRequirements = (Array.isArray(formData.caretakerRequirements)
     ? formData.caretakerRequirements
-    : [];
+    : []
+  ).filter((requirementId) => getCaretakerRequirementMeta(requirementId));
   const selectedRequirementMetas = selectedRequirements
     .map(getCaretakerRequirementMeta)
     .filter(Boolean);
@@ -65,25 +66,17 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
           <Users className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'เพศของผู้ดูแล' : 'Caretaker gender'}
         </label>
-        <div className="grid grid-cols-3 gap-[1.8vw] sm:gap-2.5">
-          {GENDERS.map((gender) => {
-            const isSelected = formData.genderPref === gender.id;
-            return (
-              <button
-                key={gender.id}
-                type="button"
-                onClick={() => setFormData({ ...formData, genderPref: gender.id })}
-                className={`h-[4.8dvh] rounded-[min(3.4vw,0.85rem)] border text-[clamp(0.72rem,3vw,0.84rem)] font-black transition-all active:scale-[0.985] sm:h-auto sm:rounded-2xl sm:py-3 sm:text-sm ${
-                  isSelected
-                    ? 'border-sky-500 bg-sky-500 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500/20'
-                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                }`}
-              >
-                {language === 'th' ? gender.th : gender.en}
-              </button>
-            );
-          })}
-        </div>
+        <select
+          value={formData.genderPref || 'any'}
+          onChange={(event) => setFormData({ ...formData, genderPref: event.target.value })}
+          className="h-[5dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.8rem,3.35vw,0.94rem)] font-black text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
+        >
+          {GENDERS.map((gender) => (
+            <option key={gender.id} value={gender.id}>
+              {language === 'th' ? gender.th : gender.en}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="min-h-0 space-y-[0.7dvh] sm:space-y-2.5">

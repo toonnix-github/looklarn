@@ -4,6 +4,7 @@ import initialBookings from '../data/bookings.json';
 import initialActivities from '../data/activities.json';
 import initialElder from '../data/elder.json';
 import { APPOINTMENT_EVENTS, ELDER_MOBILITY, MEDICAL_CONDITIONS } from '../constants/careEnums';
+import { calculateCarePrice } from '../utils/pricing';
 
 export const AppContext = createContext();
 
@@ -24,7 +25,6 @@ const defaultSearchCriteria = {
   date: '2026-08-28',
   timeSlot: 'morning',
   durationHours: 4,
-  budgetMax: 500,
   pickupAddress: '128/4 ซอยสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110',
   destination: 'โรงพยาบาลศิริราช อาคารนวมินทรบพิตร ๘๔ พรรษา',
   specialNotes: 'คุณยายเดินช้าและใช้วีลแชร์ ต้องการคนช่วยถือของและคอยดูแลเรื่องคิวพบแพทย์'
@@ -76,6 +76,17 @@ export const AppProvider = ({ children }) => {
 
   const addBooking = (newBookingData) => {
     const newId = `bk-${String(Date.now()).slice(-4)}`;
+    const priceQuote = newBookingData.priceQuote || calculateCarePrice({
+      activityType: newBookingData.activityType,
+      date: newBookingData.serviceDate,
+      timeSlot: newBookingData.timeSlot,
+      durationHours: newBookingData.durationHours,
+      mobility: newBookingData.mobility || elder.mobilityLevel,
+      caretakerRequirements: newBookingData.caretakerRequirements || [],
+    });
+    const serviceFee = newBookingData.serviceFee ?? priceQuote.serviceFee ?? 0;
+    const basePrice = newBookingData.basePrice ?? priceQuote.subtotal;
+    const totalPrice = newBookingData.totalPrice ?? Math.max(0, basePrice + serviceFee - (newBookingData.discount || 0));
     const formattedBooking = {
       id: newId,
       status: 'upcoming',
@@ -103,15 +114,11 @@ export const AppProvider = ({ children }) => {
         en: newBookingData.destination || 'Bangkok',
       },
       pickupAddress: newBookingData.pickupAddress || elder.address,
-      hourlyRate: newBookingData.hourlyRate || 350,
-      basePrice: newBookingData.basePrice || (newBookingData.hourlyRate || 350) * (newBookingData.durationHours || 4),
-      serviceFee: 100,
+      basePrice,
+      serviceFee,
       discount: newBookingData.discount || 0,
-      totalPrice:
-        newBookingData.totalPrice ||
-        (newBookingData.hourlyRate || 350) * (newBookingData.durationHours || 4) +
-          100 -
-          (newBookingData.discount || 0),
+      totalPrice,
+      priceQuote,
       paymentMethod: newBookingData.paymentMethod || 'promptpay',
       paymentMethodName: newBookingData.paymentMethodName || {
         th: 'พร้อมเพย์ QR Code',

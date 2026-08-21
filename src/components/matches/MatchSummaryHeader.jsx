@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../ui/Button';
-import { Sparkles, SlidersHorizontal, Calendar, Clock, MapPin, DollarSign, Activity, ArrowUpDown } from 'lucide-react';
+import { Sparkles, SlidersHorizontal, Calendar, Clock, DollarSign, Activity, ArrowUpDown } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
 import { getAppointmentEventLabel, getElderMobilityMeta, getEnumLabel } from '../../constants/careEnums';
+import { calculateCarePrice } from '../../utils/pricing';
 
 export function MatchSummaryHeader({
   searchCriteria = {},
@@ -22,8 +23,8 @@ export function MatchSummaryHeader({
     ? formatDate(searchCriteria.date, language)
     : (language === 'th' ? '28 ส.ค. 2569' : '28 Aug 2026');
 
-  const budget = searchCriteria.budgetMax || 500;
   const duration = searchCriteria.durationHours || 4;
+  const priceQuote = calculateCarePrice(searchCriteria);
   const activityName = getAppointmentEventLabel(searchCriteria.activityType, language, 'fullLabel');
   const mobilityName = getMobilityLabel(searchCriteria.mobility);
 
@@ -78,7 +79,7 @@ export function MatchSummaryHeader({
 
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-800 font-medium rounded-lg border border-amber-100">
             <DollarSign className="w-3.5 h-3.5 text-amber-600" />
-            ฿{budget} / {language === 'th' ? 'ชม.' : 'hr'}
+            ฿{priceQuote.totalPrice} / {language === 'th' ? 'นัด' : 'booking'}
           </span>
         </div>
       </div>
@@ -119,14 +120,14 @@ export function MatchSummaryHeader({
             </button>
             <button
               type="button"
-              onClick={() => onSortChange && onSortChange('price_asc')}
+              onClick={() => onSortChange && onSortChange('trips')}
               className={`shrink-0 px-3 py-1.5 rounded-lg font-semibold transition-all ${
-                sortBy === 'price_asc'
+                sortBy === 'trips'
                   ? 'bg-white text-sky-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {t('matches.sortPriceLow', 'ราคา (ต่ำไปสูง)')}
+              {language === 'th' ? 'จำนวนทริปสำเร็จ' : 'Completed trips'}
             </button>
           </div>
         </div>

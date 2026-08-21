@@ -3,7 +3,7 @@
  * @param {number} amount 
  * @param {'th'|'en'} lang 
  * @param {object} options 
- * @returns {string} e.g. "฿500" or "฿500 / ชม."
+ * @returns {string} e.g. "฿500" or "฿500 / นัด"
  */
 export function formatCurrency(amount, lang = 'th', options = {}) {
   const { showUnit = false, unit = 'hour', symbol = '฿' } = options;
@@ -13,10 +13,10 @@ export function formatCurrency(amount, lang = 'th', options = {}) {
   
   if (showUnit) {
     if (lang === 'th') {
-      const unitText = unit === 'hour' ? '/ ชม.' : unit === 'trip' ? '/ ทริป' : ' บาท';
+      const unitText = unit === 'hour' ? '/ นัด' : unit === 'trip' ? '/ ทริป' : ' บาท';
       return `${symbol}${formattedNumber} ${unitText}`.trim();
     } else {
-      const unitText = unit === 'hour' ? '/hr' : unit === 'trip' ? '/trip' : ' THB';
+      const unitText = unit === 'hour' ? '/booking' : unit === 'trip' ? '/trip' : ' THB';
       return `${symbol}${formattedNumber}${unitText}`;
     }
   }

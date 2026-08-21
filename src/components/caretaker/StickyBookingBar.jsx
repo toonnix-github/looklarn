@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import { useApp } from '../../context/AppContext';
 import { Button } from '../ui/Button';
 import { Sparkles, Star } from 'lucide-react';
+import { calculateCarePrice } from '../../utils/pricing';
 
 export function StickyBookingBar({ caretaker, className = '' }) {
   const { t, getLocalized, language } = useLanguage();
+  const { searchCriteria } = useApp();
 
   if (!caretaker) return null;
+  const priceQuote = calculateCarePrice(searchCriteria);
 
   return (
     <div
@@ -37,13 +41,13 @@ export function StickyBookingBar({ caretaker, className = '' }) {
 
             <div className="flex items-baseline gap-1 mt-0.5">
               <span className="text-xs text-slate-400 font-medium">
-                {t('caretaker.stickyBar.rateLabel', 'อัตราค่าบริการ')}:
+                {t('caretaker.stickyBar.rateLabel', 'ราคานัดนี้')}:
               </span>
               <span className="text-lg sm:text-2xl font-black text-emerald-600">
-                ฿{caretaker.hourlyRate}
+                ฿{priceQuote.totalPrice}
               </span>
               <span className="text-xs font-semibold text-slate-500">
-                / {t('common.hrShort', 'ชม.')}
+                / {language === 'th' ? 'นัด' : 'booking'}
               </span>
             </div>
           </div>

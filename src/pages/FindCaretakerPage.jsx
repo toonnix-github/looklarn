@@ -46,7 +46,7 @@ export default function FindCaretakerPage() {
   const elderName = elder ? (getLocalized(elder, 'name') || getLocalized(elder, 'nickname')) : (language === 'th' ? 'นางสมพร ใจดี' : 'Grandma Somporn');
   const elderNickname = elder ? getLocalized(elder, 'nickname') : (language === 'th' ? 'ยายพร' : 'Grandma Porn');
   const elderAge = elder?.age || 74;
-  const elderPhoto = elder?.photo || null;
+  const elderPhoto = elder?.photo || '/assets/elder-somporn.png';
   const elderMobility = elder?.mobilityLevel || ELDER_MOBILITY.WHEELCHAIR_ASSISTED;
   const elderConditions = elder?.medicalConditions || [
     MEDICAL_CONDITIONS.HYPERTENSION,
@@ -68,7 +68,6 @@ export default function FindCaretakerPage() {
     durationHours: searchCriteria?.durationHours || 4,
     pickupAddress: searchCriteria?.pickupAddress || elderAddress || '',
     destination: searchCriteria?.destination || elderHospital || '',
-    budgetMax: searchCriteria?.budgetMax || 500,
     notes: searchCriteria?.specialNotes || elderNotes || '',
     // pass-through from elder profile for AI matching
     mobility: elderMobility,
@@ -144,7 +143,7 @@ export default function FindCaretakerPage() {
               <img
                 src={elderPhoto}
                 alt={elderName}
-                onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = ''; e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
+                onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/assets/elder-somporn.png'; }}
                 className="aspect-square h-[7.3dvh] max-h-16 min-h-12 object-cover ring-2 ring-sky-100 shadow-sm sm:h-20 sm:w-20"
               />
             ) : null}

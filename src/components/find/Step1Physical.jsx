@@ -43,7 +43,6 @@ export default function Step1Activity({ formData, setFormData }) {
   const destination = formData.destination || '';
   const pickupAddress = formData.pickupAddress || '';
   const mapQuery = destination || pickupAddress || 'Bangkok Thailand';
-  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
   const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 
   const updateActivity = (activityType) => {
@@ -73,16 +72,21 @@ export default function Step1Activity({ formData, setFormData }) {
         >
           {appointmentEventOptions.map((activity) => (
             <option key={activity.id} value={activity.id}>
-              {getEnumLabel(activity, language, 'label')} - {getEnumLabel(activity, language, 'shortDesc')}
+              {getEnumLabel(activity, language, 'label')}
             </option>
           ))}
         </select>
-        <p className="truncate text-[clamp(0.66rem,2.8vw,0.78rem)] font-bold text-slate-500">
-          {getEnumLabel(selectedActivity, language, 'description')}
-        </p>
+        <div className="min-w-0">
+          <p className="truncate text-[clamp(0.86rem,3.65vw,1rem)] font-black leading-tight text-slate-950">
+            {getEnumLabel(selectedActivity, language, 'label')}
+          </p>
+          <p className="truncate text-[clamp(0.64rem,2.7vw,0.76rem)] font-bold leading-tight text-slate-500">
+            {getEnumLabel(selectedActivity, language, 'description')}
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-[0.86fr_1.14fr] gap-[2vw] sm:grid-cols-2 sm:gap-4">
+      <div className="space-y-[0.65dvh]">
         <div className="space-y-[0.65dvh]">
           <label className="flex items-center gap-1.5 text-[clamp(0.72rem,3vw,0.84rem)] font-black text-slate-800 sm:text-sm">
             <Calendar className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
@@ -133,7 +137,7 @@ export default function Step1Activity({ formData, setFormData }) {
         <div className="flex items-center justify-between gap-2">
           <label className="flex min-w-0 items-center gap-1.5 text-[clamp(0.72rem,3vw,0.84rem)] font-black text-slate-800 sm:text-sm">
             <MapPin className="h-[1.8dvh] w-[1.8dvh] text-rose-500 sm:h-4 sm:w-4" />
-            {language === 'th' ? 'สถานที่ปลายทาง' : 'Destination'}
+            {language === 'th' ? 'สถานที่จาก Google Maps' : 'Google Maps location'}
           </label>
           <a
             href={mapLink}
@@ -141,26 +145,22 @@ export default function Step1Activity({ formData, setFormData }) {
             rel="noreferrer"
             className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sky-50 px-[2vw] py-[0.35dvh] text-[clamp(0.58rem,2.4vw,0.68rem)] font-black text-sky-700 ring-1 ring-sky-100"
           >
-            Google Maps
+            {language === 'th' ? 'เลือกสถานที่' : 'Pick place'}
             <ExternalLink className="h-[1.25dvh] w-[1.25dvh]" />
           </a>
         </div>
+        <p className="text-[clamp(0.58rem,2.45vw,0.68rem)] font-bold leading-tight text-slate-500">
+          {language === 'th'
+            ? 'เปิด Google Maps เลือกสถานที่จริง แล้วคัดลอกชื่อ/ที่อยู่มาวาง'
+            : 'Open Google Maps, choose the real place, then paste the name/address here.'}
+        </p>
         <input
           type="text"
           value={destination}
           onChange={(event) => setFormData({ ...formData, destination: event.target.value })}
-          placeholder={language === 'th' ? 'ค้นหาสถานที่ เช่น โรงพยาบาลศิริราช' : 'Search a place, e.g. Siriraj Hospital'}
+          placeholder={language === 'th' ? 'วางที่อยู่จาก Google Maps' : 'Paste Google Maps address'}
           className="h-[5dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.76rem,3.2vw,0.9rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
         />
-        <div className="overflow-hidden rounded-[min(3.8vw,0.95rem)] bg-slate-100 ring-1 ring-slate-200">
-          <iframe
-            title={language === 'th' ? 'แผนที่สถานที่ปลายทาง' : 'Destination map'}
-            src={mapSrc}
-            className="h-[15.8dvh] w-full border-0 sm:h-72"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
         <p className="truncate text-[clamp(0.6rem,2.5vw,0.7rem)] font-bold text-slate-500">
           {language === 'th' ? 'จุดรับ: ' : 'Pickup: '}
           {pickupAddress || (language === 'th' ? 'ใช้ที่อยู่จากโปรไฟล์ผู้สูงอายุ' : 'Use elder profile address')}
