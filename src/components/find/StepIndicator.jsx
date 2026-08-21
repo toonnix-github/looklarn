@@ -5,20 +5,18 @@ import { Check } from 'lucide-react';
 const STEPS = {
   th: [
     { number: 1, label: 'กิจกรรม' },
-    { number: 2, label: 'วันเวลา & สถานที่' },
-    { number: 3, label: 'ผู้ดูแล' },
+    { number: 2, label: 'ผู้ดูแล' },
   ],
   en: [
     { number: 1, label: 'Activity' },
-    { number: 2, label: 'Time & Place' },
-    { number: 3, label: 'Caretaker' },
+    { number: 2, label: 'Caretaker' },
   ],
 };
 
 export default function StepIndicator({ currentStep, onStepClick, className = '' }) {
   const { language } = useLanguage();
   const steps = STEPS[language] || STEPS.th;
-  const progressPercent = currentStep === 1 ? '33.33%' : currentStep === 2 ? '66.66%' : '100%';
+  const progressPercent = currentStep === 1 ? '50%' : '100%';
 
   return (
     <div className={`space-y-[0.7dvh] sm:space-y-3 ${className}`}>

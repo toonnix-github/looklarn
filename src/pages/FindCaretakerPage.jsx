@@ -6,8 +6,7 @@ import { Card, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import StepIndicator from '../components/find/StepIndicator';
 import Step1Activity from '../components/find/Step1Physical';
-import Step2Schedule from '../components/find/Step2Preferences';
-import Step3Budget from '../components/find/Step3Schedule';
+import Step2Caretaker from '../components/find/Step3Schedule';
 import AiMatchingLoader from '../components/find/AiMatchingLoader';
 import {
   ArrowLeft, ArrowRight, Sparkles,
@@ -92,7 +91,7 @@ export default function FindCaretakerPage() {
 
   const handleNext = () => {
     updateSearchCriteria(formData);
-    setCurrentStep((prev) => Math.min(prev + 1, 3));
+    setCurrentStep((prev) => Math.min(prev + 1, 2));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -218,10 +217,7 @@ export default function FindCaretakerPage() {
               <Step1Activity formData={formData} setFormData={setFormData} elder={elder} />
             )}
             {currentStep === 2 && (
-              <Step2Schedule formData={formData} setFormData={setFormData} />
-            )}
-            {currentStep === 3 && (
-              <Step3Budget formData={formData} setFormData={setFormData} />
+              <Step2Caretaker formData={formData} setFormData={setFormData} />
             )}
           </div>
 
@@ -241,7 +237,7 @@ export default function FindCaretakerPage() {
               <div />
             )}
 
-            {currentStep < 3 ? (
+            {currentStep < 2 ? (
               <Button
                 type="button"
                 variant="primary"
