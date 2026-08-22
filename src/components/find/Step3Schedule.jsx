@@ -118,7 +118,7 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
         </div>
 
         <div
-          className="grid max-h-[17.4dvh] grid-cols-2 gap-[1.8vw] overflow-y-auto rounded-[min(3.8vw,0.95rem)] bg-white pr-[1vw] ring-1 ring-slate-100 sm:max-h-56 sm:gap-2.5 sm:rounded-2xl sm:p-1"
+          className="grid grid-cols-2 gap-[1.8vw] rounded-[min(3.8vw,0.95rem)] bg-white pr-[1vw] ring-1 ring-slate-100 sm:max-h-56 sm:gap-2.5 sm:overflow-y-auto sm:rounded-2xl sm:p-1"
           aria-label={language === 'th' ? 'รายการข้อจำกัดเกี่ยวกับผู้ดูแล' : 'Caretaker constraint options'}
         >
           {caretakerRequirementOptions.map((requirement) => {
@@ -149,14 +149,18 @@ export default function Step3CaretakerDetails({ formData, setFormData }) {
       </div>
 
       <div className="space-y-[0.75dvh] sm:space-y-2.5">
-        <label className="flex items-center gap-1.5 text-[clamp(0.7rem,2.95vw,0.82rem)] font-black text-slate-800 sm:text-sm">
+        <label htmlFor="caretaker-special-notes" className="flex items-center gap-1.5 text-[clamp(0.7rem,2.95vw,0.82rem)] font-black text-slate-800 sm:text-sm">
           <FileText className="h-[1.8dvh] w-[1.8dvh] text-slate-500 sm:h-4 sm:w-4" />
           {language === 'th' ? 'บอกผู้ดูแลเพิ่มเติม' : 'Caretaker note'}
         </label>
         <textarea
+          id="caretaker-special-notes"
           rows={3}
-          value={formData.notes || ''}
-          onChange={(event) => setFormData({ ...formData, notes: event.target.value })}
+          value={formData.specialNotes ?? formData.notes ?? ''}
+          onChange={(event) => setFormData({
+            ...formData,
+            specialNotes: event.target.value,
+          })}
           placeholder={
             language === 'th'
               ? 'เช่น คุณแม่เดินช้า ชอบคุยเบา ๆ และไม่ชอบที่ร้อนมาก'

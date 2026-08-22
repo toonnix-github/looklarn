@@ -68,7 +68,7 @@ export default function FindCaretakerPage() {
     durationHours: searchCriteria?.durationHours || 4,
     pickupAddress: searchCriteria?.pickupAddress || elderAddress || '',
     destination: searchCriteria?.destination || elderHospital || '',
-    notes: searchCriteria?.specialNotes || elderNotes || '',
+    specialNotes: searchCriteria?.specialNotes || elderNotes || '',
     // pass-through from elder profile for AI matching
     mobility: elderMobility,
     conditions: elderConditions,
@@ -211,7 +211,7 @@ export default function FindCaretakerPage() {
       {/* ── Step Content ── */}
       <Card className="min-h-0 overflow-hidden rounded-[min(5vw,1.25rem)] border-0 bg-white shadow-sm ring-1 ring-slate-200/80 sm:overflow-visible sm:rounded-2xl">
         <CardContent className="flex h-full min-h-0 flex-col p-[3.2vw] sm:block sm:p-7 lg:p-8">
-          <div className="min-h-0 flex-1 overflow-hidden sm:overflow-visible">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-[1vw] sm:overflow-visible sm:pr-0">
             {currentStep === 1 && (
               <Step1Activity formData={formData} setFormData={setFormData} elder={elder} />
             )}
