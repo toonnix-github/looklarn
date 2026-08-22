@@ -221,14 +221,14 @@ export default function FindCaretakerPage() {
           </div>
 
           {/* ── Wizard Nav ── */}
-          <div className="mt-[1.2dvh] flex shrink-0 items-center justify-between border-t border-slate-100 pt-[1.2dvh] sm:mt-8 sm:pt-5">
+          <div className="mt-[1.2dvh] flex shrink-0 items-center justify-between gap-3 border-t border-slate-100 pt-[1.2dvh] sm:mt-8 sm:pt-5">
             {currentStep > 1 ? (
               <Button
                 type="button"
                 variant="ghost"
                 onClick={handleBack}
                 leftIcon={<ArrowLeft className="w-4 h-4" />}
-                className="cursor-pointer px-3"
+                className="shrink-0 cursor-pointer whitespace-nowrap px-3"
               >
                 {t('common.back', 'ย้อนกลับ')}
               </Button>
@@ -250,10 +250,10 @@ export default function FindCaretakerPage() {
               <Button
                 type="button"
                 variant="accent"
-                size="lg"
+                size="md"
                 onClick={handleSubmit}
-                rightIcon={<Sparkles className="w-5 h-5 text-slate-950" />}
-                className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black shadow-lg shadow-emerald-950/20 cursor-pointer px-6 sm:px-10"
+                rightIcon={<Sparkles className="h-4 w-4 text-slate-950" />}
+                className="h-[5.2dvh] max-h-12 min-w-0 cursor-pointer whitespace-nowrap rounded-xl bg-emerald-400 px-4 text-sm font-black text-slate-950 shadow-md shadow-emerald-950/15 hover:bg-emerald-300 sm:h-auto sm:px-7"
               >
                 {t('find.submitToMatches', language === 'th' ? 'ค้นหาผู้ดูแลที่เหมาะสม' : 'Find Matches')}
               </Button>

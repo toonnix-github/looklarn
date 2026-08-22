@@ -1,9 +1,9 @@
-# Design QA — Upcoming appointment card
+# Design QA — Find caretaker action button
 
-- Source visual truth: `/workspace/scratch/18ab0f902b25/upload/01-1000007484.jpg`
+- Source visual truth: `/workspace/scratch/18ab0f902b25/upload/01-Screenshot_2026-08-22-13-38-15-854_com.android.chrome.jpg`
 - Source pixels: 690 × 1536, device screenshot at 2×-class density
 - Intended CSS viewport: approximately 393 × 852 mobile
-- Implementation target: `src/pages/HomePage.jsx`, mobile dashboard state in Thai
+- Implementation target: `src/pages/FindCaretakerPage.jsx`, step 2 mobile state in Thai
 - Implementation screenshot: unavailable
 - Browser-rendered evidence: unavailable because the cloud browser blocked the local preview URL with `net::ERR_BLOCKED_BY_CLIENT`
 - Build verification: `npm run build` passed with Vite 5.4.21
@@ -12,46 +12,46 @@
 
 ## Full-view comparison evidence
 
-The source shows the original primary appointment card with the date, a two-line appointment title, and two compact metadata pills compressed into a short vertical card. The implementation restructures this region into a two-column card: a dedicated date rail on the left and a larger content region on the right. The main appointment now receives 56% of the available appointment stack instead of 48%.
+The source shows the final search CTA taking roughly half of the action row and becoming unusually tall because its Thai label wraps to three lines. The implementation changes the CTA from the large button size to the medium size, caps it at 48px, reduces its icon and padding, and keeps the label on one line.
 
 ## Focused region comparison evidence
 
-Source region inspected: the circled primary appointment card. Code-level checks confirm:
+Source region inspected: the bottom wizard action row. Code-level checks confirm:
 
-- date is isolated with a calendar icon in a tinted side rail;
-- title retains a two-line limit with more usable width;
-- time and caregiver metadata are no longer forced into equal-width pills;
-- the caregiver value is labeled explicitly and uses a people icon instead of a location icon;
-- existing colors, radius, typography scale, shadows, and navigation behavior are preserved.
+- search CTA uses the medium button size instead of large;
+- mobile height is capped at 48px;
+- Thai label is constrained to one line;
+- icon, horizontal padding, radius, and shadow are reduced proportionally;
+- the back action is kept on one line so it cannot force the CTA narrower.
 
 ## Findings
 
 - [P2] Browser visual verification is blocked.
-  - Location: mobile Home dashboard / upcoming appointment card.
+  - Location: Find caretaker / step 2 wizard action row.
   - Evidence: production build succeeds, but no browser screenshot could be captured from the local preview.
   - Impact: exact wrapping and spacing cannot be visually confirmed at the target viewport in this environment.
-  - Fix: open the deployed `main` build on a mobile viewport and confirm the date rail, two-line title, and metadata do not clip.
+  - Fix: open the deployed `main` build on a mobile viewport and confirm the CTA is one line, approximately 48px tall, and does not clip.
 
 ## Required fidelity surfaces
 
 - Fonts and typography: existing font family, weights, responsive sizes, and line clamps preserved; browser confirmation blocked.
-- Spacing and layout rhythm: primary card allocation increased from 48% to 56%; date and content are separated; browser confirmation blocked.
+- Spacing and layout rhythm: CTA size reduced from large to medium, height capped at 48px, and the action row now has a stable gap; browser confirmation blocked.
 - Colors and visual tokens: existing sky, emerald, slate, white, ring, radius, and shadow tokens reused.
 - Image quality and asset fidelity: no image assets changed or added.
-- Copy and content: appointment title/date/time remain data-driven; caregiver now has the explicit Thai label `ผู้ดูแล`.
+- Copy and content: existing localized CTA and back labels are unchanged.
 
 ## Comparison history
 
-- Initial finding: the original card compressed date, title, time, and caregiver into a short stacked layout.
-- Fix made: converted the card to a date-rail/content layout, increased its share of the section, removed metadata pill constraints, and corrected the caregiver icon semantics.
+- Initial finding: the final search CTA wrapped to three lines and dominated the lower form area.
+- Fix made: reduced the CTA size, height, icon, padding, radius, and shadow while preventing both action labels from wrapping.
 - Post-fix visual evidence: blocked because the cloud browser could not open the local preview.
 
 ## Implementation checklist
 
-- [x] Preserve existing dashboard styling and routes.
-- [x] Separate date from the appointment description.
-- [x] Give the primary appointment more vertical space.
-- [x] Make time and caregiver labels readable without equal-width pills.
+- [x] Preserve existing form behavior and routes.
+- [x] Reduce the final CTA height and visual weight.
+- [x] Keep the Thai CTA label on one line.
+- [x] Prevent the back label from narrowing the CTA.
 - [x] Pass the production build.
 - [ ] Confirm the rendered mobile view and console in a browser.
 
