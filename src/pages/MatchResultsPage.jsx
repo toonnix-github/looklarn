@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useApp } from '../context/AppContext';
 import { MatchSummaryHeader } from '../components/matches/MatchSummaryHeader';
 import { CaretakerMatchCard } from '../components/matches/CaretakerMatchCard';
+import { CaretakerBadgePills } from '../components/matches/CaretakerBadgePills';
 import {
   ArrowRight,
   CalendarDays,
@@ -22,7 +23,6 @@ import {
   getElderMobilityMeta,
   getEnumLabel,
 } from '../constants/careEnums';
-import { calculateCarePrice } from '../utils/pricing';
 
 export default function MatchResultsPage() {
   const { t, language, getLocalized } = useLanguage();
@@ -43,11 +43,10 @@ export default function MatchResultsPage() {
     }
   }, [caretakers, sortBy]);
 
-  // Display top 3 matched candidates
-  const topMatches = sortedCaretakers.slice(0, 3);
+  // Display a deep result set while keeping the strongest match highlighted.
+  const topMatches = sortedCaretakers.slice(0, 20);
   const topMatch = topMatches[0];
-  const secondaryMatches = topMatches.slice(1, 3);
-  const priceQuote = calculateCarePrice(searchCriteria);
+  const secondaryMatches = topMatches.slice(1);
   const elderNickname = elder ? getLocalized(elder, 'nickname') : (language === 'th' ? 'ยายพร' : 'Grandma Porn');
   const activityName = getAppointmentEventLabel(searchCriteria.activityType, language, 'label');
   const mobilityName = getEnumLabel(getElderMobilityMeta(searchCriteria.mobility), language, 'shortLabel');
@@ -60,17 +59,26 @@ export default function MatchResultsPage() {
     ? searchCriteria.timeSlot
     : '08:00-12:00';
   const sortOptions = [
-    { id: 'matchScore', label: language === 'th' ? 'เหมาะสุด' : 'Best' },
+    { id: 'matchScore', label: 'AI score' },
     { id: 'rating', label: language === 'th' ? 'รีวิว' : 'Reviews' },
     { id: 'trips', label: language === 'th' ? 'ทริป' : 'Trips' },
   ];
-
-  const renderScore = (score, className = '') => (
-    <span className={`inline-flex items-center justify-center rounded-full bg-emerald-50 font-black text-emerald-700 ring-1 ring-emerald-100 ${className}`}>
-      {score}%
-    </span>
+  const renderAiScore = (score, isTop = false) => (
+    <div
+      className={`flex min-w-0 flex-col items-center justify-center rounded-full border font-black leading-none shadow-sm ${isTop ? 'self-start' : 'self-center'} ${
+        isTop
+          ? 'border-secondary-300 bg-primary-700 px-[1.6vw] py-[0.55dvh] text-white shadow-primary-900/15'
+          : 'border-sub1-200 bg-sub1-50 px-[1.4vw] py-[0.42dvh] text-primary-700'
+      }`}
+    >
+      <span className={isTop ? 'text-[length:var(--app-text-2xs)]' : 'text-[length:var(--app-text-3xs)]'}>
+        AI match
+      </span>
+      <span className={isTop ? 'text-[length:var(--app-text-sm)]' : 'text-[length:var(--app-text-xs)]'}>
+        {score}%
+      </span>
+    </div>
   );
-
   return (
     <div
       data-testid="page-matches"
@@ -80,36 +88,36 @@ export default function MatchResultsPage() {
         <div className="overflow-hidden rounded-[min(5vw,1.25rem)] bg-white p-[3.1vw] shadow-sm ring-1 ring-slate-200/75">
           <div className="mb-[1dvh] flex items-start justify-between gap-[2vw]">
             <div className="min-w-0">
-              <h1 className="text-[clamp(1.12rem,5.2vw,1.36rem)] font-black leading-tight text-slate-950">
+              <h1 className="text-[length:var(--app-text-xl)] font-black leading-tight text-slate-950">
                 {language === 'th' ? `ผู้ดูแลที่เหมาะกับ${elderNickname}` : `Best caretakers for ${elderNickname}`}
               </h1>
-              <p className="mt-[0.25dvh] text-[clamp(0.58rem,2.55vw,0.68rem)] font-bold leading-tight text-slate-500">
+              <p className="mt-[0.25dvh] text-[length:var(--app-text-xs)] font-bold leading-tight text-slate-500">
                 {language === 'th' ? `เจอ ${topMatches.length} คนที่ตรงกับนัดนี้` : `${topMatches.length} matches for this outing`}
               </p>
             </div>
             <Link
               to="/find"
               aria-label={language === 'th' ? 'ปรับเงื่อนไข' : 'Refine search'}
-              className="grid aspect-square h-[4.3dvh] shrink-0 place-items-center rounded-full bg-sky-50 text-sky-700 ring-1 ring-sky-100 active:scale-95"
+              className="grid aspect-square h-[4.3dvh] shrink-0 place-items-center rounded-full bg-sub1-50 text-primary-700 ring-1 ring-sub1-200 active:scale-95"
             >
               <SlidersHorizontal className="h-[2dvh] w-[2dvh]" />
             </Link>
           </div>
 
           <div className="mb-[0.95dvh] flex flex-wrap gap-[1.2vw]">
-            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-sky-50 px-[2vw] py-[0.42dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-sky-700 ring-1 ring-sky-100">
+            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-sky-50 px-[2vw] py-[0.42dvh] text-[length:var(--app-text-2xs)] font-black text-sky-700 ring-1 ring-sky-100">
               <Sparkles className="h-[1.3dvh] w-[1.3dvh]" />
               {activityName}
             </span>
-            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-emerald-50 px-[2vw] py-[0.42dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-emerald-700 ring-1 ring-emerald-100">
+            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-emerald-50 px-[2vw] py-[0.42dvh] text-[length:var(--app-text-2xs)] font-black text-emerald-700 ring-1 ring-emerald-100">
               <CalendarDays className="h-[1.3dvh] w-[1.3dvh]" />
               {formattedDate}
             </span>
-            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-slate-100 px-[2vw] py-[0.42dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-slate-700">
+            <span className="inline-flex items-center gap-[0.9vw] rounded-full bg-slate-100 px-[2vw] py-[0.42dvh] text-[length:var(--app-text-2xs)] font-black text-slate-700">
               <Clock3 className="h-[1.3dvh] w-[1.3dvh]" />
               {timeRange}
             </span>
-            <span className="rounded-full bg-indigo-50 px-[2vw] py-[0.42dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-indigo-700 ring-1 ring-indigo-100">
+            <span className="rounded-full bg-indigo-50 px-[2vw] py-[0.42dvh] text-[length:var(--app-text-2xs)] font-black text-indigo-700 ring-1 ring-indigo-100">
               {mobilityName}
             </span>
           </div>
@@ -120,9 +128,9 @@ export default function MatchResultsPage() {
                 key={option.id}
                 type="button"
                 onClick={() => setSortBy(option.id)}
-                className={`h-[3.6dvh] rounded-full text-[clamp(0.55rem,2.4vw,0.66rem)] font-black transition active:scale-[0.985] ${
+                className={`h-[3.6dvh] rounded-full text-[length:var(--app-text-xs)] font-black transition active:scale-[0.985] ${
                   sortBy === option.id
-                    ? 'bg-white text-sky-700 shadow-sm'
+                    ? 'bg-white text-primary-700 shadow-sm'
                     : 'text-slate-500'
                 }`}
               >
@@ -134,106 +142,105 @@ export default function MatchResultsPage() {
 
         <section className="flex min-h-0 flex-col overflow-hidden rounded-[min(5vw,1.25rem)] bg-white p-[3.1vw] shadow-sm ring-1 ring-slate-200/75">
           {topMatch && (
-            <article className="flex min-h-0 basis-[56%] flex-col justify-between overflow-hidden rounded-[min(4.4vw,1.1rem)] bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-[3vw] ring-2 ring-emerald-200">
-              <div className="flex items-start justify-between gap-[2vw]">
-                <span className="inline-flex items-center gap-[1vw] rounded-full bg-white px-[2vw] py-[0.45dvh] text-[clamp(0.52rem,2.25vw,0.62rem)] font-black text-emerald-700 shadow-sm ring-1 ring-emerald-100">
-                  <Sparkles className="h-[1.4dvh] w-[1.4dvh]" />
-                  {language === 'th' ? 'แนะนำสูงสุด' : 'Top pick'}
+            <article className="relative grid min-h-0 basis-[40%] grid-cols-[25vw_minmax(0,1fr)_auto] grid-rows-[auto_auto] gap-x-[2.2vw] gap-y-[1dvh] overflow-hidden rounded-[min(5vw,1.25rem)] border border-sub1-200 bg-gradient-to-br from-sub1-50 via-white to-secondary-50 p-[3vw] shadow-lg shadow-primary-900/10 ring-1 ring-secondary-300">
+              <div className="absolute inset-x-0 top-0 h-[0.55dvh] bg-gradient-to-r from-primary-800 via-primary-600 to-secondary-400" />
+              <div className="relative self-start overflow-hidden rounded-[min(4.2vw,1.05rem)] border-2 border-white bg-slate-100 shadow-md shadow-primary-900/10 ring-1 ring-sub1-200">
+                <img
+                  src={topMatch.photo}
+                  alt={getLocalized(topMatch, 'name')}
+                  className="aspect-square h-[9.8dvh] w-full object-cover"
+                />
+                <span className="absolute left-[0.6dvh] top-[0.6dvh] rounded-full bg-primary-700 px-[1.4vw] py-[0.25dvh] text-[length:var(--app-text-2xs)] font-black text-white shadow-sm">
+                  #1
                 </span>
-                {renderScore(topMatch.matchScore, 'h-[4.9dvh] w-[4.9dvh] text-[clamp(0.72rem,3.1vw,0.86rem)]')}
+                <span className="absolute bottom-[0.6dvh] right-[0.6dvh] grid aspect-square h-[2.4dvh] place-items-center rounded-full bg-secondary-700 text-sub1-50 shadow-sm">
+                  <CheckCircle2 className="h-[1.45dvh] w-[1.45dvh]" />
+                </span>
               </div>
-
-              <div className="grid min-h-0 grid-cols-[auto_1fr] items-center gap-[2.7vw]">
-                <div className="relative aspect-square h-[9.4dvh] overflow-hidden rounded-[min(3.8vw,0.95rem)] bg-slate-100 shadow-sm ring-1 ring-white">
-                  <img
-                    src={topMatch.photo}
-                    alt={getLocalized(topMatch, 'name')}
-                    className="h-full w-full object-cover"
-                  />
-                  <span className="absolute bottom-[0.6dvh] right-[0.6dvh] grid aspect-square h-[2.4dvh] place-items-center rounded-full bg-emerald-500 text-white shadow-sm">
-                    <CheckCircle2 className="h-[1.45dvh] w-[1.45dvh]" />
-                  </span>
-                </div>
-                <div className="min-w-0">
-                  <h2 className="truncate text-[clamp(1rem,4.3vw,1.14rem)] font-black leading-tight text-slate-950">
-                    {getLocalized(topMatch, 'nickname') || getLocalized(topMatch, 'name')}
-                  </h2>
-                  <p className="line-clamp-2 text-[clamp(0.58rem,2.55vw,0.7rem)] font-bold leading-tight text-sky-700">
-                    {getLocalized(topMatch, 'tierName')}
-                  </p>
-                  <div className="mt-[0.8dvh] grid grid-cols-3 gap-[1.2vw]">
-                    <span className="rounded-full bg-white px-[1.6vw] py-[0.38dvh] text-center text-[clamp(0.5rem,2.12vw,0.6rem)] font-black text-slate-700 shadow-sm">
-                      <Star className="mr-[0.5vw] inline h-[1.15dvh] w-[1.15dvh] fill-amber-400 text-amber-400" />
+              <div className="min-w-0 pt-[0.25dvh]">
+                <span className="mb-[0.45dvh] inline-flex rounded-full bg-sub1-100 px-[1.8vw] py-[0.3dvh] text-[length:var(--app-text-2xs)] font-black text-primary-700 ring-1 ring-sub1-200">
+                  {language === 'th' ? 'ตัวเลือกอันดับหนึ่ง' : 'Top candidate'}
+                </span>
+                <h2 className="truncate text-[length:var(--app-text-lg)] font-black leading-tight text-slate-950">
+                  {getLocalized(topMatch, 'name')}
+                </h2>
+                <p className="truncate text-[length:var(--app-text-2xs)] font-bold leading-tight text-slate-500">
+                  {topMatch.age} {language === 'th' ? 'ปี' : 'yrs'}
+                </p>
+                <div className="mt-[0.75dvh] grid grid-cols-2 gap-[1.2vw]">
+                  <span className="rounded-[min(2.6vw,0.65rem)] border border-amber-100 bg-white px-[1.6vw] py-[0.52dvh] text-center shadow-sm">
+                    <span className="block text-[length:var(--app-text-3xs)] font-black leading-none text-sub2-500">
+                      {language === 'th' ? 'รีวิว' : 'Rating'}
+                    </span>
+                    <span className="text-[length:var(--app-text-2xs)] font-black text-slate-800">
+                      <Star className="mr-[0.35vw] inline h-[1.05dvh] w-[1.05dvh] fill-amber-400 text-amber-400" />
                       {topMatch.rating}
                     </span>
-                    <span className="rounded-full bg-white px-[1.6vw] py-[0.38dvh] text-center text-[clamp(0.5rem,2.12vw,0.6rem)] font-black text-slate-700 shadow-sm">
-                      {topMatch.experienceYears} ปี
+                  </span>
+                  <span className="rounded-[min(2.6vw,0.65rem)] border border-sky-100 bg-white px-[1.6vw] py-[0.52dvh] text-center shadow-sm">
+                    <span className="block text-[length:var(--app-text-3xs)] font-black leading-none text-sub2-500">
+                      {language === 'th' ? 'บริการ' : 'Services'}
                     </span>
-                    <span className="rounded-full bg-white px-[1.6vw] py-[0.38dvh] text-center text-[clamp(0.5rem,2.12vw,0.6rem)] font-black text-emerald-700 shadow-sm">
-                      ฿{priceQuote.totalPrice}
+                    <span className="text-[length:var(--app-text-2xs)] font-black text-slate-800">
+                      {topMatch.completedTrips}+
                     </span>
-                  </div>
+                  </span>
                 </div>
               </div>
-
-              <div className="grid grid-cols-2 gap-[1.5vw]">
-                {(topMatch.specialties || []).slice(0, 2).map((specialty, index) => (
-                  <span
-                    key={index}
-                    className="truncate rounded-full bg-white/85 px-[2vw] py-[0.5dvh] text-[clamp(0.5rem,2.12vw,0.6rem)] font-black text-slate-600 ring-1 ring-slate-100"
-                  >
-                    {getLocalized(specialty)}
-                  </span>
-                ))}
+              <Link
+                to={`/caretaker/${topMatch.id}`}
+                className="flex h-[3.8dvh] min-w-[17vw] items-center justify-center self-start rounded-full bg-sub1-50 px-[2vw] text-[length:var(--app-text-2xs)] font-black text-primary-700 shadow-sm ring-1 ring-sub1-200 active:scale-[0.985]"
+              >
+                {language === 'th' ? 'โปรไฟล์' : 'Profile'}
+              </Link>
+              {renderAiScore(topMatch.matchScore, true)}
+              <div className="min-w-0 self-start rounded-full bg-white/80 px-[1.3vw] py-[0.45dvh] shadow-sm ring-1 ring-white">
+                <CaretakerBadgePills caretaker={topMatch} compact />
               </div>
-
-              <div className="grid grid-cols-[0.85fr_1.15fr] gap-[2vw]">
-                <Link
-                  to={`/caretaker/${topMatch.id}`}
-                  className="flex h-[4.5dvh] items-center justify-center rounded-full bg-white text-[clamp(0.62rem,2.75vw,0.74rem)] font-black text-slate-700 shadow-sm ring-1 ring-slate-200 active:scale-[0.985]"
-                >
-                  ดูโปรไฟล์
-                </Link>
-                <Link
-                  to={`/book/${topMatch.id}`}
-                  className="flex h-[4.5dvh] items-center justify-center gap-[1.5vw] rounded-full bg-emerald-500 text-[clamp(0.62rem,2.75vw,0.74rem)] font-black text-white shadow-lg shadow-emerald-700/20 active:scale-[0.985]"
-                >
-                  จองคนนี้
-                  <ArrowRight className="h-[1.7dvh] w-[1.7dvh]" />
-                </Link>
-              </div>
+              <Link
+                to={`/book/${topMatch.id}`}
+                className="flex h-[3.8dvh] min-w-[17vw] items-center justify-center gap-[1vw] rounded-full bg-secondary-700 px-[2vw] text-[length:var(--app-text-2xs)] font-black text-sub1-50 shadow-lg shadow-secondary-700/20 active:scale-[0.985]"
+              >
+                {language === 'th' ? 'จอง' : 'Book'}
+                <ArrowRight className="h-[1.55dvh] w-[1.55dvh]" />
+              </Link>
             </article>
           )}
 
-          <div className="mt-[1dvh] grid min-h-0 flex-1 gap-[0.75dvh]">
+          <div className="mt-[1dvh] min-h-0 flex-1 space-y-[0.75dvh] overflow-y-auto pr-[0.4vw]">
             {secondaryMatches.map((caretaker) => (
               <article
                 key={caretaker.id}
-                className="grid min-h-0 grid-cols-[auto_1fr_auto] items-center gap-[2.2vw] rounded-[min(3.8vw,0.95rem)] bg-slate-50 px-[2.4vw] py-[0.8dvh] ring-1 ring-slate-100"
+                className="grid min-h-0 shrink-0 grid-cols-[18vw_minmax(0,1fr)_auto] grid-rows-[auto_auto] gap-x-[2vw] gap-y-[0.55dvh] rounded-[min(3.8vw,0.95rem)] bg-slate-50 px-[2.4vw] py-[0.85dvh] ring-1 ring-slate-100"
               >
-                <div className="relative aspect-square h-[5.5dvh] overflow-hidden rounded-[min(2.8vw,0.7rem)] bg-slate-100">
-                  <img src={caretaker.photo} alt={getLocalized(caretaker, 'name')} className="h-full w-full object-cover" />
+                <div className="min-w-0 self-start">
+                  <div className="mx-auto aspect-square h-[5.3dvh] overflow-hidden rounded-[min(2.8vw,0.7rem)] bg-slate-100">
+                    <img src={caretaker.photo} alt={getLocalized(caretaker, 'name')} className="h-full w-full object-cover" />
+                  </div>
                 </div>
                 <div className="min-w-0">
-                  <div className="flex items-center gap-[1.4vw]">
-                    <h3 className="truncate text-[clamp(0.72rem,3.1vw,0.84rem)] font-black leading-tight text-slate-950">
-                      {getLocalized(caretaker, 'nickname') || getLocalized(caretaker, 'name')}
-                    </h3>
-                    {renderScore(caretaker.matchScore, 'h-[2.8dvh] px-[1.6vw] text-[clamp(0.48rem,2vw,0.58rem)]')}
-                  </div>
-                  <p className="truncate text-[clamp(0.52rem,2.25vw,0.62rem)] font-bold leading-tight text-slate-500">
-                    {getLocalized(caretaker, 'tierName')}
-                  </p>
-                  <p className="text-[clamp(0.5rem,2.12vw,0.6rem)] font-black leading-tight text-slate-500">
-                    ★ {caretaker.rating} · ฿{priceQuote.totalPrice}/นัด
+                  <h3 className="truncate text-[length:var(--app-text-sm)] font-black leading-tight text-slate-950">
+                    {getLocalized(caretaker, 'name')}
+                  </h3>
+                  <p className="text-[length:var(--app-text-2xs)] font-bold leading-tight text-slate-500">
+                    {caretaker.age} {language === 'th' ? 'ปี' : 'yrs'} · {caretaker.completedTrips}+ {language === 'th' ? 'บริการ' : 'services'} · ★ {caretaker.rating}
                   </p>
                 </div>
                 <Link
+                  to={`/caretaker/${caretaker.id}`}
+                  aria-label={`${language === 'th' ? 'ดูโปรไฟล์' : 'View profile'} ${getLocalized(caretaker, 'nickname') || getLocalized(caretaker, 'name')}`}
+                  className="flex h-[3dvh] min-w-[14vw] items-center justify-center self-start rounded-full bg-white px-[1.8vw] text-[length:var(--app-text-2xs)] font-black text-slate-700 shadow-sm ring-1 ring-slate-200 active:scale-95"
+                >
+                  {language === 'th' ? 'โปรไฟล์' : 'Profile'}
+                </Link>
+                {renderAiScore(caretaker.matchScore)}
+                <CaretakerBadgePills caretaker={caretaker} compact className="min-w-0 self-center" />
+                <Link
                   to={`/book/${caretaker.id}`}
                   aria-label={`${language === 'th' ? 'จอง' : 'Book'} ${getLocalized(caretaker, 'nickname') || getLocalized(caretaker, 'name')}`}
-                  className="grid aspect-square h-[4.1dvh] place-items-center rounded-full bg-white text-sky-700 shadow-sm ring-1 ring-sky-100 active:scale-95"
+                  className="flex h-[3dvh] min-w-[14vw] items-center justify-center self-center rounded-full bg-sub1-50 px-[1.8vw] text-[length:var(--app-text-2xs)] font-black text-primary-700 shadow-sm ring-1 ring-sub1-200 active:scale-95"
                 >
-                  <ArrowRight className="h-[1.9dvh] w-[1.9dvh]" />
+                  {language === 'th' ? 'จอง' : 'Book'}
                 </Link>
               </article>
             ))}
@@ -266,7 +273,7 @@ export default function MatchResultsPage() {
       <div className="p-5 sm:p-6 bg-white rounded-2xl border border-sky-100 shadow-sm">
         <div className="max-w-2xl mb-5">
           <h2 className="text-lg sm:text-xl font-extrabold text-slate-900">
-            {t('matches.trustBannerTitle', 'มั่นใจทุกการดูแลด้วยมาตรฐาน Looklarn')}
+            {t('matches.trustBannerTitle', 'มั่นใจทุกการดูแลด้วยมาตรฐาน CareMate')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             {language === 'th'
@@ -284,7 +291,7 @@ export default function MatchResultsPage() {
               <h4 className="text-xs font-bold text-slate-900">
                 {t('matches.trustBanner1', 'ตรวจสอบประวัติอาชญากรรม 100%')}
               </h4>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-sub2-500">
                 {language === 'th' ? 'สำนักงานตำรวจแห่งชาติ' : 'Royal Thai Police'}
               </p>
             </div>
@@ -298,7 +305,7 @@ export default function MatchResultsPage() {
               <h4 className="text-xs font-bold text-slate-900">
                 {t('matches.trustBanner2', 'ผ่านการฝึกอบรม CPR & ปฐมพยาบาล')}
               </h4>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-sub2-500">
                 {language === 'th' ? 'สภากาชาดไทย & สธ.' : 'Thai Red Cross Society'}
               </p>
             </div>
@@ -312,7 +319,7 @@ export default function MatchResultsPage() {
               <h4 className="text-xs font-bold text-slate-900">
                 {t('matches.trustBanner3', 'ประกันอุบัติเหตุคุ้มครองตลอดทริป')}
               </h4>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-sub2-500">
                 {language === 'th' ? 'วงเงินสูงสุด 100,000 บาท' : 'Up to ฿100,000 coverage'}
               </p>
             </div>

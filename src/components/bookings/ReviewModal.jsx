@@ -74,7 +74,7 @@ export function ReviewModal({
             {t('bookings.reviewModal.cancelBtn', 'ยกเลิก')}
           </Button>
           <Button
-            variant="accent"
+            variant="secondary"
             onClick={handleSubmit}
             leftIcon={<Star className="w-4 h-4 fill-current" />}
           >

@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { MatchScoreRing } from '../ui/MatchScoreRing';
 import { Button } from '../ui/Button';
-import { Badge } from '../ui/Badge';
-import { Star, ShieldCheck, CheckCircle2, Award, Sparkles, Clock, ArrowRight } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { calculateCarePrice } from '../../utils/pricing';
+import { Star, BriefcaseBusiness, Sparkles } from 'lucide-react';
+import { CaretakerBadgePills } from './CaretakerBadgePills';
 
 export function CaretakerMatchCard({
   caretaker,
@@ -14,12 +11,10 @@ export function CaretakerMatchCard({
   rank = 1,
 }) {
   const { t, getLocalized, language } = useLanguage();
-  const { searchCriteria } = useApp();
 
   if (!caretaker) return null;
 
   const isBest = isTopMatch || caretaker.matchScore >= 95 || rank === 1;
-  const priceQuote = calculateCarePrice(searchCriteria);
 
   return (
     <div
@@ -29,99 +24,57 @@ export function CaretakerMatchCard({
           : 'border-slate-100 shadow-sm hover:border-sky-200 hover:shadow-md'
       }`}
     >
-      <div className="p-5 sm:p-6 space-y-5">
-        {/* Top Header: Score Ring + Badges */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <MatchScoreRing
-              score={caretaker.matchScore}
-              size="md"
-              showSublabel
-              sublabel={t('matches.matchScoreLabel', 'ความเข้ากันได้')}
-            />
-          </div>
-
-          <div className="flex flex-col items-end gap-1.5">
-            {isBest ? (
-              <Badge variant="match">
-                {t('matches.bestMatchBadge', '★ แนะนำสูงสุด 96%')}
-              </Badge>
-            ) : (
-              <Badge variant="verified">
-                {t('matches.verifiedBadge', 'ผ่านการตรวจสอบประวัติ')}
-              </Badge>
-            )}
-
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              {t('matches.availableStatus', 'พร้อมให้บริการ')}
-            </span>
-          </div>
-        </div>
-
-        {/* Profile Details */}
-        <div className="flex items-center gap-3.5 pt-1">
-          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200/80 shadow-xs">
+      <div className="grid grid-cols-[5rem_1fr] gap-4 p-5 sm:grid-cols-[5.75rem_1fr] sm:p-6">
+        <div className="min-w-0">
+          <div className="relative mx-auto h-16 w-16 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-100 shadow-xs sm:h-20 sm:w-20">
             <img
               src={caretaker.photo}
               alt={getLocalized(caretaker, 'name')}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
             {caretaker.verifiedBadges && (
-              <span className="absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[10px] shadow-xs">
+              <span className="absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[10px] text-white shadow-xs">
                 ✓
               </span>
             )}
           </div>
+          <CaretakerBadgePills caretaker={caretaker} compact className="mt-2 justify-center" />
+        </div>
 
-          <div className="min-w-0 flex-1">
+        <div className="min-w-0 space-y-4">
+          <div>
             <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-tight truncate">
               {getLocalized(caretaker, 'name')}
             </h3>
-            <p className="text-xs text-sky-600 font-semibold mt-0.5 line-clamp-1">
-              {getLocalized(caretaker, 'tierName')}
-            </p>
             <p className="text-xs text-slate-400 mt-0.5">
-              {caretaker.experienceYears} {language === 'th' ? 'ปีประสบการณ์' : 'yrs experience'} • {caretaker.completedTrips}+ {language === 'th' ? 'ทริปสำเร็จ' : 'trips'}
+              {caretaker.age} {language === 'th' ? 'ปี' : 'yrs'}
             </p>
           </div>
-        </div>
 
-        {/* Rating & Rate Strip */}
-        <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border border-slate-100">
-          <div className="flex items-center gap-1.5">
-            <Star className="w-4 h-4 text-amber-400 fill-amber-400 shrink-0" />
-            <span className="font-black text-slate-800 text-sm">{caretaker.rating}</span>
-            <span className="text-xs text-slate-400 font-normal">
-              ({caretaker.reviewsCount} {language === 'th' ? 'รีวิว' : 'reviews'})
-            </span>
-          </div>
-
-          <div className="text-right">
-            <span className="text-base sm:text-lg font-black text-emerald-600">
-              ฿{priceQuote.totalPrice}
-            </span>
-            <span className="text-xs font-semibold text-slate-500 ml-1">
-              {language === 'th' ? '/นัด' : '/booking'}
-            </span>
-          </div>
-        </div>
-
-        {/* Specialty Chips */}
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-            {t('matches.specialtyTagsTitle', 'ความเชี่ยวชาญ:')}
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {(caretaker.specialties || []).slice(0, 3).map((sp, idx) => (
-              <span
-                key={idx}
-                className="inline-flex items-center gap-1 text-[11px] font-medium bg-sky-50 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-100"
-              >
-                <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
-                <span>{getLocalized(sp)}</span>
+          <div className="space-y-2 rounded-2xl border border-slate-100 bg-slate-50 p-3">
+            <div className="flex items-center gap-1.5 rounded-xl bg-emerald-50 px-2 py-1 ring-1 ring-emerald-100">
+              <Sparkles className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span className="font-black text-emerald-700 text-sm">{caretaker.matchScore}%</span>
+              <span className="text-xs text-emerald-700 font-bold">
+                AI match
               </span>
-            ))}
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <Star className="w-4 h-4 text-amber-400 fill-amber-400 shrink-0" />
+              <span className="font-black text-slate-800 text-sm">{caretaker.rating}</span>
+              <span className="text-xs text-slate-400 font-normal">
+                {language === 'th' ? 'คะแนนรีวิว' : 'review score'}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <BriefcaseBusiness className="w-4 h-4 text-sky-500 shrink-0" />
+              <span className="font-black text-slate-800 text-sm">{caretaker.completedTrips}+</span>
+              <span className="text-xs text-slate-400 font-normal">
+                {language === 'th' ? 'บริการ' : 'services'}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -134,7 +87,7 @@ export function CaretakerMatchCard({
           </Button>
         </Link>
         <Link to={`/book/${caretaker.id}`} className="flex-1">
-          <Button variant="accent" size="sm" className="w-full font-bold shadow-xs">
+          <Button variant="secondary" size="sm" className="w-full font-bold shadow-xs">
             {t('matches.bookNowBtn', 'จองทันที')}
           </Button>
         </Link>

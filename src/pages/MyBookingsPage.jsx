@@ -81,10 +81,10 @@ export default function MyBookingsPage() {
           <div className="flex items-center gap-3">
             <Link to="/find">
               <Button
-                variant="accent"
+                variant="secondary"
                 size="md"
                 leftIcon={<Sparkles className="w-4 h-4" />}
-                className="font-bold text-xs sm:text-sm shadow-md shadow-emerald-500/15 cursor-pointer"
+                className="font-bold text-xs sm:text-sm shadow-md shadow-secondary-700/15 cursor-pointer"
               >
                 {t('bookings.findCaretakerBtn', 'ค้นหาผู้ดูแลใหม่')}
               </Button>
@@ -217,8 +217,8 @@ export default function MyBookingsPage() {
         <ShieldCheck className="w-4 h-4 text-emerald-600" />
         <span>
           {language === 'th'
-            ? 'ทุกการจองได้รับความคุ้มครองจาก Looklarn Care ประกันอุบัติเหตุ 100%'
-            : 'Every booking is protected by Looklarn Care with 100% accident insurance'}
+            ? 'ทุกการจองได้รับความคุ้มครองจาก CareMate Care ประกันอุบัติเหตุ 100%'
+            : 'Every booking is protected by CareMate Care with 100% accident insurance'}
         </span>
       </div>
 

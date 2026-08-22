@@ -4,6 +4,7 @@ import initialBookings from '../data/bookings.json';
 import initialActivities from '../data/activities.json';
 import initialElder from '../data/elder.json';
 import { APPOINTMENT_EVENTS, ELDER_MOBILITY, MEDICAL_CONDITIONS } from '../constants/careEnums';
+import { buildCaretakerRoster } from '../utils/caretakerRoster';
 import { calculateCarePrice } from '../utils/pricing';
 
 export const AppContext = createContext();
@@ -180,7 +181,7 @@ export const AppProvider = ({ children }) => {
   };
 
   // 4. Caretakers & Activities Static Accessors
-  const [caretakers] = useState(initialCaretakers);
+  const [caretakers] = useState(() => buildCaretakerRoster(initialCaretakers));
   const [activities] = useState(initialActivities);
 
   const getCaretakerById = (id) => {

@@ -8,7 +8,7 @@
       "en": "Nurse Areeya Rattanakul"
     },
     "caretakerNickname": { "th": "อารี", "en": "Aree" },
-    "caretakerPhoto": "/assets/caretaker-aree.png",
+    "caretakerPhoto": "/assets/caretaker-female-01.jpg",
     "caretakerPhone": "089-123-4567",
     "elderId": "elder-001",
     "elderName": {
@@ -77,7 +77,7 @@
       "en": "Ploy Chidchanok"
     },
     "caretakerNickname": { "th": "พลอย", "en": "Ploy" },
-    "caretakerPhoto": "/assets/caretaker-aree.png",
+    "caretakerPhoto": "/assets/caretaker-female-02.jpg",
     "caretakerPhone": "086-987-6543",
     "elderId": "elder-001",
     "elderName": {
@@ -146,7 +146,7 @@
       "en": "Somchai Prasert"
     },
     "caretakerNickname": { "th": "สมชาย", "en": "Somchai" },
-    "caretakerPhoto": "/assets/caretaker-aree.png",
+    "caretakerPhoto": "/assets/caretaker-male-01.jpg",
     "caretakerPhone": "081-234-5678",
     "elderId": "elder-001",
     "elderName": {

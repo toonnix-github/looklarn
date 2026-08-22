@@ -86,9 +86,9 @@ export function formatMatchScore(score) {
   if (numScore >= 90) {
     return {
       scoreText: `${numScore}%`,
-      colorClass: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-      strokeColor: 'stroke-emerald-500',
-      hexColor: '#10B981',
+      colorClass: 'text-blue-700 bg-blue-50 border-blue-200',
+      strokeColor: 'stroke-blue-600',
+      hexColor: '#2563EB',
       tier: 'excellent'
     };
   }
@@ -97,7 +97,7 @@ export function formatMatchScore(score) {
       scoreText: `${numScore}%`,
       colorClass: 'text-sky-600 bg-sky-50 border-sky-200',
       strokeColor: 'stroke-sky-500',
-      hexColor: '#0EA5E9',
+      hexColor: '#38BDF8',
       tier: 'great'
     };
   }

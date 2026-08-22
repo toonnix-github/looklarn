@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    brandName: "Looklarn",
+    brandName: "CareMate",
     brandSubtitle: "Senior Escort Companion",
     tagline: "Trusted Companion Care for Your Loved Ones",
     home: "Home",
@@ -92,7 +92,7 @@ export const en = {
       title: "Special Healthcare Partner Promotion",
       desc: "Get ฿150 off your first medical companion booking with our healthcare partners.",
       codeLabel: "Promo Code:",
-      code: "LOOKLARNCARE",
+      code: "CAREMATE",
       copyCode: "Copy Code",
       codeCopied: "Code Copied!",
       partnerHospitals: "Partner Centers: Siriraj • Chulalongkorn • Ramathibodi • Phramongkutklao",
@@ -119,16 +119,16 @@ export const en = {
       t1Text: "Khun Somchai was wonderful escorting my mother to her clinic checkup when I had an urgent board meeting. Continuous updates kept me at ease.",
       t1Author: "Thanakorn Jaidee",
       t1Role: "Son (Corporate Executive)",
-      t2Text: "Finding someone patient enough to escort grandmother to Wat Arun seemed impossible until Looklarn. Nipaporn was so attentive with the sun and stairs.",
+      t2Text: "Finding someone patient enough to escort grandmother to Wat Arun seemed impossible until CareMate. Nipaporn was so attentive with the sun and stairs.",
       t2Author: "Dr. Wannapa Sitthipong",
       t2Role: "Daughter (Physician)",
-      t3Text: "Ploy was so sweet and energetic guiding dad outdoors. She cheered him up immensely. Deeply grateful to the Looklarn team!",
+      t3Text: "Ploy was so sweet and energetic guiding dad outdoors. She cheered him up immensely. Deeply grateful to the CareMate team!",
       t3Author: "Kittisak Woradech",
       t3Role: "Son (Civil Servant)"
     },
     ctaBanner: {
       title: "Ready to Give Your Parents the Warmest Care & Joy?",
-      subtitle: "Start matching with certified companions on Looklarn today. Easy booking in under 3 minutes.",
+      subtitle: "Start matching with certified companions on CareMate today. Easy booking in under 3 minutes.",
       button: "Find a Caretaker"
     }
   },
@@ -232,7 +232,7 @@ export const en = {
   matches: {
     badge: "AI Matching Completed",
     title: "Your Top Matched Caretakers",
-    subtitle: "Looklarn AI has evaluated and ranked the 3 most compatible companions based on your preferences.",
+    subtitle: "CareMate AI has evaluated and ranked the 3 most compatible companions based on your preferences.",
     summaryPill: "Results for: {activity} • {date} • Condition-based price",
     criteriaTitle: "Your Search Criteria",
     activity: "Activity: {activity}",
@@ -251,6 +251,7 @@ export const en = {
     bestMatchBadge: "★ #1 Best Match",
     bestMatch: "Best Match",
     matchScoreLabel: "Match Score",
+    aiMatchScoreLabel: "AI Matching Score",
     verifiedBadge: "Verified Caregiver",
     availableStatus: "Available Now",
     hourlyRateText: "฿{rate} / booking",
@@ -262,7 +263,7 @@ export const en = {
     specialtyTagsTitle: "Key Specialties:",
     experienceText: "{years} yrs experience",
     completedTripsText: "{count}+ trips completed",
-    trustBannerTitle: "Cared for with Looklarn Peace of Mind",
+    trustBannerTitle: "Cared for with CareMate Peace of Mind",
     trustBanner1: "100% Criminal Background Checked",
     trustBanner2: "CPR & First Aid Certified",
     trustBanner3: "Trip Accident Insurance Covered"
@@ -275,7 +276,7 @@ export const en = {
     verified: "Background Verified",
     bioPlaceholder: "Specialized in hospital coordination and mobility rehabilitation.",
     bookThisCaretaker: "Book This Caretaker",
-    matchScoreBadge: "AI Match Score {score}%",
+    matchScoreBadge: "AI Matching Score {score}%",
     compatibilityRate: "Compatibility",
     verifiedTitle: "Safety & Professional Verification Badges",
     badgeBackground: "Criminal Background Checked (Royal Thai Police)",
@@ -353,7 +354,7 @@ export const en = {
     serviceInsuranceLabel: "Accident Insurance & Safety Protection Fee",
     promoDiscountLabel: "Promotional Discount",
     totalAmountLabel: "Total Amount Due",
-    promoInputPlaceholder: "Enter Promo Code (e.g., LOOKLARNCARE)",
+    promoInputPlaceholder: "Enter Promo Code (e.g., CAREMATE)",
     applyPromoBtn: "Apply Code",
     promoSuccessText: "Promo applied! ฿{discount} discount granted.",
     promoInvalidText: "Invalid promo code or expired.",
@@ -363,7 +364,7 @@ export const en = {
     payMobileBanking: "Mobile Banking (K PLUS, SCB EASY, Krungthai NEXT)",
     payCash: "Direct Cash Payment upon Outing Completion",
     confirmBookingBtn: "Proceed to Payment",
-    agreeTermsText: "By clicking confirm, you agree to Looklarn's Terms of Service and Privacy Policy.",
+    agreeTermsText: "By clicking confirm, you agree to CareMate's Terms of Service and Privacy Policy.",
     notFoundTitle: "Caretaker Not Found",
     notFoundDesc: "Please select a caretaker from the matching results page.",
     successModal: {
@@ -470,7 +471,7 @@ export const en = {
     findCaretakerBtn: "Find Caretaker for this Elder"
   },
   footer: {
-    tagline: "Looklarn — Dedicated, compassionate elder escort companions providing warmth, safety, and joy.",
+    tagline: "CareMate — Dedicated, compassionate elder escort companions providing warmth, safety, and joy.",
     quickLinksTitle: "Quick Links",
     quickLinks: "Quick Links",
     servicesTitle: "Our Services",
@@ -491,7 +492,7 @@ export const en = {
     serviceShopping: "Grocery Shopping & Dining Out",
     contactSupport: "Contact Us",
     supportHours: "Customer support open daily 07:00 - 22:00",
-    copyright: "© 2026 Looklarn Co., Ltd. All rights reserved.",
+    copyright: "© 2026 CareMate Co., Ltd. All rights reserved.",
     terms: "Terms of Service",
     privacy: "Privacy Policy"
   }

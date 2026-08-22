@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 import { Sparkles, SlidersHorizontal, Calendar, Clock, DollarSign, Activity, ArrowUpDown } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
 import { getAppointmentEventLabel, getElderMobilityMeta, getEnumLabel } from '../../constants/careEnums';
-import { calculateCarePrice } from '../../utils/pricing';
+import { calculateCarePrice, formatServicePrice } from '../../utils/pricing';
 
 export function MatchSummaryHeader({
   searchCriteria = {},
@@ -25,6 +25,7 @@ export function MatchSummaryHeader({
 
   const duration = searchCriteria.durationHours || 4;
   const priceQuote = calculateCarePrice(searchCriteria);
+  const formattedPrice = formatServicePrice(priceQuote.totalPrice);
   const activityName = getAppointmentEventLabel(searchCriteria.activityType, language, 'fullLabel');
   const mobilityName = getMobilityLabel(searchCriteria.mobility);
 
@@ -42,7 +43,7 @@ export function MatchSummaryHeader({
             {t('matches.title', 'ผลการจับคู่ผู้ดูแลที่เหมาะสมที่สุด')}
           </h1>
           <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-            {t('matches.subtitle', 'ระบบ Looklarn AI คัดเลือก 3 ผู้ดูแลที่มีคะแนนความเข้ากันได้สูงสุดตามความต้องการของคุณ')}
+            {t('matches.subtitle', 'ระบบ CareMate AI คัดเลือก 3 ผู้ดูแลที่มีคะแนนความเข้ากันได้สูงสุดตามความต้องการของคุณ')}
           </p>
         </div>
 
@@ -79,7 +80,7 @@ export function MatchSummaryHeader({
 
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-800 font-medium rounded-lg border border-amber-100">
             <DollarSign className="w-3.5 h-3.5 text-amber-600" />
-            ฿{priceQuote.totalPrice} / {language === 'th' ? 'นัด' : 'booking'}
+            {formattedPrice} / {language === 'th' ? 'นัด' : 'booking'}
           </span>
         </div>
       </div>
@@ -105,7 +106,7 @@ export function MatchSummaryHeader({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {t('matches.sortMatchScore', 'คะแนนความเข้ากันได้ (สูงสุด)')}
+              AI score
             </button>
             <button
               type="button"

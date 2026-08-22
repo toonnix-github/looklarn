@@ -131,9 +131,9 @@ export default function HomePage() {
     >
       <section
         className="grid h-full min-h-0 grid-rows-[0.6fr_0.44fr_1.58fr_0.78fr] gap-[1.2dvh] sm:hidden"
-        aria-label="Looklarn mobile dashboard"
+        aria-label="CareMate mobile dashboard"
       >
-        <h1 className="sr-only">Looklarn ลูกหลาน</h1>
+        <h1 className="sr-only">CareMate</h1>
         <div className="min-h-0 overflow-hidden rounded-[min(5.4vw,1.35rem)] bg-white shadow-sm ring-1 ring-slate-200/75">
           <div className="grid h-full min-h-0 grid-cols-[0.66fr_1.66fr] items-center gap-[2.6vw] p-[2.35vw]">
             <div className="relative aspect-square w-full self-center overflow-hidden bg-sky-50">
@@ -176,7 +176,7 @@ export default function HomePage() {
         <div className="grid min-h-0 grid-cols-[1.08fr_0.92fr] gap-[2.6vw]">
           <Link
             to="/find"
-            className="group flex min-h-0 items-center justify-between rounded-[min(4.6vw,1.12rem)] bg-gradient-to-br from-sky-500 to-cyan-600 px-[3.8vw] text-white shadow-lg shadow-sky-700/25 ring-1 ring-sky-300/40 transition active:scale-[0.985]"
+            className="group flex min-h-0 items-center justify-between rounded-[min(4.6vw,1.12rem)] bg-gradient-to-br from-primary-700 to-secondary-600 px-[3.8vw] text-sub1-50 shadow-lg shadow-primary-900/20 ring-1 ring-secondary-300/40 transition active:scale-[0.985]"
           >
             <span className="flex min-w-0 items-center gap-[2.4vw]">
               <span className="grid aspect-square h-[4.9dvh] place-items-center rounded-[min(3.2vw,0.8rem)] bg-white/20 shadow-inner ring-1 ring-white/25">
@@ -186,7 +186,7 @@ export default function HomePage() {
                 <span className="block text-[clamp(0.78rem,3.7vw,0.96rem)] font-black leading-tight">
                   ค้นหาผู้ดูแล
                 </span>
-                <span className="block truncate text-[clamp(0.56rem,2.45vw,0.68rem)] font-semibold text-sky-100">
+                <span className="block truncate text-[clamp(0.56rem,2.45vw,0.68rem)] font-semibold text-sub1-100">
                   จับคู่ด้วย AI
                 </span>
               </span>
@@ -198,7 +198,7 @@ export default function HomePage() {
 
           <button
             type="button"
-            className="group flex min-h-0 items-center justify-between rounded-[min(4.6vw,1.12rem)] bg-gradient-to-br from-rose-500 to-pink-600 px-[3.4vw] text-left text-white shadow-lg shadow-rose-700/25 ring-1 ring-rose-300/40 transition active:scale-[0.985]"
+            className="group flex min-h-0 items-center justify-between rounded-[min(4.6vw,1.12rem)] bg-gradient-to-br from-rose-500 to-pink-600 px-[3.4vw] text-left text-rose-50 shadow-lg shadow-rose-700/25 ring-1 ring-rose-300/40 transition active:scale-[0.985]"
           >
             <span className="min-w-0">
               <span className="block text-[clamp(0.76rem,3.45vw,0.92rem)] font-black leading-tight">
@@ -293,7 +293,7 @@ export default function HomePage() {
 
             <Link
               to="/find"
-              className="flex h-[4.7dvh] shrink-0 items-center justify-center gap-[2vw] rounded-full bg-emerald-500 px-[3vw] text-[clamp(0.66rem,2.9vw,0.78rem)] font-black text-white shadow-lg shadow-emerald-700/20 ring-1 ring-emerald-300 transition active:scale-[0.985]"
+              className="flex h-[4.7dvh] shrink-0 items-center justify-center gap-[2vw] rounded-full bg-secondary-700 px-[3vw] text-[clamp(0.66rem,2.9vw,0.78rem)] font-black text-sub1-50 shadow-lg shadow-secondary-700/20 ring-1 ring-secondary-300 transition active:scale-[0.985]"
             >
               ทำการนัดหมายครั้งถัดไป
               <PhoneCall className="h-[1.8dvh] w-[1.8dvh]" />
@@ -346,10 +346,10 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => setActivityModalOpen(true)}
-              className="flex min-h-0 w-[13vw] flex-col items-center justify-center gap-[0.45dvh] rounded-[min(3.4vw,0.85rem)] bg-sky-50 text-sky-700 shadow-sm ring-1 ring-sky-100 transition active:scale-[0.985]"
+              className="flex min-h-0 w-[13vw] flex-col items-center justify-center gap-[0.45dvh] rounded-[min(3.4vw,0.85rem)] bg-sub1-50 text-primary-700 shadow-sm ring-1 ring-sub1-200 transition active:scale-[0.985]"
               aria-label="ดูทุกกิจกรรม"
             >
-              <span className="grid aspect-square h-[4.1dvh] place-items-center rounded-full bg-white shadow-sm ring-1 ring-sky-100">
+              <span className="grid aspect-square h-[4.1dvh] place-items-center rounded-full bg-white shadow-sm ring-1 ring-sub1-200">
                 <Plus className="h-[2.1dvh] w-[2.1dvh]" />
               </span>
               <span className="text-[clamp(0.5rem,2.05vw,0.58rem)] font-black leading-none">

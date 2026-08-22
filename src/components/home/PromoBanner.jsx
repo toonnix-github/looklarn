@@ -9,14 +9,14 @@ export default function PromoBanner({ className = '' }) {
 
   const handleCopyCode = () => {
     if (navigator?.clipboard?.writeText) {
-      navigator.clipboard.writeText('LOOKLARNCARE');
+      navigator.clipboard.writeText('CAREMATE');
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-600 via-sky-500 to-emerald-500 text-white p-6 sm:p-10 shadow-lg shadow-sky-500/10 ${className}`}>
+    <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary-900 via-primary-800 to-secondary-500 text-white p-6 sm:p-10 shadow-lg shadow-primary-900/15 ${className}`}>
       {/* Decorative glow */}
       <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -30,29 +30,29 @@ export default function PromoBanner({ className = '' }) {
           {t('home.promo.title', 'รับส่วนลดพิเศษสำหรับสถานพยาบาลพันธมิตร')}
         </h3>
 
-        <p className="text-sm sm:text-base text-sky-50 leading-relaxed max-w-2xl">
+        <p className="text-sm sm:text-base text-sub1-50 leading-relaxed max-w-2xl">
           {t('home.promo.desc', 'รับส่วนลด 150 บาท สำหรับการนัดหมายพาผู้สูงอายุไปคลินิกและศูนย์การแพทย์พันธมิตรครั้งแรก')}
         </p>
 
         {/* Promo code strip */}
         <div className="flex flex-wrap items-center gap-3 pt-2">
-          <span className="text-xs text-sky-100 font-medium">{t('home.promo.codeLabel', 'โค้ดส่วนลด:')}</span>
+          <span className="text-xs text-sub1-100 font-medium">{t('home.promo.codeLabel', 'โค้ดส่วนลด:')}</span>
           <span className="px-3.5 py-1.5 bg-white/20 backdrop-blur-md rounded-xl font-mono font-black tracking-widest text-sm text-white border border-white/30 shadow-inner">
-            LOOKLARNCARE
+            CAREMATE
           </span>
           <button
             type="button"
             onClick={handleCopyCode}
             aria-label="Copy promo code"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white text-sky-700 hover:bg-sky-50 active:scale-95 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-sub1-50 text-primary-700 hover:bg-sub1-100 active:scale-95 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-sky-700" />}
+            {copied ? <Check className="w-4 h-4 text-secondary-700" /> : <Copy className="w-4 h-4 text-primary-700" />}
             <span>{copied ? t('home.promo.codeCopied', 'คัดลอกโค้ดแล้ว!') : t('home.promo.copyCode', 'คัดลอกโค้ด')}</span>
           </button>
         </div>
 
         {/* Partner list and insurance badge */}
-        <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-sky-100">
+        <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-sub1-100">
           <p>
             {t('home.promo.partnerHospitals', 'ศูนย์การแพทย์พันธมิตร: รพ.ศิริราช • รพ.จุฬาลงกรณ์ • รพ.รามาธิบดี • รพ.พระมงกุฎเกล้า')}
           </p>

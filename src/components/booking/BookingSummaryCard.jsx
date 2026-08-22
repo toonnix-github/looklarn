@@ -25,6 +25,7 @@ import {
   Users,
 } from 'lucide-react';
 import { formatDate } from '../../utils/formatters';
+import { formatServicePrice } from '../../utils/pricing';
 import {
   APPOINTMENT_EVENTS,
   getAppointmentEventMeta,
@@ -60,6 +61,7 @@ export function BookingSummaryCard({
   const { t, language, getLocalized } = useLanguage();
 
   if (!caretaker) return null;
+  const formattedPrice = priceQuote ? formatServicePrice(priceQuote.totalPrice) : null;
 
   const getActivityIcon = (type) => {
     const meta = getAppointmentEventMeta(type);
@@ -145,7 +147,7 @@ export function BookingSummaryCard({
                 </p>
                 <div className="flex items-center gap-3 text-xs text-slate-600 pt-0.5">
                   <span className="font-bold text-emerald-600 text-sm">
-                    {priceQuote ? `฿${priceQuote.totalPrice}` : t('book.standardPriceLabel', 'ราคามาตรฐาน')}
+                    {formattedPrice || t('book.standardPriceLabel', 'ราคามาตรฐาน')}
                   </span>
                   <span>•</span>
                   <span>★ {caretaker.rating} ({caretaker.reviewsCount || caretaker.reviews?.length || 0})</span>
@@ -159,7 +161,7 @@ export function BookingSummaryCard({
             </div>
             {caretaker.matchScore && (
               <div className="shrink-0 flex sm:flex-col items-center justify-between sm:justify-center border-t sm:border-t-0 sm:border-l border-slate-200/80 pt-3 sm:pt-0 sm:pl-4">
-                <MatchScoreRing score={caretaker.matchScore} size="md" showSublabel sublabel="Match" />
+                <MatchScoreRing score={caretaker.matchScore} size="md" showSublabel sublabel="AI Matching Score" />
               </div>
             )}
           </div>

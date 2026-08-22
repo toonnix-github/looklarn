@@ -6,7 +6,8 @@ import { Card, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import StepIndicator from '../components/find/StepIndicator';
 import Step1Activity from '../components/find/Step1Physical';
-import Step2Caretaker from '../components/find/Step3Schedule';
+import Step2Location from '../components/find/Step2Location';
+import Step3Caretaker from '../components/find/Step3Schedule';
 import AiMatchingLoader from '../components/find/AiMatchingLoader';
 import {
   ArrowLeft, ArrowRight, Sparkles,
@@ -90,7 +91,7 @@ export default function FindCaretakerPage() {
 
   const handleNext = () => {
     updateSearchCriteria(formData);
-    setCurrentStep((prev) => Math.min(prev + 1, 2));
+    setCurrentStep((prev) => Math.min(prev + 1, 3));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -216,7 +217,10 @@ export default function FindCaretakerPage() {
               <Step1Activity formData={formData} setFormData={setFormData} elder={elder} />
             )}
             {currentStep === 2 && (
-              <Step2Caretaker formData={formData} setFormData={setFormData} />
+              <Step2Location formData={formData} setFormData={setFormData} elder={elder} />
+            )}
+            {currentStep === 3 && (
+              <Step3Caretaker formData={formData} setFormData={setFormData} />
             )}
           </div>
 
@@ -236,7 +240,7 @@ export default function FindCaretakerPage() {
               <div />
             )}
 
-            {currentStep < 2 ? (
+            {currentStep < 3 ? (
               <Button
                 type="button"
                 variant="primary"
@@ -249,11 +253,11 @@ export default function FindCaretakerPage() {
             ) : (
               <Button
                 type="button"
-                variant="accent"
+                variant="primary"
                 size="md"
                 onClick={handleSubmit}
-                rightIcon={<Sparkles className="h-4 w-4 text-slate-950" />}
-                className="h-[5.2dvh] max-h-12 min-w-0 cursor-pointer whitespace-nowrap rounded-xl bg-emerald-400 px-4 text-sm font-black text-slate-950 shadow-md shadow-emerald-950/15 hover:bg-emerald-300 sm:h-auto sm:px-7"
+                rightIcon={<Sparkles className="h-4 w-4" />}
+                className="h-[5.2dvh] max-h-12 min-w-0 cursor-pointer whitespace-nowrap rounded-xl px-4 text-sm font-black sm:h-auto sm:px-7"
               >
                 {t('find.submitToMatches', language === 'th' ? 'ค้นหาผู้ดูแลที่เหมาะสม' : 'Find Matches')}
               </Button>

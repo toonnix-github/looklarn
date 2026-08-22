@@ -105,7 +105,7 @@ export function CaretakerWaveHero({ caretaker }) {
           </div>
         </div>
 
-        {/* Right Side: AI Match Score Glassmorphic Card */}
+        {/* Right Side: AI Matching Score Glassmorphic Card */}
         <div className="bg-white/15 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/25 flex flex-col items-center justify-center text-center shadow-lg shrink-0 w-full sm:w-44">
           <MatchScoreRing
             score={caretaker.matchScore}
@@ -113,7 +113,7 @@ export function CaretakerWaveHero({ caretaker }) {
             className="text-white"
           />
           <span className="text-xs font-extrabold text-white mt-2">
-            AI Match Score
+            AI Matching Score
           </span>
           <span className="text-[11px] text-sky-100 font-medium">
             {t('caretaker.compatibilityRate', 'ความเข้ากันได้')}
@@ -124,7 +124,7 @@ export function CaretakerWaveHero({ caretaker }) {
       {/* Decorative Wave Divider at Bottom */}
       <div className="relative w-full overflow-hidden leading-none z-0">
         <svg
-          className="relative block w-full h-8 sm:h-12 text-[#F0F9FF]"
+          className="relative block w-full h-8 sm:h-12 text-[#F8FBFF]"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
         >

@@ -12,9 +12,9 @@ export function Footer() {
         <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
           <div className="flex items-center gap-2 font-black text-slate-900">
             <HeartHandshake className="h-4 w-4 text-sky-500" />
-            <span>Looklarn (ลูกหลาน)</span>
+            <span>CareMate</span>
           </div>
-          <div className="flex items-center gap-1.5 font-semibold text-emerald-700">
+          <div className="flex items-center gap-1.5 font-semibold text-blue-800">
             <ShieldCheck className="h-3.5 w-3.5" />
             <span>{t('footer.safetyCertified', 'ผู้ดูแลทุกคนผ่านการตรวจสอบประวัติอาชญากรรมและการฝึกปฐมพยาบาล 100%')}</span>
           </div>

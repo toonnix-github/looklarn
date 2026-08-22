@@ -247,7 +247,7 @@ export function BookingCard({
             {/* Completed bookings can receive or update review feedback. */}
             {booking.status === 'completed' && (
               <Button
-                variant="accent"
+                variant="secondary"
                 size="sm"
                 onClick={() => onReview?.(booking)}
                 leftIcon={<Star className="w-3.5 h-3.5 fill-current" />}

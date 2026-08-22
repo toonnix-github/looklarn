@@ -96,9 +96,9 @@ export default function ElderProfilePage() {
       <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm flex items-center justify-between w-full">
         <h1 className="text-lg font-black text-slate-800">โปรไฟล์</h1>
         <Button
-          variant="accent"
+          variant="secondary"
           size="sm"
-          className="bg-emerald-500 hover:bg-emerald-400 text-white font-black shadow-md shadow-emerald-500/25 border-0"
+          className="font-black shadow-md shadow-secondary-700/20"
           onClick={handleFindCaretaker}
           leftIcon={<CalendarPlus className="w-4 h-4" />}
         >
@@ -211,9 +211,9 @@ export default function ElderProfilePage() {
                   {formData.conditions.map((condId) => {
                     const meta = medicalConditionOptions.find(c => c.id === condId);
                     return (
-                      <div key={condId} className="flex items-center gap-1 px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-[13px] font-medium border border-sky-100">
+                      <div key={condId} className="flex items-center gap-1 px-2.5 py-1 bg-sub1-50 text-primary-700 rounded-md text-[13px] font-medium border border-sub1-200">
                         <span>{meta ? getEnumLabel(meta, language) : condId}</span>
-                        <button onClick={() => removeCondition(condId)} className="p-0.5 hover:bg-sky-200 rounded-sm text-sky-900 transition-colors">
+                        <button onClick={() => removeCondition(condId)} className="p-0.5 hover:bg-sub1-200 rounded-sm text-primary-900 transition-colors">
                           <X className="w-3 h-3" />
                         </button>
                       </div>
@@ -231,7 +231,7 @@ export default function ElderProfilePage() {
                       setIsSearching(true);
                     }}
                     onFocus={() => setIsSearching(true)}
-                    className="w-full text-[14px] px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-sky-500 focus:bg-white transition-colors"
+                    className="w-full text-[14px] px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-primary-500 focus:bg-white transition-colors"
                     placeholder="ค้นหาและเพิ่มโรคประจำตัว..."
                   />
                   
@@ -242,10 +242,10 @@ export default function ElderProfilePage() {
                         <button
                           key={cond.id}
                           onClick={() => addCondition(cond.id)}
-                          className="w-full text-left px-3 py-2 text-[14px] text-slate-700 hover:bg-sky-50 flex items-center justify-between"
+                          className="w-full text-left px-3 py-2 text-[14px] text-slate-700 hover:bg-sub1-50 flex items-center justify-between"
                         >
                           <span>{getEnumLabel(cond, language)}</span>
-                          <Plus className="w-4 h-4 text-sky-500" />
+                          <Plus className="w-4 h-4 text-primary-500" />
                         </button>
                       ))}
                     </div>
@@ -300,9 +300,9 @@ export default function ElderProfilePage() {
       <div className="fixed inset-x-0 bottom-[calc(4.05rem+max(env(safe-area-inset-bottom),0.55rem))] z-40 border-t border-slate-200/80 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.07)] backdrop-blur-md md:bottom-0">
         <div className="mx-auto max-w-lg">
           <Button
-            variant="accent"
+            variant="secondary"
             size="md"
-            className="h-12 w-full rounded-2xl border-0 bg-emerald-500 text-[0.95rem] font-black text-white shadow-lg shadow-emerald-700/20 hover:bg-emerald-400 active:bg-emerald-600"
+            className="h-12 w-full rounded-2xl text-[0.95rem] font-black shadow-lg shadow-secondary-700/20"
             onClick={handleSave}
             leftIcon={<Save className="h-[1.1rem] w-[1.1rem]" />}
           >

@@ -284,7 +284,7 @@ describe('Tier 1: Core Feature Coverage across 7 Routes & Components', () => {
   // FEATURE 5: Caretaker Profile (/caretaker/:id)
   // ==========================================
   describe('Feature 5: Caretaker Profile (/caretaker/:id)', () => {
-    it('5.1 should render wave gradient hero with photo, name, and AI Match Score', () => {
+    it('5.1 should render wave gradient hero with photo, name, and AI Matching Score', () => {
       renderApp('/caretaker/ct-1');
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
       expect(screen.getByText(/96%/i)).toBeInTheDocument();

@@ -117,7 +117,7 @@ export function PriceBreakdown({
                 type="text"
                 value={promoCode}
                 onChange={(e) => onPromoCodeChange?.(e.target.value)}
-                placeholder={t('book.promoInputPlaceholder', 'กรอกโค้ดส่วนลด (เช่น LOOKLARNCARE)')}
+                placeholder={t('book.promoInputPlaceholder', 'กรอกโค้ดส่วนลด (เช่น CAREMATE)')}
                 className="w-full pl-3.5 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm uppercase placeholder:normal-case placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
               />
             </div>
@@ -167,9 +167,9 @@ export function PriceBreakdown({
         {/* Confirm Action Button */}
         <div className="pt-2 space-y-3">
           <Button
-            variant="accent"
+            variant="secondary"
             size="lg"
-            className="w-full text-base font-bold shadow-md shadow-emerald-500/20 cursor-pointer"
+            className="w-full text-base font-bold shadow-md shadow-secondary-700/20 cursor-pointer"
             onClick={onConfirm}
             disabled={isSubmitting}
             rightIcon={<ArrowRight className="w-4 h-4" />}
@@ -180,7 +180,7 @@ export function PriceBreakdown({
           </Button>
 
           <p className="text-[11px] text-center text-slate-400 leading-relaxed px-2">
-            {t('book.agreeTermsText', 'การกดยืนยันแสดงว่าท่านยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัวของ Looklarn')}
+            {t('book.agreeTermsText', 'การกดยืนยันแสดงว่าท่านยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัวของ CareMate')}
           </p>
         </div>
       </CardContent>

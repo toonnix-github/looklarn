@@ -138,7 +138,7 @@ export function PaymentMethodSelector({
                 </div>
                 <div className="flex items-center justify-center">
                   <div className="px-2 py-1 bg-sky-500 text-white text-[9px] font-black rounded-md tracking-wider">
-                    LOOKLARN
+                    CAREMATE
                   </div>
                 </div>
                 <div className="flex justify-between">

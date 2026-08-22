@@ -85,7 +85,7 @@ export default function BookingPage() {
 
   const handleApplyPromo = (code) => {
     const cleanCode = (code || '').trim().toUpperCase();
-    if (cleanCode === 'LOOKLARNCARE' || cleanCode === 'LOOKLARN150') {
+    if (cleanCode === 'CAREMATE' || cleanCode === 'CAREMATE150') {
       setPromoDiscount(150);
       setPromoStatus('applied');
       toast.success(t('book.promoSuccessText', { discount: 150 }));

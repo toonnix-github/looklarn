@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { appointmentEventOptions, getEnumLabel } from '../../constants/careEnums';
-import { Calendar, Clock3, ExternalLink, MapPin } from 'lucide-react';
+import { Calendar, Clock3 } from 'lucide-react';
 
 const TIME_PRESETS = [
   {
@@ -35,15 +35,8 @@ const getPresetLabel = (preset, language, key = 'label') =>
 
 export default function Step1Activity({ formData, setFormData }) {
   const { language } = useLanguage();
-  const selectedActivity =
-    appointmentEventOptions.find((activity) => activity.id === formData.activityType) ||
-    appointmentEventOptions[0];
   const selectedPreset =
     TIME_PRESETS.find((preset) => preset.id === formData.timeSlot) || TIME_PRESETS[0];
-  const destination = formData.destination || '';
-  const pickupAddress = formData.pickupAddress || '';
-  const mapQuery = destination || pickupAddress || 'Bangkok Thailand';
-  const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 
   const updateActivity = (activityType) => {
     setFormData({ ...formData, activityType });
@@ -68,7 +61,7 @@ export default function Step1Activity({ formData, setFormData }) {
         <select
           value={formData.activityType}
           onChange={(event) => updateActivity(event.target.value)}
-          className="h-[5.2dvh] w-full rounded-[min(3.6vw,0.9rem)] border border-slate-200 bg-white px-[3.2vw] text-[clamp(0.82rem,3.5vw,0.98rem)] font-black text-slate-950 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
+          className="h-[5.2dvh] w-full rounded-[min(3.6vw,0.9rem)] border border-slate-200 bg-white px-[3.2vw] text-[clamp(0.82rem,3.5vw,0.98rem)] font-black text-slate-950 shadow-xs focus:outline-none focus:ring-2 focus:ring-primary-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
         >
           {appointmentEventOptions.map((activity) => (
             <option key={activity.id} value={activity.id}>
@@ -76,20 +69,12 @@ export default function Step1Activity({ formData, setFormData }) {
             </option>
           ))}
         </select>
-        <div className="min-w-0">
-          <p className="truncate text-[clamp(0.86rem,3.65vw,1rem)] font-black leading-tight text-slate-950">
-            {getEnumLabel(selectedActivity, language, 'label')}
-          </p>
-          <p className="truncate text-[clamp(0.64rem,2.7vw,0.76rem)] font-bold leading-tight text-slate-500">
-            {getEnumLabel(selectedActivity, language, 'description')}
-          </p>
-        </div>
       </div>
 
       <div className="space-y-[0.65dvh]">
         <div className="space-y-[0.65dvh]">
           <label className="flex items-center gap-1.5 text-[clamp(0.72rem,3vw,0.84rem)] font-black text-slate-800 sm:text-sm">
-            <Calendar className="h-[1.8dvh] w-[1.8dvh] text-sky-500 sm:h-4 sm:w-4" />
+            <Calendar className="h-[1.8dvh] w-[1.8dvh] text-primary-500 sm:h-4 sm:w-4" />
             {language === 'th' ? 'วันที่' : 'Date'}
           </label>
           <input
@@ -97,13 +82,13 @@ export default function Step1Activity({ formData, setFormData }) {
             value={formData.date || ''}
             min={new Date().toISOString().split('T')[0]}
             onChange={(event) => setFormData({ ...formData, date: event.target.value })}
-            className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[2.6vw] text-[clamp(0.76rem,3.2vw,0.9rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
+            className="h-[5.1dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[2.6vw] text-[clamp(0.76rem,3.2vw,0.9rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-primary-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
           />
         </div>
 
         <div className="space-y-[0.65dvh]">
           <label className="flex items-center gap-1.5 text-[clamp(0.72rem,3vw,0.84rem)] font-black text-slate-800 sm:text-sm">
-            <Clock3 className="h-[1.8dvh] w-[1.8dvh] text-emerald-500 sm:h-4 sm:w-4" />
+            <Clock3 className="h-[1.8dvh] w-[1.8dvh] text-secondary-600 sm:h-4 sm:w-4" />
             {language === 'th' ? 'ช่วงเวลา' : 'Time'}
           </label>
           <div className="grid grid-cols-3 gap-[1vw]">
@@ -116,14 +101,14 @@ export default function Step1Activity({ formData, setFormData }) {
                   onClick={() => updateTimePreset(preset)}
                   className={`flex h-[5.1dvh] min-w-0 flex-col items-center justify-center rounded-[min(3.1vw,0.78rem)] border px-[1vw] text-center transition active:scale-[0.985] ${
                     isSelected
-                      ? 'border-sky-500 bg-sky-500 text-white shadow-md shadow-sky-500/20'
+                      ? 'border-primary-600 bg-primary-700 text-white shadow-md shadow-primary-900/20'
                       : 'border-slate-200 bg-white text-slate-700'
                   }`}
                 >
                   <span className="block max-w-full truncate text-[clamp(0.56rem,2.32vw,0.66rem)] font-black leading-tight">
                     {getPresetLabel(preset, language)}
                   </span>
-                  <span className={`block text-[clamp(0.48rem,2vw,0.58rem)] font-bold leading-tight ${isSelected ? 'text-sky-100' : 'text-slate-400'}`}>
+                  <span className={`block text-[clamp(0.48rem,2vw,0.58rem)] font-bold leading-tight ${isSelected ? 'text-sub1-100' : 'text-sub2-500'}`}>
                     {getPresetLabel(preset, language, 'detail')}
                   </span>
                 </button>
@@ -131,40 +116,6 @@ export default function Step1Activity({ formData, setFormData }) {
             })}
           </div>
         </div>
-      </div>
-
-      <div className="space-y-[0.65dvh]">
-        <div className="flex items-center justify-between gap-2">
-          <label className="flex min-w-0 items-center gap-1.5 text-[clamp(0.72rem,3vw,0.84rem)] font-black text-slate-800 sm:text-sm">
-            <MapPin className="h-[1.8dvh] w-[1.8dvh] text-rose-500 sm:h-4 sm:w-4" />
-            {language === 'th' ? 'สถานที่จาก Google Maps' : 'Google Maps location'}
-          </label>
-          <a
-            href={mapLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sky-50 px-[2vw] py-[0.35dvh] text-[clamp(0.58rem,2.4vw,0.68rem)] font-black text-sky-700 ring-1 ring-sky-100"
-          >
-            {language === 'th' ? 'เลือกสถานที่' : 'Pick place'}
-            <ExternalLink className="h-[1.25dvh] w-[1.25dvh]" />
-          </a>
-        </div>
-        <p className="text-[clamp(0.58rem,2.45vw,0.68rem)] font-bold leading-tight text-slate-500">
-          {language === 'th'
-            ? 'เปิด Google Maps เลือกสถานที่จริง แล้วคัดลอกชื่อ/ที่อยู่มาวาง'
-            : 'Open Google Maps, choose the real place, then paste the name/address here.'}
-        </p>
-        <input
-          type="text"
-          value={destination}
-          onChange={(event) => setFormData({ ...formData, destination: event.target.value })}
-          placeholder={language === 'th' ? 'วางที่อยู่จาก Google Maps' : 'Paste Google Maps address'}
-          className="h-[5dvh] w-full rounded-[min(3.5vw,0.9rem)] border border-slate-200 bg-white px-[3vw] text-[clamp(0.76rem,3.2vw,0.9rem)] font-bold text-slate-900 shadow-xs focus:outline-none focus:ring-2 focus:ring-sky-500 sm:h-auto sm:rounded-2xl sm:p-3 sm:text-sm"
-        />
-        <p className="truncate text-[clamp(0.6rem,2.5vw,0.7rem)] font-bold text-slate-500">
-          {language === 'th' ? 'จุดรับ: ' : 'Pickup: '}
-          {pickupAddress || (language === 'th' ? 'ใช้ที่อยู่จากโปรไฟล์ผู้สูงอายุ' : 'Use elder profile address')}
-        </p>
       </div>
     </div>
   );

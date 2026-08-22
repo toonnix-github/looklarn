@@ -19,7 +19,7 @@ export default function Testimonials({ className = '' }) {
     {
       id: 't2',
       rating: 5,
-      text: t('home.testimonials.t2Text', 'หาคนพาคุณยายไปสักการะสิ่งศักดิ์สิทธิ์ที่วัดอรุณยากมากจนมาเจอลูกหลาน น้องนิภาพรใจเย็น ช่วยพยุงดูแลเรื่องแดดและน้ำดื่มดีมาก แนะนำทุกคนเลยค่ะ'),
+      text: t('home.testimonials.t2Text', 'หาคนพาคุณยายไปสักการะสิ่งศักดิ์สิทธิ์ที่วัดอรุณยากมากจนมาเจอ CareMate น้องนิภาพรใจเย็น ช่วยพยุงดูแลเรื่องแดดและน้ำดื่มดีมาก แนะนำทุกคนเลยค่ะ'),
       author: t('home.testimonials.t2Author', 'พญ. วรรณภา สิทธิพงศ์'),
       role: t('home.testimonials.t2Role', 'บุตรสาว (แพทย์หญิง)'),
       initials: 'วส',
@@ -28,7 +28,7 @@ export default function Testimonials({ className = '' }) {
     {
       id: 't3',
       rating: 5,
-      text: t('home.testimonials.t3Text', 'น้องพลอยน่ารักมาก พาคุณพ่อไปผ่อนคลายที่สวนสาธารณะอย่างทะนุถนอม คอยชวนคุยจนคุณพ่ออารมณ์ดีขึ้นมาก ขอบคุณทีมงานลูกหลานจริงๆ ครับ'),
+      text: t('home.testimonials.t3Text', 'น้องพลอยน่ารักมาก พาคุณพ่อไปผ่อนคลายที่สวนสาธารณะอย่างทะนุถนอม คอยชวนคุยจนคุณพ่ออารมณ์ดีขึ้นมาก ขอบคุณทีมงาน CareMate จริงๆ ครับ'),
       author: t('home.testimonials.t3Author', 'คุณกิตติศักดิ์ วรเดช'),
       role: t('home.testimonials.t3Role', 'บุตรชาย (ข้าราชการ)'),
       initials: 'กว',

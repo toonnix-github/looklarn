@@ -8,19 +8,19 @@ export function MatchScoreRing({
   strokeWidth,
   showLabel = true,
   showSublabel = false,
-  sublabel = 'Match',
+  sublabel = 'AI Matching Score',
   className = '',
 }) {
   const sizeMap = {
-    sm: { px: 52, defaultStroke: 4, textSize: 'text-xs font-bold', subTextSize: 'text-[9px]' },
-    md: { px: 76, defaultStroke: 6, textSize: 'text-base font-extrabold', subTextSize: 'text-[10px]' },
-    lg: { px: 96, defaultStroke: 8, textSize: 'text-xl font-extrabold', subTextSize: 'text-xs' },
+    sm: { px: 52, defaultStroke: 4, textSize: 'text-xs font-bold', subTextSize: 'text-[7px]' },
+    md: { px: 76, defaultStroke: 6, textSize: 'text-base font-extrabold', subTextSize: 'text-[8px]' },
+    lg: { px: 96, defaultStroke: 8, textSize: 'text-xl font-extrabold', subTextSize: 'text-[10px]' },
     xl: { px: 124, defaultStroke: 10, textSize: 'text-2xl font-black', subTextSize: 'text-xs' },
   };
 
   const currentSizeConfig =
     typeof size === 'number'
-      ? { px: size, defaultStroke: strokeWidth || 6, textSize: 'text-base font-bold', subTextSize: 'text-[10px]' }
+      ? { px: size, defaultStroke: strokeWidth || 6, textSize: 'text-base font-bold', subTextSize: 'text-[8px]' }
       : sizeMap[size] || sizeMap.md;
 
   const dimension = currentSizeConfig.px;
@@ -40,7 +40,7 @@ export function MatchScoreRing({
       aria-valuenow={clampedScore}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-label={`Match score ${clampedScore} percent`}
+      aria-label={`AI match score ${clampedScore} percent`}
     >
       <svg
         width={dimension}
@@ -78,7 +78,7 @@ export function MatchScoreRing({
             {clampedScore}%
           </span>
           {showSublabel && (
-            <span className={cn('font-medium text-slate-500 uppercase tracking-wider mt-0.5', currentSizeConfig.subTextSize)}>
+            <span className={cn('mt-0.5 max-w-[82%] whitespace-normal text-center font-bold leading-none text-slate-500', currentSizeConfig.subTextSize)}>
               {sublabel}
             </span>
           )}

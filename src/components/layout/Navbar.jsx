@@ -54,17 +54,17 @@ export function Navbar() {
       <header role="banner" className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         <nav aria-label="Main Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            <Link to="/" className="flex items-center gap-3 group focus:outline-hidden focus:ring-2 focus:ring-sky-500 rounded-xl p-1">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-sky-500/25 group-hover:scale-105 transition-transform">
+            <Link to="/" className="flex items-center gap-3 group focus:outline-hidden focus:ring-2 focus:ring-primary-500 rounded-xl p-1">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-primary-900 via-primary-700 to-secondary-400 flex items-center justify-center text-white shadow-md shadow-primary-900/25 group-hover:scale-105 transition-transform">
                 <HeartHandshake className="w-6 h-6" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <span className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight">
-                    Looklarn
+                    CareMate
                   </span>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/70">
-                    ลูกหลาน
+                  <span className="text-xs font-bold text-primary-800 bg-sub1-50 px-1.5 py-0.5 rounded-md border border-sub1-200/70">
+                    Premium
                   </span>
                 </div>
                 <span className="text-[10px] sm:text-[11px] font-medium text-slate-500">
@@ -82,13 +82,13 @@ export function Navbar() {
                     to={link.path}
                     className={`relative px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
                       active
-                        ? 'text-sky-600 bg-sky-50 shadow-2xs'
+                        ? 'text-primary-700 bg-sub1-50 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     <span>{link.label}</span>
                     {link.badge != null && (
-                      <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-black text-white bg-sky-500 rounded-full">
+                      <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-black text-sub1-50 bg-secondary-700 rounded-full">
                         {link.badge}
                       </span>
                     )}
@@ -101,10 +101,10 @@ export function Navbar() {
               <LanguageToggle />
               <Link to="/find">
                 <Button
-                  variant="accent"
+                  variant="primary"
                   size="sm"
-                  leftIcon={<Search className="w-4 h-4 text-slate-950" />}
-                  className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black shadow-sm"
+                  leftIcon={<Search className="w-4 h-4" />}
+                  className="font-black"
                 >
                   {t('nav.findCaretakerCta', 'จองผู้ดูแลด่วน')}
                 </Button>
@@ -134,12 +134,12 @@ export function Navbar() {
                     to={link.path}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-bold ${
-                      active ? 'text-sky-600 bg-sky-50' : 'text-slate-600 hover:bg-slate-50'
+                      active ? 'text-primary-700 bg-sub1-50' : 'text-slate-600 hover:bg-slate-50'
                     }`}
                   >
                     <span>{link.label}</span>
                     {link.badge != null && (
-                      <span className="px-1.5 py-0.5 text-xs font-black text-white bg-sky-500 rounded-full">
+                      <span className="px-1.5 py-0.5 text-xs font-black text-sub1-50 bg-secondary-700 rounded-full">
                         {link.badge}
                       </span>
                     )}
@@ -166,15 +166,15 @@ export function Navbar() {
                 to={tab.path}
                 aria-label={tab.ariaLabel}
                 className={`relative flex min-h-[3.55rem] flex-col items-center justify-center gap-1 rounded-2xl text-[0.68rem] font-black transition-all ${
-                  active ? 'bg-sky-50 text-sky-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                  active ? 'bg-sub1-50 text-primary-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                 }`}
               >
-                <span className={`grid h-7 w-7 place-items-center rounded-xl ${active ? 'bg-sky-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500'}`}>
+                <span className={`grid h-7 w-7 place-items-center rounded-xl ${active ? 'bg-primary-700 text-white shadow-sm' : 'bg-sub2-100 text-sub2-500'}`}>
                   <Icon className="h-4 w-4" />
                 </span>
                 <span className="leading-none">{tab.label}</span>
                 {tab.badge != null && (
-                  <span className="absolute right-4 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-emerald-500 px-1 text-[0.6rem] font-black leading-none text-white">
+                  <span className="absolute right-4 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-secondary-700 px-1 text-[0.6rem] font-black leading-none text-sub1-50">
                     {tab.badge}
                   </span>
                 )}

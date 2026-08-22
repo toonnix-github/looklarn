@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useApp } from '../../context/AppContext';
 import { Button } from '../ui/Button';
 import { Sparkles, Star } from 'lucide-react';
-import { calculateCarePrice } from '../../utils/pricing';
+import { calculateCarePrice, formatServicePrice } from '../../utils/pricing';
 
 export function StickyBookingBar({ caretaker, className = '' }) {
   const { t, getLocalized, language } = useLanguage();
@@ -12,6 +12,7 @@ export function StickyBookingBar({ caretaker, className = '' }) {
 
   if (!caretaker) return null;
   const priceQuote = calculateCarePrice(searchCriteria);
+  const formattedPrice = formatServicePrice(priceQuote.totalPrice);
 
   return (
     <div
@@ -44,7 +45,7 @@ export function StickyBookingBar({ caretaker, className = '' }) {
                 {t('caretaker.stickyBar.rateLabel', 'ราคานัดนี้')}:
               </span>
               <span className="text-lg sm:text-2xl font-black text-emerald-600">
-                ฿{priceQuote.totalPrice}
+                {formattedPrice}
               </span>
               <span className="text-xs font-semibold text-slate-500">
                 / {language === 'th' ? 'นัด' : 'booking'}
@@ -57,9 +58,9 @@ export function StickyBookingBar({ caretaker, className = '' }) {
         <div>
           <Link to={`/book/${caretaker.id}`}>
             <Button
-              variant="accent"
+              variant="secondary"
               size="lg"
-              className="font-bold shadow-lg shadow-emerald-500/25 px-5 sm:px-8 py-3 text-sm sm:text-base whitespace-nowrap"
+              className="font-bold shadow-lg shadow-secondary-700/20 px-5 sm:px-8 py-3 text-sm sm:text-base whitespace-nowrap"
             >
               {t('caretaker.bookThisCaretaker', 'จองผู้ดูแลคนนี้')}
             </Button>

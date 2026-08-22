@@ -284,7 +284,7 @@ describe('Milestone M3: Match Results & Caretaker Profile Comprehensive Tests', 
       renderWithProviders(<CaretakerWaveHero caretaker={mockCaretaker} />);
       expect(screen.getByRole('heading', { level: 1, name: /สมชาย ประเสริฐ/i })).toBeInTheDocument();
       expect(screen.getByText('96%')).toBeInTheDocument();
-      expect(screen.getByText(/AI Match Score/i)).toBeInTheDocument();
+      expect(screen.getByText(/AI Matching Score/i)).toBeInTheDocument();
     });
 
     it('handles share button click and copies URL', async () => {

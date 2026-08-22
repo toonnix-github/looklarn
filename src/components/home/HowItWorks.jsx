@@ -41,7 +41,7 @@ export default function HowItWorks({ className = '' }) {
           {t('home.howItWorks.tag', '3 ขั้นตอนง่ายๆ')}
         </span>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-          {t('home.howItWorks.title', 'เริ่มต้นใช้งาน Looklarn ได้อย่างมั่นใจ')}
+          {t('home.howItWorks.title', 'เริ่มต้นใช้งาน CareMate ได้อย่างมั่นใจ')}
         </h2>
         <p className="text-sm text-slate-500">
           {t('home.howItWorks.subtitle', 'ระบบอัจฉริยะช่วยดูแลทุกขั้นตอนตั้งแต่การจับคู่จนถึงเสร็จสิ้นการเดินทาง')}
