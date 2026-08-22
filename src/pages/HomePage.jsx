@@ -30,7 +30,6 @@ import {
   HeartPulse,
   Home as HomeIcon,
   Landmark,
-  MapPin,
   PhoneCall,
   Pill,
   Plus,
@@ -233,25 +232,33 @@ export default function HomePage() {
           <div className="flex min-h-0 flex-1 flex-col gap-[0.9dvh]">
             <Link
               to="/bookings"
-              className="flex basis-[48%] min-h-0 flex-col justify-between overflow-hidden rounded-[min(4vw,1rem)] bg-white p-[3vw] text-slate-950 shadow-sm ring-1 ring-sky-100 transition active:scale-[0.99]"
+              className="grid basis-[56%] min-h-0 grid-cols-[minmax(4.6rem,0.32fr)_1fr] overflow-hidden rounded-[min(4vw,1rem)] bg-white text-slate-950 shadow-sm ring-1 ring-sky-100 transition active:scale-[0.99]"
             >
-              <div className="min-w-0">
-                <div className="mb-[0.65dvh] inline-flex rounded-full bg-sky-100 px-[2vw] py-[0.4dvh] text-[clamp(0.54rem,2.3vw,0.64rem)] font-black text-sky-700">
+              <div className="flex min-w-0 flex-col items-center justify-center gap-[0.7dvh] border-r border-sky-100 bg-sky-50/80 px-[2vw] text-center">
+                <span className="grid aspect-square h-[3.2dvh] place-items-center rounded-full bg-white text-sky-700 shadow-sm ring-1 ring-sky-100">
+                  <CalendarDays className="h-[1.7dvh] w-[1.7dvh]" />
+                </span>
+                <div className="text-[clamp(0.58rem,2.5vw,0.7rem)] font-black leading-tight text-sky-800">
                   {upcomingBooking ? formatDate(upcomingBooking.serviceDate, language, 'short') : 'ยังไม่มีนัดหมาย'}
                 </div>
+              </div>
+
+              <div className="flex min-w-0 flex-col justify-center gap-[1.05dvh] p-[3vw]">
                 <h3 className="line-clamp-2 text-[clamp(0.88rem,3.9vw,1.05rem)] font-black leading-tight">
                   {upcomingBooking ? getLocalized(upcomingBooking, 'activityTitle') : 'เลือกผู้ดูแลสำหรับนัดแรก'}
                 </h3>
-              </div>
-              <div className="grid grid-cols-2 gap-[2vw] text-[clamp(0.56rem,2.45vw,0.68rem)] font-bold text-slate-500">
-                <span className="flex min-w-0 items-center gap-[1vw] truncate rounded-full bg-slate-50 px-[1.7vw] py-[0.35dvh]">
-                  <Clock3 className="h-[1.65dvh] w-[1.65dvh] shrink-0" />
-                  {upcomingBooking ? upcomingBooking.timeSlot : '-'}
-                </span>
-                <span className="flex min-w-0 items-center gap-[1vw] truncate rounded-full bg-slate-50 px-[1.7vw] py-[0.35dvh]">
-                  <MapPin className="h-[1.65dvh] w-[1.65dvh] shrink-0" />
-                  {upcomingBooking ? getLocalized(upcomingBooking, 'caretakerNickname') : 'รอเลือก'}
-                </span>
+                <div className="flex flex-wrap gap-x-[3vw] gap-y-[0.45dvh] text-[clamp(0.56rem,2.45vw,0.68rem)] font-bold text-slate-500">
+                  <span className="flex min-w-0 items-center gap-[1vw]">
+                    <Clock3 className="h-[1.65dvh] w-[1.65dvh] shrink-0 text-sky-600" />
+                    {upcomingBooking ? upcomingBooking.timeSlot : '-'}
+                  </span>
+                  <span className="flex min-w-0 items-center gap-[1vw]">
+                    <Users className="h-[1.65dvh] w-[1.65dvh] shrink-0 text-emerald-600" />
+                    <span className="truncate">
+                      ผู้ดูแล {upcomingBooking ? getLocalized(upcomingBooking, 'caretakerNickname') : 'รอเลือก'}
+                    </span>
+                  </span>
+                </div>
               </div>
             </Link>
 
