@@ -297,7 +297,7 @@ export default function ElderProfilePage() {
       </div>
 
       {/* ── Bottom Action Bar ── */}
-      <div className="fixed inset-x-0 bottom-[3.55rem] z-40 border-t border-slate-200/80 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.07)] backdrop-blur-md md:bottom-0">
+      <div className="fixed inset-x-0 bottom-[calc(4.05rem+max(env(safe-area-inset-bottom),0.55rem))] z-40 border-t border-slate-200/80 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.07)] backdrop-blur-md md:bottom-0">
         <div className="mx-auto max-w-lg">
           <Button
             variant="accent"
