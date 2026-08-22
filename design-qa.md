@@ -1,58 +1,58 @@
-# Design QA — Find caretaker action button
+# Design QA — Profile save action
 
-- Source visual truth: `/workspace/scratch/18ab0f902b25/upload/01-Screenshot_2026-08-22-13-38-15-854_com.android.chrome.jpg`
-- Source pixels: 690 × 1536, device screenshot at 2×-class density
+- Source visual truth: `/workspace/scratch/18ab0f902b25/upload/01-Screenshot_2026-08-22-14-12-03-408_com.android.chrome.jpg`
+- Source pixels: 690 × 1536, mobile device screenshot
 - Intended CSS viewport: approximately 393 × 852 mobile
-- Implementation target: `src/pages/FindCaretakerPage.jsx`, step 2 mobile state in Thai
+- Implementation target: `src/pages/ElderProfilePage.jsx`, Thai profile screen
 - Implementation screenshot: unavailable
-- Browser-rendered evidence: unavailable because the cloud browser blocked the local preview URL with `net::ERR_BLOCKED_BY_CLIENT`
+- Browser-rendered evidence: unavailable because the cloud browser previously blocked the local preview URL with `net::ERR_BLOCKED_BY_CLIENT`
 - Build verification: `npm run build` passed with Vite 5.4.21
-- Primary interactions tested: blocked with browser rendering
+- Primary interaction: existing `handleSave` behavior retained
 - Console errors checked: blocked before page load
 
 ## Full-view comparison evidence
 
-The source shows the final search CTA taking roughly half of the action row and becoming unusually tall because its Thai label wraps to three lines. The implementation changes the CTA from the large button size to the medium size, caps it at 48px, reduces its icon and padding, and keeps the label on one line.
+The source shows the save action as a tall white outlined control that visually resembles an input field and adds a large empty band above the bottom navigation. The implementation changes it to a compact 48px emerald primary action inside a shallower sticky action bar.
 
 ## Focused region comparison evidence
 
-Source region inspected: the bottom wizard action row. Code-level checks confirm:
+Source region inspected: fixed save bar above the bottom navigation. Code-level checks confirm:
 
-- search CTA uses the medium button size instead of large;
-- mobile height is capped at 48px;
-- Thai label is constrained to one line;
-- icon, horizontal padding, radius, and shadow are reduced proportionally;
-- the back action is kept on one line so it cannot force the CTA narrower.
+- control changes from outline to the existing emerald accent variant;
+- height is fixed at 48px with a 0.95rem label;
+- icon is reduced to 1.1rem;
+- bar padding and upward shadow are reduced;
+- button keeps its full-width mobile touch target and existing save handler.
 
 ## Findings
 
 - [P2] Browser visual verification is blocked.
-  - Location: Find caretaker / step 2 wizard action row.
+  - Location: Elder profile / sticky save action.
   - Evidence: production build succeeds, but no browser screenshot could be captured from the local preview.
-  - Impact: exact wrapping and spacing cannot be visually confirmed at the target viewport in this environment.
-  - Fix: open the deployed `main` build on a mobile viewport and confirm the CTA is one line, approximately 48px tall, and does not clip.
+  - Impact: exact relationship between the sticky bar and bottom navigation cannot be visually confirmed in this environment.
+  - Fix: open the deployed `main` build on a mobile viewport and confirm the bar does not overlap the navigation and the button remains 48px tall.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: existing font family, weights, responsive sizes, and line clamps preserved; browser confirmation blocked.
-- Spacing and layout rhythm: CTA size reduced from large to medium, height capped at 48px, and the action row now has a stable gap; browser confirmation blocked.
-- Colors and visual tokens: existing sky, emerald, slate, white, ring, radius, and shadow tokens reused.
-- Image quality and asset fidelity: no image assets changed or added.
-- Copy and content: existing localized CTA and back labels are unchanged.
+- Fonts and typography: existing app typeface retained; label reduced to a compact primary-action size.
+- Spacing and layout rhythm: action bar padding reduced from 16px to 12px and shadow softened.
+- Colors and visual tokens: existing emerald accent, white text, and emerald active states reused.
+- Image quality and asset fidelity: no images changed.
+- Copy and content: `บันทึกข้อมูล` and its save behavior are unchanged.
 
 ## Comparison history
 
-- Initial finding: the final search CTA wrapped to three lines and dominated the lower form area.
-- Fix made: reduced the CTA size, height, icon, padding, radius, and shadow while preventing both action labels from wrapping.
+- Initial finding: oversized white outline button resembled a form field and lacked primary-action emphasis.
+- Fix made: converted it to a compact filled emerald CTA and reduced the surrounding sticky bar.
 - Post-fix visual evidence: blocked because the cloud browser could not open the local preview.
 
 ## Implementation checklist
 
-- [x] Preserve existing form behavior and routes.
-- [x] Reduce the final CTA height and visual weight.
-- [x] Keep the Thai CTA label on one line.
-- [x] Prevent the back label from narrowing the CTA.
+- [x] Preserve the existing save handler and toast.
+- [x] Give the action clear primary emphasis.
+- [x] Reduce button and sticky-bar height.
+- [x] Preserve an accessible full-width touch target.
 - [x] Pass the production build.
-- [ ] Confirm the rendered mobile view and console in a browser.
+- [ ] Confirm the deployed mobile view and console in a browser.
 
 final result: blocked

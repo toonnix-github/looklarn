@@ -297,14 +297,14 @@ export default function ElderProfilePage() {
       </div>
 
       {/* ── Bottom Action Bar ── */}
-      <div className="fixed inset-x-0 bottom-[3.55rem] md:bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-4 shadow-[0_-10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md">
+      <div className="fixed inset-x-0 bottom-[3.55rem] z-40 border-t border-slate-200/80 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.07)] backdrop-blur-md md:bottom-0">
         <div className="mx-auto max-w-lg">
           <Button
-            variant="outline"
-            size="lg"
-            className="w-full border-slate-200 text-slate-700 font-bold hover:bg-slate-50 bg-white shadow-sm"
+            variant="accent"
+            size="md"
+            className="h-12 w-full rounded-2xl border-0 bg-emerald-500 text-[0.95rem] font-black text-white shadow-lg shadow-emerald-700/20 hover:bg-emerald-400 active:bg-emerald-600"
             onClick={handleSave}
-            leftIcon={<Save className="w-5 h-5" />}
+            leftIcon={<Save className="h-[1.1rem] w-[1.1rem]" />}
           >
             บันทึกข้อมูล
           </Button>
